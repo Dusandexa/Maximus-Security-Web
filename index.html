@@ -9,212 +9,24 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 <!-- Poppins font (300/400/600/700) -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    :root{
-      --brand-red:#c02632;
-      --pre-nav-bg:#0d0d0d;
-      --nav-bg:#111111;
-      --nav-text:#cccccc;
-    }
-
-    /* Layout: fixed wrapper (pre-nav + navbar) */
-    #site-header{position:fixed;top:0;left:0;right:0;z-index:1030}
-    body{padding-top:94px;} /* space for fixed header (adjust if you tweak heights) */
-
-    /* Pre-nav */
-    .pre-nav{
-  background:#0d0d0d;
-  color:#bdbdbd;
-  font-size:.95rem;
-  border-bottom:1px solid #1b1b1b;
-}
-.pre-nav-text{
-  font-weight:500;
-  color:#e3e3e3;
-}
-.pre-nav .phone{
-  font-weight:700;
-  font-size:1.05rem;   /* slightly larger, like a call center number */
-  color:#fff;
-  margin-left:.35rem;
-}
-
-
-    /* Main navbar */
-    .main-navbar{
-      background:var(--nav-bg);
-      transition:background .25s ease, backdrop-filter .25s ease, box-shadow .25s ease;
-      border-bottom:1px solid #1a1a1a;
-    }
-    /* On scroll: slight transparency + blur */
-    .main-navbar.scrolled{
-      background:rgba(17,17,17,.7);
-      backdrop-filter:blur(8px);
-      box-shadow:0 8px 24px rgba(0,0,0,.35);
-    }
-
-    /* Brand: logo larger & sticking out of nav bottom */
-    .navbar-brand{
-      display:flex; align-items:center; gap:.5rem;
-    }
-    .brand-img{
-      height:120px;             /* a bit taller than the bar */
-      position:absolute;
-      top:10px;                /* pushes it down to “stick out” */
-      z-index:2;
-    }
-
-    /* Links */
-    .navbar .nav-link{
-      color:var(--nav-text);
-      font-weight:500;
-      letter-spacing:.2px;
-      position:relative;
-      padding:.6rem .9rem;
-    }
-    .navbar .nav-link:hover,
-    .navbar .nav-link:focus{ color:#ffffff; }
-
-
-    .navbar .nav-link:hover::after,
-.navbar .nav-link:focus::after,
-.navbar .nav-link.active::after {
-  transform:scaleX(1);
-  background:#c02632 !important;   /* force it red */
-}
-
-
-    /* Dropdowns: dark */
-    .dropdown-menu{
-      background:#0f0f0f; border:1px solid #1f1f1f;
-      padding:.4rem; min-width:15rem;
-    }
-    .dropdown-item{ color:#d7d7d7; border-radius:.375rem; }
-    .dropdown-item:hover{ background:var(--brand-red); color:#fff; }
-
-    /* Toggler */
-    .navbar-toggler{
-      border-color:#333;
-    }
-    .navbar-toggler:focus{ box-shadow:0 0 0 .15rem rgba(192,38,50,.35); }
-
-    /* Small screens: tighten paddings */
-    @media (max-width: 991.98px){
-      body{padding-top:126px;}
-      .navbar .nav-link::after{ bottom:.5rem; left:.75rem; right:.75rem; }
-    }
-
-   :root{ --brand-red:#c02632; }
-.accent{ color:var(--brand-red); }
-
-/* Full width hero with tighter padding */
-.hero{
-  min-height: 80vh;          /* was 100vh; smaller feel */
-  background:#000;
-  padding-bottom: 3.5rem;    /* was 6rem */
-}
-
-/* Cap inner content width so full-width doesn't feel too wide */
-.hero-inner{ max-width: 960px; }
-
-/* Smaller heading on purpose */
-.hero-title{
-  font-size: clamp(2.2rem, 5vw, 4rem);
-}
-
-/* Badge + ghost button */
-.hero-badge{
-  background: rgba(255,255,255,0.08);
-  color:#e8e8e8;
-  border:1px solid rgba(255,255,255,0.14);
-  font-weight:600;
-  letter-spacing:.2px;
-}
-.hero-ghost{
-  background: rgba(255,255,255,0.06);
-  border-color: rgba(255,255,255,0.28);
-}
-.hero-ghost:hover{
-  background: var(--brand-red);
-  border-color: var(--brand-red);
-  color:#fff;
-}
-
-/* Soft glow blob */
-.hero-blob{
-  position:absolute;
-  left:-20vw; bottom:-30vh;
-  width:70vw; height:70vw;
-  pointer-events:none;
-  background:
-    radial-gradient(closest-side, rgba(192,38,50,0.55), rgba(192,38,50,0.18) 40%, transparent 70%),
-    radial-gradient(closest-side, rgba(33,150,243,0.18), transparent 60%);
-  filter: blur(40px);
-  transform: translateZ(0);
-}
-
-/* Extra-tight on very small screens */
-@media (max-width: 575.98px){
-  .hero{ min-height: 70vh; padding-top: 2.5rem; padding-bottom: 2.5rem; }
-  .lead{ font-size: 1rem; }
-}
-
-/* Global font */
-html, body, .navbar, .dropdown-menu, .btn, .badge, .lead, h1, h2, h3, h4, h5, h6 {
-  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
-}
-body { font-weight:400; }
-.semibold { font-weight:600; }
-.bold { font-weight:700; }
-/* Make the logo a bit taller than the bar and push it down so it sticks out on the bottom */
-.brand-img{
-  height: 120px;
-    top: -4px;
-    position: absolute;
-    z-index: 2;
-  }               /* pushes logo downward */
-  
-}
-@media (max-width: 991.98px){
-  .brand-img{ height: 82px; top: 10px; }
-}
-/* Dropdowns: transparent & blurred */
-.dropdown-menu{
-  background: rgba(17,17,17,0.7);   /* dark semi-transparent */
-  backdrop-filter: blur(12px);      /* blur effect */
-  -webkit-backdrop-filter: blur(12px); /* Safari support */
-  border: 1px solid rgba(255,255,255,0.08);
-  padding: .4rem; 
-  min-width: 15rem;
-  border-radius: .5rem;
-  box-shadow: 0 8px 24px rgba(0,0,0,.45);
-}
-.dropdown-item{
-  color:#d7d7d7;
-  border-radius:.375rem;
-}
-.dropdown-item:hover{
-  background:var(--brand-red);
-  color:#fff;
-}
-  </style>
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/custom.css">
 </head>
 <body class="bg-black text-light">
 
 <header id="site-header">
   <!-- Pre-nav -->
-<div class="pre-nav py-1">
+<div class="pre-nav py-2">
   <div class="container d-flex justify-content-end">
     <div class="pre-nav-text">
-      Imate pitanja? Pozovite nas <span class="phone">061 152 3456</span>
+      Imate pitanja? Pozovite nas:
+      <span class="phone"><i class="bi bi-telephone"></i>061 152 3456</span>
     </div>
   </div>
 </div>
 
   <!-- Main Navbar -->
-  <nav class="navbar navbar-expand-lg main-navbar" data-bs-theme="dark">
+  <nav class="navbar navbar-expand-xl main-navbar" data-bs-theme="dark"> <!-- remove 'scrolled' -->
     <div class="container">
       <!-- Brand (left) -->
       <a class="navbar-brand" href="#">
@@ -237,7 +49,9 @@ body { font-weight:400; }
             </a>
             <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="tzDrop">
               <li><a class="dropdown-item" href="#">Video nadzor</a></li>
+              <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Alarmni sistemi</a></li>
+              <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Kontrola pristupa</a></li>
             </ul>
           </li>
@@ -249,7 +63,9 @@ body { font-weight:400; }
             </a>
             <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="vrataDrop">
               <li><a class="dropdown-item" href="#">Walk-through</a></li>
+              <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Hand-held</a></li>
+              <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Industrijska rešenja</a></li>
             </ul>
           </li>
@@ -261,7 +77,9 @@ body { font-weight:400; }
             </a>
             <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="elektroDrop">
               <li><a class="dropdown-item" href="#">Projektovanje</a></li>
+              <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Montaža</a></li>
+              <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Održavanje</a></li>
             </ul>
           </li>
@@ -273,7 +91,9 @@ body { font-weight:400; }
             </a>
             <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="xrayDrop">
               <li><a class="dropdown-item" href="#">Poštanski &amp; paket</a></li>
+              <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Prtljag &amp; teret</a></li>
+              <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Specijalne namene</a></li>
             </ul>
           </li>
@@ -285,7 +105,9 @@ body { font-weight:400; }
             </a>
             <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="resenjaDrop">
               <li><a class="dropdown-item" href="#">Po meri</a></li>
+              <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Integracije</a></li>
+              <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Konsalting</a></li>
             </ul>
           </li>
@@ -297,40 +119,47 @@ body { font-weight:400; }
 </header>
 
 <!-- Demo content -->
-<main class="container" style="min-height:150vh">
- <!-- Hero Section -->
-<section class="hero w-100 d-flex flex-column justify-content-center align-items-center text-center position-relative overflow-hidden">
-  <div class="hero-blob"></div>
+<main>
+  <!-- Hero Section -->
+  <section class="hero w-100 d-flex flex-column justify-content-center align-items-center text-center position-relative overflow-hidden">
+    <div class="hero-blob"></div> <!-- restore blob -->
+    <div class="container">
+      <div class="hero-inner mx-auto px-3">
+        <span class="badge rounded-pill hero-badge px-3 py-2 mb-3">
+          <span class="me-2"> Budni 24/7</span> sigurnost bez kompromisa.
+        </span>
 
-  <!-- full width, but content capped nicely -->
-  <div class="container-fluid">
-    <div class="hero-inner mx-auto px-3">
-      <span class="badge rounded-pill hero-badge px-3 py-2 mb-3">
-        <span class="me-2">New</span> Introducing On-Page Editing
-      </span>
+        <h1 class="hero-title fw-bold text-white mb-2 lh-1">
+          Sigurnost počinje sa <span class="accent">poverenjem</span>.
+        </h1>
 
-      <h1 class="hero-title fw-bold text-white mb-2 lh-1">
-        Just publish it<br>with <span class="accent">Framer</span>
-      </h1>
+        <p class="lead text-secondary mb-3">The website builder loved by designers.</p>
 
-      <p class="lead text-secondary mb-3">The website builder loved by designers.</p>
-
-      <!-- stack on xs, row from sm and up -->
-      <div class="d-flex flex-column flex-sm-row justify-content-center gap-2">
-        <a href="#" class="btn btn-light btn-sm px-3 fw-semibold rounded-pill">Start for free</a>
-        <a href="#" class="btn btn-outline-light btn-sm px-3 fw-semibold rounded-pill hero-ghost">Watch video</a>
+        <!-- stack on xs, row from sm and up -->
+        <div class="d-flex flex-column flex-sm-row justify-content-center gap-2">
+          <a href="#" class="btn btn-light btn-sm px-3 fw-semibold rounded-pill">Start for free</a>
+          <a href="#" class="btn btn-outline-light btn-sm px-3 fw-semibold rounded-pill hero-ghost">Watch video</a>
+        </div>
       </div>
     </div>
-  </div>
-</section>
-
-
+  </section>
+  <section>
+    <div class="container py-5">
+      <h2 class="text-center mb-4">Demo Content Section</h2>
+      <p class="text-center text-secondary">This is a placeholder section to demonstrate the header functionality.</p>
+  </section>
 </main>
+
+<footer>
+  <div class="container">
+    <p class="text-center text-secondary">© 2023 Maximus Security. All rights reserved.</p>
+  </div>
+</footer>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-  // Add blur & transparency on scroll
+  // Restore scroll-based blur
   (function(){
     const nav = document.querySelector('.main-navbar');
     const onScroll = () => {
@@ -340,6 +169,29 @@ body { font-weight:400; }
     onScroll();
     window.addEventListener('scroll', onScroll, {passive:true});
   })();
+
+  // Speed up closing animation by toggling a 'closing' class
+  (function(){
+    const collapseEl = document.getElementById('mainNav');
+    if(!collapseEl) return;
+    collapseEl.addEventListener('hide.bs.collapse', () => {
+      collapseEl.classList.add('closing');
+    });
+    collapseEl.addEventListener('hidden.bs.collapse', () => {
+      collapseEl.classList.remove('closing');
+    });
+  })();
+
+  // Ensure dropdown toggle loses focus after closing to revert color immediately
+  (function(){
+    document.addEventListener('hidden.bs.dropdown', function(){
+      const el = document.activeElement;
+      if (el && el.classList && el.classList.contains('dropdown-toggle')) {
+        el.blur();
+      }
+    });
+  })();
 </script>
 </body>
+</html>
 </html>

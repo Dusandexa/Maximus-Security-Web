@@ -1,129 +1,357 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+ :root{
+      --brand-red:#c02632;
+      --pre-nav-bg:#0d0d0d;
+      --nav-bg:#111111;
+      --nav-text:#cccccc;
+    }
 
-body {
-  font-family: 'Poppins', sans-serif;
-}
+    /* Layout: fixed wrapper (pre-nav + navbar) */
+    #site-header{position:fixed;top:0;left:0;right:0;z-index:1030}
+    body{padding-top:0;} /* was 94px */
 
-@media (max-width: 991.98px) {
-  /* Hide desktop nav links on small screens */
-  .navbar-collapse.desktop-menu {
-    display: none !important;
-  }
+    /* Pre-nav */
+    .pre-nav{
+  background:#0d0d0d;
+  color:#bdbdbd;
+  font-size:.95rem;
+  border-bottom:1px solid #1b1b1b;
 }
-
-@media (min-width: 992px) {
-  /* Hide offcanvas toggle on large screens */
-  .mobile-toggle {
-    display: none !important;
-  }
+.pre-nav-text{
+  font-weight:500;
+  color:#e3e3e3;
 }
-
-.bg-dark {
-  --bs-bg-opacity: 1;
-  background-color: black !important;
+.pre-nav .phone{
+  font-weight:700;
+  font-size:1.05rem;   /* slightly larger, like a call center number */
+  color:#fff;
+  margin-left:.35rem;
+  display:inline-flex;
+  align-items:center;
+  gap:.4rem;
+  padding:.15rem .6rem;
+  border:2px solid var(--brand-red);
+  border-radius:999px;                /* max rounded */
+  background:transparent;
+  line-height:1.2;
+  white-space:nowrap;
 }
-
-/* Add a glowing effect behind the logo */
-.navbar .navbar-brand {
-  position: relative;
-  z-index: 1; /* ensures logo stays above glow */
+.pre-nav .phone .bi{
+  font-size:1rem;
+  color:var(--brand-red);             /* outlined icon in brand red */
+  line-height:0;
+  display:inline-block;
+  transform: translateY(1px);
 }
-
-.navbar .navbar-brand::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, 10%); /* adjust the vertical position of glow */
-  width: 220px;
-  height: 220px;
-  background: radial-gradient(circle, rgba(255,255,255,0.25) 0%, rgba(0,0,0,0) 62%);
-  border-radius: 50%;
-  z-index: -1; /* places it behind the logo */
-  pointer-events: none; /* allows clicks to pass through */
-}
-.p-5{
-  padding: 5px;
-}
-.p-10{
-  padding: 10px;
-}
-.p-15{
-  padding: 15px;
-}
-.p-20{
-  padding: 20px;
+.pre-nav .phone:hover{
+  background:rgba(192,38,50,.12);
+  text-decoration:none;
 }
 
-/* Base nav link styling */
-.navbar-dark .navbar-nav .nav-link {
-  color: white !important;
-  padding-bottom: 5px;
-  position: relative;
-  font-weight: normal;
-  transition: all 0.3s ease;
+
+    /* Main navbar */
+    .main-navbar{
+      background: rgba(17,17,17,0.55); /* was 0.9; darker but clearly transparent */
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition:background .25s ease, backdrop-filter .25s ease, box-shadow .25s ease;
+      border-bottom:0;
+      position:relative;
+    }
+    .main-navbar::after{
+      content:"";
+      position:absolute;
+      left:0; right:0; bottom:0;
+      height:1px;
+      transform: scaleY(.8);
+      transform-origin: bottom;
+      background:linear-gradient(90deg,
+        #2a0505 0%,
+        #6e0e0e 4%,
+        #b91111 7%,
+        #b91111 14%,
+        #6e0e0e 72%,
+        #2a0505 100%
+      );
+      pointer-events:none;
+    }
+    .main-navbar.scrolled{
+      background: rgba(17,17,17,0.90); /* match base transparency */
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow:0 8px 24px rgba(0,0,0,.35);
+    }
+    .main-navbar.scrolled::after{
+      transform:scaleY(1);
+    }
+
+    /* Brand: logo larger & sticking out of nav bottom */
+    .navbar-brand{
+      display:flex; align-items:center; gap:.5rem;
+    }
+    .brand-img{
+      height:120px;             /* a bit taller than the bar */
+      position:absolute;
+      top:10px;                /* pushes it down to “stick out” */
+      z-index:2;
+    }
+
+    /* Links */
+    .navbar .nav-link{
+      color:var(--nav-text);
+      font-weight:500;
+      letter-spacing:.2px;
+      position:relative;
+      padding:.6rem .9rem;
+    }
+    /* Base underline only for non-dropdown links */
+    .navbar .nav-link:not(.dropdown-toggle)::after{
+      content:"";
+      position:absolute;
+      left:.9rem; right:.9rem; bottom:.35rem;
+      height:2px;
+      background:transparent;
+      transform:scaleX(0);
+      transform-origin:left;
+      transition:transform .2s ease, background-color .2s ease;
+    }
+
+    .navbar .nav-link:hover{ color:#ffffff; }
+    .navbar .nav-link:focus{ color: var(--nav-text); } /* don’t stay white on focus */
+
+    /* Keep white only when dropdown is open */
+    .navbar .dropdown.show > .dropdown-toggle,
+    .navbar .dropdown-toggle[aria-expanded="true"]{
+      color:#ffffff;
+    }
+
+    /* Ensure caret has no background */
+    .navbar .dropdown-toggle::after{ background:none !important; }
+
+    /* Smooth rotate for caret: down (default) -> up (open) */
+    .navbar .dropdown-toggle::after{
+      transition: transform .2s ease;
+      opacity: 0.6; /* 60% transparent caret */
+    }
+    .navbar .dropdown.show .dropdown-toggle::after,
+    .navbar .dropdown-toggle[aria-expanded="true"]::after{
+      transform: rotate(180deg);
+    }
+
+    /* Apply underline only to non-dropdown links */
+    .navbar .nav-link:hover:not(.dropdown-toggle)::after,
+    .navbar .nav-link:focus:not(.dropdown-toggle)::after,
+    .navbar .nav-link.active:not(.dropdown-toggle)::after{
+      transform:scaleX(1);
+      background:#c02632 !important;
+    }
+
+
+    /* Dropdowns: dark */
+    .dropdown-menu{
+      background: transparent;                 /* fully transparent */
+      backdrop-filter: blur(12px);             /* blur content behind */
+      -webkit-backdrop-filter: blur(12px);     /* Safari support */
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: .4rem; 
+      min-width: 15rem;
+      border-radius: .5rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,.45);
+      display: block !important;
+      visibility: hidden;
+      opacity: 0;
+      transform: translateY(6px);
+      pointer-events: none;
+      transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s;
+    }
+    .dropdown-menu.show{
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+      transition-delay: 0s, 0s, 0s;
+    }
+    .dropdown-item{ color:#d7d7d7; border-radius:.375rem; }
+    .dropdown-item:hover{ background:var(--brand-red); color:#fff; }
+
+    /* Dropdown divider (10% opacity) */
+    .dropdown-divider{
+      border-top:1px solid rgba(255,255,255,0.1) !important;
+      opacity:1;
+      margin:.25rem .5rem;
+    }
+
+    /* Toggler */
+    .navbar-toggler{
+      border-color:#333;
+    }
+    .navbar-toggler:focus{ box-shadow:0 0 0 .15rem rgba(192,38,50,.35); }
+
+    /* Small screens: tighten paddings */
+    @media (max-width: 1199.98px){
+      body{padding-top:0;} /* was 126px */
+
+      /* push the hamburger menu below the absolute logo instantly (during .collapsing and when .show) */
+      .main-navbar .navbar-collapse.collapsing,
+      .main-navbar .navbar-collapse.show{
+        padding-top: calc(120px + -4px); /* was 82px; align under larger logo */
+      }
+
+      /* ensure hero sits behind fixed header on mobile/tablet */
+      .hero{
+        margin-top:-126px;  /* pull under taller mobile header */
+        padding-top:126px;  /* keep text readable below header */
+      }
+
+      /* make the collapse animation faster and smoother on mobile breakpoint */
+      .main-navbar .collapse{ --bs-collapse-transition: height .18s ease-out; }
+      .main-navbar .collapsing{ transition: height .18s ease-out !important; }
+      .main-navbar .navbar-collapse{
+        will-change: height, opacity;         /* already anim height; add opacity hint */
+        opacity: 0;
+        transition: opacity .18s ease-out;    /* fade in on open */
+      }
+      .main-navbar .navbar-collapse.collapsing,
+      .main-navbar .navbar-collapse.show{
+        opacity: 1;
+      }
+      .main-navbar .navbar-collapse.collapsing.closing{
+        opacity: 0;                            /* fade out on close */
+        transition: opacity .12s ease-in, height .12s ease-in !important;
+      }
+
+      /* Fix mobile gaps: collapse hidden dropdowns, expand smoothly on show */
+      .main-navbar .navbar-nav .dropdown-menu{
+        position: static;               /* stack within flow */
+        display: block !important;      /* keep for animation */
+        overflow: hidden;               /* hide contents while collapsed */
+        max-height: 0;                  /* no height when hidden */
+        opacity: 0;
+        visibility: hidden;
+        margin-top: 0;
+        transform: none;                /* no slide on mobile, use height instead */
+        transition: max-height .2s ease, opacity .18s ease;
+      }
+      .main-navbar .navbar-nav .dropdown-menu.show{
+        max-height: 60vh;               /* enough to show items */
+        opacity: 1;
+        visibility: visible;
+      }
+
+      /* Dividers between main tabs (top-level items) only in hamburger menu */
+      .main-navbar .navbar-collapse .navbar-nav > .nav-item + .nav-item{
+        border-top:1px solid rgba(255,255,255,0.1); /* 10% opacity */
+        margin-top:.125rem;
+        padding-top:.125rem;
+      }
+    }
+
+    /* respect users who prefer reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .dropdown-menu{ transition: none; }
+      .dropdown-menu.show{ transform: none; }
+      .main-navbar .navbar-collapse{ transition: none; }
+      .main-navbar .collapsing{ transition: none !important; }
+    }
+
+   :root{ --brand-red:#c02632; }
+.accent{ color:var(--brand-red); }
+
+/* Full width hero */
+.hero{
+  min-height: 60vh;
+  background:#000;                      /* remove image + overlay */
+  margin-top:-94px;    /* pull section up under header (desktop) */
+  padding-top:94px;    /* keep text readable below header */
+  padding-bottom: 3.5rem;
 }
 
-/* Invisible bold clone to reserve space */
-.navbar-dark .navbar-nav .nav-link::before {
-  content: attr(data-text);
-  font-weight: bold;
+/* Restore the soft red glow blob behind hero */
+.hero-blob{
+  position:absolute;
+  left:-20vw; bottom:-30vh;
+  width:70vw; height:70vw;
+  pointer-events:none;
+  background:
+    radial-gradient(closest-side, rgba(192,38,50,0.55), rgba(192,38,50,0.18) 40%, transparent 70%),
+    radial-gradient(closest-side, rgba(33,150,243,0.18), transparent 60%);
+  filter: blur(40px);
+  transform: translateZ(0);
+}
+
+/* Cap inner content width so full-width doesn't feel too wide */
+.hero-inner{ max-width: 960px; margin-top: 230px; margin-bottom: 100px; } /* add extra top space for content only */
+
+/* Smaller heading on purpose */
+.hero-title{
+  font-size: clamp(2.2rem, 5vw, 4rem);
+}
+
+/* Badge + ghost button */
+.hero-badge{
+  background: rgba(255,255,255,0.08);
+  color:#e8e8e8;
+  border:1px solid rgba(255,255,255,0.14);
+  font-weight:600;
+  letter-spacing:.2px;
+}
+.hero-ghost{
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.28);
+}
+.hero-ghost:hover{
+  background: var(--brand-red);
+  border-color: var(--brand-red);
+  color:#fff;
+}
+
+/* Extra-tight on very small screens */
+@media (max-width: 575.98px){
+  .hero{ min-height: 70vh; padding-top: 2.5rem; padding-bottom: 2.5rem; }
+  .lead{ font-size: 1rem; }
+}
+
+/* Global font */
+html, body, .navbar, .dropdown-menu, .btn, .badge, .lead, h1, h2, h3, h4, h5, h6 {
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+}
+body { font-weight:400; }
+.semibold { font-weight:600; }
+.bold { font-weight:700; }
+/* Make the logo a bit taller than the bar and push it down so it sticks out on the bottom */
+.brand-img{
+  height: 120px;
+    top: -4px;
+    position: absolute;
+    z-index: 2;
+  }               /* pushes logo downward */
+  
+@media (max-width: 1199.98px){
+  .brand-img{ height: 120px; top: -1px; }
+}
+
+/* Dropdowns: transparent & blurred (keep this; remove any duplicate blocks later) */
+.dropdown-menu{
+  background: transparent;                 /* fully transparent */
+  backdrop-filter: blur(12px);             /* blur content behind */
+  -webkit-backdrop-filter: blur(12px);     /* Safari support */
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: .4rem; 
+  min-width: 15rem;
+  border-radius: .5rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,.45);
+  display: block !important;
   visibility: hidden;
-  height: 0;
-  overflow: hidden;
-  display: block;
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s;
+}
+.dropdown-menu.show{
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition-delay: 0s, 0s, 0s;
 }
 
-/* Underline setup */
-.navbar-dark .navbar-nav .nav-link::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 2px;
-  width: 0;
-  background-color: #b70513;
-  transition: width 0.3s ease;
-}
-
-/* Hover effects */
-.navbar-dark .navbar-nav .nav-link:hover {
-  font-weight: bold;
-}
-
-.navbar-dark .navbar-nav .nav-link:hover::after {
-  width: 100%;
-}
-.navbar {
-  position: relative;
-}
-
-.navbar::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  z-index: 2;
-}
-
-.logo{
-margin-top: 61px !important;
-}
-
-.navbar-gradient-line {
-  height: 4px;
-  width: 100%;
-  background: linear-gradient(to right, #6a010a, #b70513, #6a010a);
-  position: relative;
-  z-index: 0;
-}
-
-.navbar .container-fluid,
-.navbar .container-xxl {
-  max-width: 1600px; /* or 1800px */
-  margin: 0 auto;
-  padding-left: 40px;
-  padding-right: 40px;
-}
+/* If a second .dropdown-menu block appears later, delete it to avoid overrides */
