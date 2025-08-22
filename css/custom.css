@@ -355,3 +355,69 @@ body { font-weight:400; }
 }
 
 /* If a second .dropdown-menu block appears later, delete it to avoid overrides */
+/* Footer */
+.footer-wrap{
+  background: var(--brand-red); /* full-width red background */
+}
+
+.footer-card{
+  background: #0f0f11;                 /* dark inner card */
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 12px 30px rgba(0,0,0,.35);
+  margin-block: 1.25rem;               /* space from red background (top/bottom) */
+}
+
+.footer-logo{
+  display:block;
+  object-fit:contain;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));
+}
+
+/* Links */
+.footer-links li + li{ margin-top:.35rem; }
+.footer-links a{
+  color:#cfcfcf;
+  text-decoration:none;
+  transition: color .15s ease, opacity .15s ease;
+  display:inline-block;
+}
+.footer-links a:hover{
+  color:#ffffff;
+  opacity:.95;
+}
+
+/* Divider */
+.footer-sep{
+  border:0;
+  height:1px;
+  background: linear-gradient(90deg,
+    rgba(255,255,255,.06), rgba(255,255,255,.12), rgba(255,255,255,.06));
+}
+
+/* Small screens: tighten spacing */
+@media (max-width: 575.98px){
+  .footer-card{ padding: 1.25rem !important; }
+}
+.footer-card {
+  position: relative;
+  overflow: hidden;                          /* keep the band inside rounded edges */
+  padding-bottom: calc(1.5rem + 20px);       /* push content above the band */
+  top: -52px;
+}
+
+.footer-card::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 20px;                              /* band height */
+  background: repeating-linear-gradient(
+    -45deg,
+    #000 0 20px,
+    var(--brand-red) 20px 40px
+  );
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+  pointer-events: none;
+}

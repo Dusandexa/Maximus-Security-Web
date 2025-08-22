@@ -149,12 +149,72 @@
       <p class="text-center text-secondary">This is a placeholder section to demonstrate the header functionality.</p>
   </section>
 </main>
-
-<footer>
+<div class="clearfix"></div>
+<footer class="footer-wrap mt-5">
   <div class="container">
-    <p class="text-center text-secondary">© 2023 Maximus Security. All rights reserved.</p>
+    <!-- Inner rounded card that sits inside the red background -->
+    <div class="footer-card rounded-4 p-4 p-lg-5">
+      <div class="row g-4 align-items-start">
+        <!-- Left: Logo / brand -->
+        <div class="col-lg-4 text-center">
+  <a href="#" class="d-inline-block text-decoration-none">
+    <img src="assets/images/maximus-security-logo.png"
+         alt="Maximus Security" width="110" height="110"
+         class="footer-logo mb-3">
+  </a>
+  <h5 class="text-white mb-1">Maximus Security</h5>
+  <p class="text-secondary small mb-0">
+    Profesionalna zaštita, maksimalna sigurnost.
+  </p>
+</div>
+
+        <!-- Right: 3 columns with titles + 5 links each -->
+        <div class="col-lg-8">
+          <div class="row g-4">
+            <div class="col-12 col-sm-4">
+              <h6 class="text-white mb-3">Tehnička zaštita</h6>
+              <ul class="list-unstyled footer-links">
+                <li><a href="#">Video nadzor</a></li>
+                <li><a href="#">Alarmni sistemi</a></li>
+                <li><a href="#">Kontrola pristupa</a></li>
+                <li><a href="#">Interfoni</a></li>
+                <li><a href="#">Server &amp; mreže</a></li>
+              </ul>
+            </div>
+            <div class="col-12 col-sm-4">
+              <h6 class="text-white mb-3">Rešenja</h6>
+              <ul class="list-unstyled footer-links">
+                <li><a href="#">Integracije</a></li>
+                <li><a href="#">Po meri</a></li>
+                <li><a href="#">Konsalting</a></li>
+                <li><a href="#">Održavanje</a></li>
+                <li><a href="#">Podrška 24/7</a></li>
+              </ul>
+            </div>
+            <div class="col-12 col-sm-4">
+              <h6 class="text-white mb-3">Kompanija</h6>
+              <ul class="list-unstyled footer-links">
+                <li><a href="#">O nama</a></li>
+                <li><a href="#">Novosti</a></li>
+                <li><a href="#">Karijera</a></li>
+                <li><a href="#">Kontakt</a></li>
+                <li><a href="#">Politika privatnosti</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Optional thin divider + bottom row -->
+      <hr class="footer-sep my-4">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-2">
+        <small class="text-secondary">© 2025 Maximus Security. Sva prava zadržana.</small>
+        <small class="text-secondary">Made with <span class="text-white">Bootstrap 5.3.7</span></small>
+      </div>
+    </div>
   </div>
 </footer>
+
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
