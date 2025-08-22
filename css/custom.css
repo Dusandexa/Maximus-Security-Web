@@ -480,3 +480,8 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
   transform: scale(1.03);
   transition: transform .4s ease;
 }
+/* Overlap hero section by 50px */
+.cards-overlap {
+  margin-top: -50px;   /* pull upward to overlap hero */
+  z-index: 5;          /* stay above hero background */
+}
