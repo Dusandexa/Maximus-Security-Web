@@ -1,4 +1,4 @@
- :root{
+:root{
       --brand-red:#c02632;
       --pre-nav-bg:#0d0d0d;
       --nav-bg:#111111;
@@ -50,7 +50,7 @@
 
     /* Main navbar */
     .main-navbar{
-      background: rgba(17,17,17,0.55); /* was 0.9; darker but clearly transparent */
+      background: rgba(17,17,17,0.90); /* was 0.9; darker but clearly transparent */
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       transition:background .25s ease, backdrop-filter .25s ease, box-shadow .25s ease;
@@ -148,7 +148,7 @@
 
     /* Dropdowns: dark */
     .dropdown-menu{
-      background: transparent;                 /* fully transparent */
+      background: rgba(17, 17, 17, 0.70);      /* 90% opacity */
       backdrop-filter: blur(12px);             /* blur content behind */
       -webkit-backdrop-filter: blur(12px);     /* Safari support */
       border: 1px solid rgba(255,255,255,0.08);
@@ -193,7 +193,7 @@
       /* push the hamburger menu below the absolute logo instantly (during .collapsing and when .show) */
       .main-navbar .navbar-collapse.collapsing,
       .main-navbar .navbar-collapse.show{
-        padding-top: calc(120px + -4px); /* was 82px; align under larger logo */
+        padding-top: calc(120px + -40px); /* was 82px; align under larger logo */
       }
 
       /* ensure hero sits behind fixed header on mobile/tablet */
@@ -258,12 +258,26 @@
 
 /* Full width hero */
 .hero{
+  position: relative;
   min-height: 60vh;
-  background:#000;                      /* remove image + overlay */
-  margin-top:-94px;    /* pull section up under header (desktop) */
-  padding-top:94px;    /* keep text readable below header */
+  background: #000 url('https://insights.workwave.com/wp-content/uploads/2021/01/closeup-of-surveillance-camera-installation-male-hand-holds-cctv-picture-id1192103258.jpg') center/cover no-repeat;
+  margin-top:-94px;
+  padding-top:94px;
   padding-bottom: 3.5rem;
 }
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: rgba(0,0,0,0.55); /* darken image */
+  z-index: 1;                   /* above image, below content */
+  pointer-events:none;
+}
+/* Ensure hero content sits above the overlay */
+.hero .container,
+.hero .hero-inner{ position: relative; z-index: 2; }
+/* Keep blob under the overlay */
+.hero-blob{ z-index: 0; }
 
 /* Restore the soft red glow blob behind hero */
 .hero-blob{
@@ -320,38 +334,16 @@ body { font-weight:400; }
 /* Make the logo a bit taller than the bar and push it down so it sticks out on the bottom */
 .brand-img{
   height: 120px;
-    top: -4px;
-    position: absolute;
-    z-index: 2;
-  }               /* pushes logo downward */
-  
-@media (max-width: 1199.98px){
-  .brand-img{ height: 120px; top: -1px; }
-}
+  top: -4px;
+  position: absolute;
+  z-index: 2;
+}               /* pushes logo downward */
 
-/* Dropdowns: transparent & blurred (keep this; remove any duplicate blocks later) */
-.dropdown-menu{
-  background: transparent;                 /* fully transparent */
-  backdrop-filter: blur(12px);             /* blur content behind */
-  -webkit-backdrop-filter: blur(12px);     /* Safari support */
-  border: 1px solid rgba(255,255,255,0.08);
-  padding: .4rem; 
-  min-width: 15rem;
-  border-radius: .5rem;
-  box-shadow: 0 8px 24px rgba(0,0,0,.45);
-  display: block !important;
-  visibility: hidden;
-  opacity: 0;
-  transform: translateY(6px);
-  pointer-events: none;
-  transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s;
-}
-.dropdown-menu.show{
-  visibility: visible;
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-  transition-delay: 0s, 0s, 0s;
+@media (max-width: 1199.98px){
+  .brand-img{
+    height: 120px;
+    top: -1px;
+  }
 }
 
 /* If a second .dropdown-menu block appears later, delete it to avoid overrides */
@@ -361,7 +353,11 @@ body { font-weight:400; }
 }
 
 .footer-card{
-  background: #0f0f11;                 /* dark inner card */
+background: #1f1f1f;
+background: -webkit-linear-gradient(180deg, rgba(31, 31, 31, 1) 0%, rgba(23, 23, 23, 1) 7%, rgba(0, 0, 0, 1) 100%);
+background: -moz-linear-gradient(180deg, rgba(31, 31, 31, 1) 0%, rgba(23, 23, 23, 1) 7%, rgba(0, 0, 0, 1) 100%);
+background: linear-gradient(180deg, rgba(31, 31, 31, 1) 0%, rgba(23, 23, 23, 1) 7%, rgba(0, 0, 0, 1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endColorstr="#000000", GradientType=0);
   border: 1px solid rgba(255,255,255,.08);
   box-shadow: 0 12px 30px rgba(0,0,0,.35);
   margin-block: 1.25rem;               /* space from red background (top/bottom) */
@@ -391,7 +387,7 @@ body { font-weight:400; }
   border:0;
   height:1px;
   background: linear-gradient(90deg,
-    rgba(255,255,255,.06), rgba(255,255,255,.12), rgba(255,255,255,.06));
+    rgba(255,255,255,.50), rgba(255,255,255,.50), rgba(255,255,255,.50));
 }
 
 /* Small screens: tighten spacing */
@@ -420,4 +416,67 @@ body { font-weight:400; }
   border-bottom-left-radius: inherit;
   border-bottom-right-radius: inherit;
   pointer-events: none;
+}
+
+.white{
+  color: white !important;
+}
+
+.footer-position{
+  position: absolute;
+  width: 100%;
+}
+
+.profile-card{
+  aspect-ratio: 3 / 3.5;        /* shorter: ~40% less tall than before */
+  border-radius: 22px;
+  overflow: hidden;
+  position: relative;
+  background: #0f0f0f;
+  box-shadow: 0 12px 40px rgba(0,0,0,.45);
+}
+
+.pc-img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Blur only bottom half with smooth gradient transition */
+.pc-blur{
+  content:"";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 40%;                      /* bottom portion */
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.85) 0%,
+    rgba(0,0,0,0.65) 25%,
+    rgba(0,0,0,0.45) 50%,
+    rgba(0,0,0,0.25) 75%,
+    rgba(0,0,0,0) 100%
+  );
+  z-index: 1;
+}
+
+/* Meta text sits inside blurred zone */
+.pc-meta{
+  position: absolute;
+  bottom: 0;
+  left: 0; right: 0;
+  padding: 16px 20px;
+  z-index: 2;                       /* above blur */
+}
+
+.pc-name{ letter-spacing: .2px; }
+.text-white-75{ color: rgba(255,255,255,.75); }
+
+.profile-card:hover .pc-img{
+  transform: scale(1.03);
+  transition: transform .4s ease;
 }

@@ -11,6 +11,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="css/custom.css">
+  <!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body class="bg-black text-light">
 
@@ -133,7 +135,7 @@
           Sigurnost počinje sa <span class="accent">poverenjem</span>.
         </h1>
 
-        <p class="lead text-secondary mb-3">The website builder loved by designers.</p>
+        <p class="lead text-secondary mb-3 white">The website builder loved by designers.</p>
 
         <!-- stack on xs, row from sm and up -->
         <div class="d-flex flex-column flex-sm-row justify-content-center gap-2">
@@ -143,14 +145,124 @@
       </div>
     </div>
   </section>
+
+  <div class="clearfix"></div>
   <section>
     <div class="container py-5">
-      <h2 class="text-center mb-4">Demo Content Section</h2>
-      <p class="text-center text-secondary">This is a placeholder section to demonstrate the header functionality.</p>
+      <div class="row g-4">
+        <!-- Card 1 -->
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="profile-card shadow-lg h-100">
+            <img class="pc-img" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1200&auto=format&fit=crop" alt="Sophie Bennett portrait">
+
+            <div class="pc-blur"></div>
+
+            <div class="pc-meta d-flex flex-column justify-content-end">
+              <div>
+                <h5 class="pc-name mb-1 text-white">
+                  Video nadzor
+                </h5>
+                <p class="mb-3 text-white-75 small">
+                  A Product Designer focused on intuitive user experiences.
+                </p>
+
+                <div class="d-flex align-items-center justify-content-between">
+                  <div class="d-flex gap-3 small text-white-75">
+                    <span class="d-inline-flex align-items-center gap-1">
+                      <i class="bi bi-people"></i> 312
+                    </span>
+                    <span class="d-inline-flex align-items-center gap-1">
+                      <i class="bi bi-heart"></i> 48
+                    </span>
+                  </div>
+
+                  <button class="btn btn-danger btn-sm rounded-pill fw-semibold px-3">
+                    Pogledajte ponudu <i class="bi bi-plus-lg ms-1"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Card 2 -->
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="profile-card shadow-lg h-100">
+            <img class="pc-img" src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?q=80&w=1200&auto=format&fit=crop" alt="Liam Carter portrait">
+
+            <div class="pc-blur"></div>
+
+            <div class="pc-meta d-flex flex-column justify-content-end">
+              <div>
+                <h5 class="pc-name mb-1 text-white">
+                 Iznajmljivanje metal detektora
+                </h5>
+                <p class="mb-3 text-white-75 small">
+                    Iznajmljivanje metal detektora
+                </p>
+
+                <div class="d-flex align-items-center justify-content-between">
+                  <div class="d-flex gap-3 small text-white-75">
+                    <span class="d-inline-flex align-items-center gap-1">
+                      <i class="bi bi-people"></i> 528
+                    </span>
+                    <span class="d-inline-flex align-items-center gap-1">
+                      <i class="bi bi-heart"></i> 96
+                    </span>
+                  </div>
+
+                  <button class="btn btn-danger btn-sm rounded-pill fw-semibold px-3">
+                    Pogledajte ponudu <i class="bi bi-plus-lg ms-1"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="profile-card shadow-lg h-100">
+            <img class="pc-img" src="https://images.unsplash.com/photo-1528892952291-009c663ce843?q=80&w=1200&auto=format&fit=crop" alt="Maya Patel portrait">
+
+            <div class="pc-blur"></div>
+
+            <div class="pc-meta d-flex flex-column justify-content-end">
+              <div>
+                <h5 class="pc-name mb-1 text-white">
+                  Maya Patel
+                </h5>
+                <p class="mb-3 text-white-75 small">
+                  UX Researcher turning insights into delightful products.
+                </p>
+
+                <div class="d-flex align-items-center justify-content-between">
+                  <div class="d-flex gap-3 small text-white-75">
+                    <span class="d-inline-flex align-items-center gap-1">
+                      <i class="bi bi-people"></i> 402
+                    </span>
+                    <span class="d-inline-flex align-items-center gap-1">
+                      <i class="bi bi-heart"></i> 73
+                    </span>
+                  </div>
+
+                  <button class="btn btn-danger btn-sm rounded-pill fw-semibold px-3">
+                    Pogledajte ponudu <i class="bi bi-plus-lg ms-1"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </section>
+
+  <div class="clearfix"></div>
 </main>
 <div class="clearfix"></div>
-<footer class="footer-wrap mt-5">
+<footer class="footer-wrap mt-5 footer-position">
   <div class="container">
     <!-- Inner rounded card that sits inside the red background -->
     <div class="footer-card rounded-4 p-4 p-lg-5">
@@ -209,7 +321,7 @@
       <hr class="footer-sep my-4">
       <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-2">
         <small class="text-secondary">© 2025 Maximus Security. Sva prava zadržana.</small>
-        <small class="text-secondary">Made with <span class="text-white">Bootstrap 5.3.7</span></small>
+        <small class="text-secondary">sajt test <span class="text-white">Maximus</span></small>
       </div>
     </div>
   </div>
@@ -253,5 +365,4 @@
   })();
 </script>
 </body>
-</html>
 </html>
