@@ -13,6 +13,9 @@
   <link rel="stylesheet" href="css/custom.css">
   <!-- Bootstrap Icons -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
 </head>
 <body class="bg-black text-light">
 
@@ -87,7 +90,9 @@
               </a>
               <ul class="dropdown-menu" aria-labelledby="handHeldSub">
                 <li><a class="dropdown-item" href="#">Standard</a></li>
+                <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="#">Visoka osetljivost</a></li>
+                <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="#">USB punjenje</a></li>
               </ul>
               </li>
@@ -101,7 +106,9 @@
               </a>
               <ul class="dropdown-menu" aria-labelledby="indSub">
                 <li><a class="dropdown-item" href="#">Rudnici</a></li>
+                <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="#">Fabrike hrane</a></li>
+                <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="#">Farmaceutska</a></li>
               </ul>
               </li>
@@ -261,13 +268,26 @@
 <br><br>
 </section>
 
-<!-- Next Section -->
-<section class="bg-dark text-light py-5">
+<section class="text-light py-5">
   <div class="container">
-    <h2>Next Section</h2>
-    <p>This section continues right after the cards.</p>
+    <h2 class="text-center mb-4">Featured in:</h2>
+
+    <div class="logo-marquee bg-dark rounded px-2">
+      <div class="logo-track">
+        <!-- Your ONE set of logos (SVG/PNG). Add/remove as needed -->
+        <img class="logo-img" src="https://cdn.jsdelivr.net/npm/simple-icons@11/icons/apple.svg" alt="Apple">
+        <img class="logo-img" src="https://cdn.jsdelivr.net/npm/simple-icons@11/icons/google.svg" alt="Google">
+        <img class="logo-img" src="https://cdn.jsdelivr.net/npm/simple-icons@11/icons/microsoft.svg" alt="Microsoft">
+        <img class="logo-img" src="https://cdn.jsdelivr.net/npm/simple-icons@11/icons/ibm.svg" alt="IBM">
+        <img class="logo-img" src="https://cdn.jsdelivr.net/npm/simple-icons@11/icons/cisco.svg" alt="Cisco">
+        <img class="logo-img" src="https://cdn.jsdelivr.net/npm/simple-icons@11/icons/nvidia.svg" alt="NVIDIA">
+      </div>
+      <!-- JS will clone .logo-track once for seamless looping -->
+    </div>
   </div>
 </section>
+
+
   <div class="clearfix"></div>
 </main>
 <div class="clearfix"></div>
@@ -339,6 +359,8 @@
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
   // Restore scroll-based blur
   (function(){
@@ -373,6 +395,5 @@
     });
   })();
 </script>
-
 </body>
 </html>
