@@ -21,8 +21,8 @@
 <div class="pre-nav py-2">
   <div class="container d-flex justify-content-end">
     <div class="pre-nav-text">
-      Imate pitanja? Pozovite nas:
-      <span class="phone"><i class="bi bi-telephone"></i>061 152 3456</span>
+      Imate pitanja? Pozovite:
+      <span class="phone"><i class="bi bi-telephone-fill"></i>061/152-3456</span>
     </div>
   </div>
 </div>
@@ -58,19 +58,53 @@
             </ul>
           </li>
 
-          <!-- Vrata metal detektori -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="vrataDrop" data-bs-toggle="dropdown" aria-expanded="false">
+            <!-- Vrata metal detektori -->
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="vrataDrop" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
               Vrata metal detektori
             </a>
             <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="vrataDrop">
-              <li><a class="dropdown-item" href="#">Walk-through</a></li>
+              <!-- Walk-through submenu -->
+              <li class="dropend">
+              <a class="dropdown-item dropdown-toggle" href="#" id="walkThroughSub" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                Walk-through
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="walkThroughSub">
+                <li><a class="dropdown-item" href="#">Model 6 zona</a></li>
+                <li><a class="dropdown-item" href="#">Model 18 zona</a></li>
+                <li><a class="dropdown-item" href="#">Outdoor IP65</a></li>
+              </ul>
+              </li>
+
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Hand-held</a></li>
+
+              <!-- Hand-held submenu -->
+              <li class="dropend">
+              <a class="dropdown-item dropdown-toggle" href="#" id="handHeldSub" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                Hand-held
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="handHeldSub">
+                <li><a class="dropdown-item" href="#">Standard</a></li>
+                <li><a class="dropdown-item" href="#">Visoka osetljivost</a></li>
+                <li><a class="dropdown-item" href="#">USB punjenje</a></li>
+              </ul>
+              </li>
+
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Industrijska rešenja</a></li>
+
+              <!-- Industrijska rešenja submenu -->
+              <li class="dropend">
+              <a class="dropdown-item dropdown-toggle" href="#" id="indSub" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                Industrijska rešenja
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="indSub">
+                <li><a class="dropdown-item" href="#">Rudnici</a></li>
+                <li><a class="dropdown-item" href="#">Fabrike hrane</a></li>
+                <li><a class="dropdown-item" href="#">Farmaceutska</a></li>
+              </ul>
+              </li>
             </ul>
-          </li>
+            </li>
 
           <!-- Elektro instalacije -->
           <li class="nav-item dropdown">
@@ -295,7 +329,7 @@
       <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-2">
         <small class="text-secondary">© 2025 Maximus Security. Sva prava zadržana.</small>
         <small class="text-secondary">sajt test <span class="text-white">Maximus</span></small>
-      </div>
+      </div><br>
     </div>
   </div>
 </footer>

@@ -22,7 +22,6 @@
 }
 .pre-nav .phone{
   font-weight:700;
-  font-size:1.05rem;   /* slightly larger, like a call center number */
   color:#fff;
   margin-left:.35rem;
   display:inline-flex;
@@ -127,6 +126,36 @@
     /* Ensure caret has no background */
     .navbar .dropdown-toggle::after{ background:none !important; }
 
+    /* Replace caret with + / − and center vertically */
+.navbar .dropdown-toggle::after{
+  background: none !important;
+  content: "+";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.1em;
+  height: 1.1em;
+  margin-left: 0 !important;
+  font-size: 1rem;
+  line-height: 1;
+  vertical-align: middle;      /* center with text */
+  border: 0 !important;
+  opacity: .8;
+  transform: none !important;  /* override any rotations */
+  transition: opacity .2s ease;
+}
+.navbar .dropdown.show .dropdown-toggle::after,
+.navbar .dropdown-toggle[aria-expanded="true"]::after{
+  content: "−";                /* minus when open */
+  opacity: 1;
+  transform: none !important;  /* ensure no rotation */
+}
+
+/* Remove/override older rotate rules if present */
+/* .navbar .dropdown-toggle::after{ transition: transform .2s ease; opacity:.6; }
+   .navbar .dropdown.show .dropdown-toggle::after,
+   .navbar .dropdown-toggle[aria-expanded="true"]::after{ transform: rotate(180deg); } */
+
     /* Smooth rotate for caret: down (default) -> up (open) */
     .navbar .dropdown-toggle::after{
       transition: transform .2s ease;
@@ -148,9 +177,9 @@
 
     /* Dropdowns: dark */
     .dropdown-menu{
-      background: rgba(17, 17, 17, 0.70);      /* 90% opacity */
-      backdrop-filter: blur(12px);             /* blur content behind */
-      -webkit-backdrop-filter: blur(12px);     /* Safari support */
+      background: rgba(17, 17, 17, 0.90);      /* 90% opacity */
+      backdrop-filter: blur(10px);          /* match navbar blur */
+      -webkit-backdrop-filter: blur(10px);  /* Safari */
       border: 1px solid rgba(255,255,255,0.08);
       padding: .4rem; 
       min-width: 15rem;
@@ -489,8 +518,8 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
 /* Fix card height at 200px up to XL */
 @media (max-width: 1199.98px) {
   .cards-overlap .profile-card {
-    aspect-ratio: auto !important;   /* cancel the ratio */
-    height: 200px !important;         /* force height */
+    aspect-ratio: auto !important; /* cancel the ratio */
+    height: 200px !important;  /* force height */
   }
   .cards-overlap .pc-img {
     height: 100% !important;
