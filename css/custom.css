@@ -185,7 +185,7 @@
       min-width: 15rem;
       border-radius: .5rem;
       box-shadow: 0 8px 24px rgba(0,0,0,.45);
-      display: block !important;
+      /* display: block !important; */
       visibility: hidden;
       opacity: 0;
       transform: translateY(6px);
@@ -458,11 +458,32 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
 
 .profile-card{
   aspect-ratio: 3 / 3.5;        /* shorter: ~40% less tall than before */
-  border-radius: 22px;
+  border-top-left-radius: 22px;
+  border-top-right-radius: 22px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
   overflow: hidden;
-  position: relative;
+  position: relative; /* ensure positioning for overlay */
   background: #0f0f0f;
-  box-shadow: 0 12px 40px rgba(0,0,0,.45);
+  box-shadow: 0 12px 40px rgba(0,0,0,.45), inset 0 -1px 0 rgba(220,53,69,.5); /* 50% opacity */
+}
+
+/* Darken image with a soft top->bottom gradient */
+.profile-card::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.70) 0%,
+    rgba(0,0,0,0.55) 35%,
+    rgba(0,0,0,0.35) 65%,
+    rgba(0,0,0,0.15) 85%,
+    rgba(0,0,0,0.00) 100%
+  );
+  z-index: 1;              /* above image, below blur/meta */
+  pointer-events: none;
+  border-radius: inherit;               /* match card (rounded top, flat bottom) */
 }
 
 .pc-img{
@@ -490,7 +511,7 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
     rgba(0,0,0,0.25) 80%,
     rgba(0,0,0,0) 100%
   );
-  z-index: 1;
+  z-index: 2;              /* was 1; above overlay */
 }
 
 /* Meta text sits inside blurred zone */
@@ -499,7 +520,7 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
   bottom: 0;
   left: 0; right: 0;
   padding: 16px 20px;
-  z-index: 2;                       /* above blur */
+  z-index: 4; /* was 3 */
 }
 
 .pc-name{ letter-spacing: .2px; }
@@ -516,10 +537,10 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
 }
 
 /* Fix card height at 200px up to XL */
-@media (max-width: 1199.98px) {
+@media (max-width: 991.98px) {
   .cards-overlap .profile-card {
     aspect-ratio: auto !important; /* cancel the ratio */
-    height: 200px !important;  /* force height */
+    height: 220px !important;  /* force height */
   }
   .cards-overlap .pc-img {
     height: 100% !important;
@@ -528,6 +549,132 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
   }
   /* If .h-100 is present, make sure our fixed height wins */
   .cards-overlap .profile-card.h-100 {
-    height: 200px !important;
+    height: 220px !important;
   }
+}
+
+/* Desktop (XL and up): fix dropdown/submenu closing flash + keep blur */
+@media (min-width: 1200px){
+
+  /* Let Bootstrap control display again (defuse the old !important) */
+  .main-navbar .navbar-nav > .nav-item .dropdown-menu{
+    display: none !important;                 /* hidden by default */
+    opacity: 0;
+    visibility: hidden;
+    transform: none;                           /* no slide on desktop */
+    transition: opacity .15s ease, visibility 0s linear .15s;
+    /* keep your frosted look in one place */
+    background: rgba(17,17,17,.90);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .main-navbar .navbar-nav > .nav-item .dropdown-menu.show{
+    display: block !important;
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s, 0s;
+  }
+
+  /* Submenu (dropend) – always open to the right, no reflow under the tab */
+  .dropdown-menu .dropend .dropdown-menu{
+    top: 0;
+    left: 100%;
+    margin-left: .25rem;
+    margin-top: 0;
+  }
+
+  /* Optional: tiny nudge animation for submenus (no vertical slide) */
+  .dropdown-menu .dropend > .dropdown-menu{
+    transform: translateX(6px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .12s ease, transform .12s ease, visibility 0s linear .12s;
+  }
+  .dropdown-menu .dropend.show > .dropdown-menu{
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s,0s,0s;
+  }
+
+  /* Caret/chevron for submenu toggles inside the menu (optional) */
+  .dropdown-menu .dropdown-toggle::after{
+    content: "+";
+    float: right;
+    transform: none !important;
+    opacity: .8;
+  }
+}
+/* Collapse (below xl): make items full-width and left-aligned */
+@media (max-width: 1199.98px){
+
+  /* Stop the LG centering that leaks into the collapsed state */
+  .main-navbar .navbar-collapse{
+    justify-content: flex-start !important;  /* overrides justify-content-lg-end */
+  }
+
+  .main-navbar .navbar-collapse .navbar-nav{
+    align-items: stretch !important;         /* overrides align-items-lg-center */
+    width: 100%;
+  }
+
+  /* Each top-level item spans 100% */
+  .main-navbar .navbar-nav > .nav-item{
+    width: 100%;
+  }
+
+  /* Links look like a proper list */
+  .main-navbar .navbar-nav .nav-link{
+    display: block;
+    width: 100%;
+    text-align: left !important;
+    padding: .85rem 1rem;
+  }
+
+  /* Dropdowns inside the collapsed menu: inline & full width */
+  .main-navbar .navbar-nav .dropdown-menu{
+    position: static !important;
+    float: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  /* Dividers: full width */
+  .main-navbar .navbar-collapse hr,
+  .main-navbar .navbar-nav .dropdown-divider{
+    width: 100% !important;
+    margin: .25rem 0 !important;
+    border: 0;
+    border-top: 1px solid rgba(255,255,255,.18);
+    opacity: 1;
+  }
+
+  /* Optional: small separators between top-level items */
+  .main-navbar .navbar-collapse .navbar-nav > .nav-item + .nav-item{
+    border-top:1px solid rgba(255,255,255,0.10);
+    margin-top:.125rem;
+    padding-top:.125rem;
+  }
+}
+
+/* Replace any previous ::after border with bottom-half side fades only */
+.profile-card::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height: 50%;                 /* only bottom half */
+  border-radius: inherit;
+  pointer-events:none;
+  z-index: 3;                  /* above image/blur, below text */
+
+  /* Left/Right fades + Bottom solid 1px line */
+  background:
+    linear-gradient(to right, rgba(220,53,69,.5), rgba(220,53,69,.5)) bottom / 100% 1px no-repeat, /* 50% opacity */
+    linear-gradient(to top, rgba(220,53,69,.5) 0%, rgba(220,53,69,0) 100%) left bottom / 1px 100% no-repeat,
+    linear-gradient(to top, rgba(220,53,69,.5) 0%, rgba(220,53,69,0) 100%) right bottom / 1px 100% no-repeat; /* 50% -> 0% */
 }
