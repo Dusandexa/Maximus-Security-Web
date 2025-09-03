@@ -282,14 +282,14 @@
       .main-navbar .collapsing{ transition: none !important; }
     }
 
-   :root{ --brand-red:#c02632; }
-.accent{ color:var(--brand-red); }
+   :root{ --brand-red:#ea3141; }
+.accent{ color:hsl(355, 81%, 55%); ; }
 
 /* Full width hero */
 .hero{
   position: relative;
   min-height: 60vh;
-  background: #000 url('https://insights.workwave.com/wp-content/uploads/2021/01/closeup-of-surveillance-camera-installation-male-hand-holds-cctv-picture-id1192103258.jpg') center/cover no-repeat;
+  background: #000 url('../assets/images/gromobran.jpg') center/cover no-repeat;
   margin-top:-94px;
   padding-top:94px;
   padding-bottom: 3.5rem;
@@ -677,4 +677,54 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
     linear-gradient(to right, rgba(220,53,69,.5), rgba(220,53,69,.5)) bottom / 100% 1px no-repeat, /* 50% opacity */
     linear-gradient(to top, rgba(220,53,69,.5) 0%, rgba(220,53,69,0) 100%) left bottom / 1px 100% no-repeat,
     linear-gradient(to top, rgba(220,53,69,.5) 0%, rgba(220,53,69,0) 100%) right bottom / 1px 100% no-repeat; /* 50% -> 0% */
+}
+.underline{
+  text-decoration: underline;
+}
+
+.slider {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.logos {
+  display: inline-flex;
+  animation: slidein 25s linear infinite; /* desktop default */
+}
+
+.logo-img {
+  height: 20px;                 /* fixed height */
+  width: auto;                  /* keep aspect ratio */
+  margin: 0 30px;               /* spacing between logos */
+  filter: brightness(0) invert(1); /* force solid white */
+  flex-shrink: 0;               /* prevent resizing */
+  opacity: 0.3;
+}
+
+/* Pause on hover */
+.slider:hover .logos {
+  animation-play-state: paused;
+}
+
+@keyframes slidein {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Faster on tablets */
+@media (max-width: 768px) {
+  .logos {
+    animation-duration: 10s;
+  }
+}
+
+/* Even faster on very small screens */
+@media (max-width: 480px) {
+  .logos {
+    animation-duration: 5s;
+  }
 }

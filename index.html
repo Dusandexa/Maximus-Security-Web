@@ -15,7 +15,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
+<script defer src="js/custom.js"></script>
 </head>
 <body class="bg-black text-light">
 
@@ -25,7 +25,7 @@
   <div class="container d-flex justify-content-end">
     <div class="pre-nav-text">
       Imate pitanja? Pozovite:
-      <span class="phone"><i class="bi bi-telephone-fill"></i>061/152-3456</span>
+      <span class="phone"><i class="bi bi-telephone-fill"></i>062/42 15 15</span>
     </div>
   </div>
 </div>
@@ -165,29 +165,40 @@
 
 <!-- Demo content -->
 <main>
-  <!-- Hero Section -->
-  <section class="hero w-100 d-flex flex-column justify-content-center align-items-center text-center position-relative overflow-hidden">
-    <div class="hero-blob"></div> <!-- restore blob -->
-    <div class="container">
-      <div class="hero-inner mx-auto px-3">
-        <span class="badge rounded-pill hero-badge px-3 py-2 mb-3">
-          <span class="me-2"> Budni 24/7</span> sigurnost bez kompromisa.
-        </span>
+<!-- Hero Section -->
+<section class="hero w-100 position-relative overflow-hidden text-white">
+  <div class="hero-blob"></div>
 
-        <h1 class="hero-title fw-bold text-white mb-2 lh-1">
-          Sigurnost počinje sa <span class="accent">poverenjem</span>.
+  <div class="container">
+    <div class="row align-items-center hero-inner px-3 mx-auto">
+      
+      <!-- LEFT: BIG HEADLINE -->
+      <div class="col-12 col-lg-7">
+         
+        <h1 class="hero-title fw-bold mb-2 lh-1">
+          Rešite zakonsku obavezu <span class="accent">gromobrana.</span>
         </h1>
+      </div>
 
-        <p class="lead text-secondary mb-3 white">The website builder loved by designers.</p>
+      <!-- RIGHT: BADGE + COPY + CTAs -->
+      <div class="col-12 col-lg-5 mt-3 mt-lg-0">
+       
+
+        <p class="lead text-secondary mb-3 white">
+          Mi preuzimamo ceo proces umesto vas - <strong class="underline">od izrade potrebne dokumentacije do kompletne montaže</strong>. Sve rešavate na jednom mestu!
+        </p>
 
         <!-- stack on xs, row from sm and up -->
-        <div class="d-flex flex-column flex-sm-row justify-content-center gap-2">
-          <a href="#" class="btn btn-light btn-sm px-3 fw-semibold rounded-pill">Start for free</a>
-          <a href="#" class="btn btn-outline-light btn-sm px-3 fw-semibold rounded-pill hero-ghost">Watch video</a>
+        <div class="d-flex flex-column flex-sm-row gap-2">
+          <a href="#" class="btn btn-light btn-sm px-3 fw-semibold rounded-pill">Pozovite nas <i class="bi bi-telephone-fill ms-1"></i></a>
+          <a href="#" class="btn btn-outline-light btn-sm px-3 fw-semibold rounded-pill hero-ghost">Saznajte više <i class="bi bi-arrow-right ms-1"></i></a>
         </div>
       </div>
+
     </div>
-  </section>
+  </div>
+</section>
+
 
   <div class="clearfix"></div>
 <!-- 3 Cards Section (overlap hero) -->
@@ -198,15 +209,15 @@
       <!-- Card 1 -->
       <div class="col-12 col-sm-12 col-lg-3">
         <div class="profile-card shadow-lg h-100">
-          <img class="pc-img" src="https://insytesecurity.com/wp-content/uploads/2025/03/security-28-1.webp" alt="Video nadzor">
+          <img class="pc-img" src="assets/images/Product_ColorVu.jpg" alt="Video nadzor">
           <div class="pc-blur"></div>
           <div class="pc-meta d-flex flex-column justify-content-end">
             <div>
-              <h5 class="pc-name mb-1 text-white">Video nadzor</h5>
-              <p class="mb-3 text-white-75 small">Osigurajte vaš dom ili poslovni prostor.</p>
+              <h5 class="pc-name mb-1 text-white">Kompletna rešenja za video nadzor</h5>
+              <p class="mb-3 text-white-75 small">Najmodernije kamere i oprema, sa FullHD, 2K, 3K i 4K snimcima. </p>
               <div class="d-flex align-items-center justify-content-between">
                 <div class="d-flex gap-3 small text-white-75">
-                  <button class="btn btn-danger btn-sm rounded-pill fw-semibold px-3">
+                  <button class="btn btn-outline-danger btn-sm rounded-pill fw-semibold px-3">
                   Pogledajte ponudu <i class="bi bi-plus-lg ms-1"></i>
                 </button>
                 </div>
@@ -220,15 +231,15 @@
       <!-- Card 2 -->
       <div class="col-12 col-sm-12 col-lg-3">
         <div class="profile-card shadow-lg h-100">
-          <img class="pc-img" src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?q=80&w=1200&auto=format&fit=crop" alt="Iznajmljivanje metal detektora">
+          <img class="pc-img" src="assets/images/metel-detektor-vrata.png" alt="Iznajmljivanje metal detektora">
           <div class="pc-blur"></div>
           <div class="pc-meta d-flex flex-column justify-content-end">
             <div>
               <h5 class="pc-name mb-1 text-white">Iznajmljivanje metal detektora</h5>
-              <p class="mb-3 text-white-75 small">Kontrola pristupa uz pouzdane sigurnosne sisteme.</p>
+              <p class="mb-3 text-white-75 small">X-Ray skeneri, skeneri sa zonama, rendgen skeneri za prtljag i ostala sigurnosna oprema.</p>
               <div class="d-flex align-items-center justify-content-between">
                 <div class="d-flex gap-3 small text-white-75">
-                  <button class="btn btn-danger btn-sm rounded-pill fw-semibold px-3">
+                  <button class="btn btn-outline-danger btn-sm rounded-pill fw-semibold px-3">
                   Pogledajte ponudu <i class="bi bi-plus-lg ms-1"></i>
                 </button>
                 </div>
@@ -249,13 +260,12 @@
               <p class="mb-3 text-white-75 small">Profesionalna i sigurna ugradnja svih elektro sistema.</p>
               <div class="d-flex align-items-center justify-content-between">
                 <div class="d-flex gap-3 small text-white-75">
-                  <button class="btn btn-danger btn-sm rounded-pill fw-semibold px-3">
+                  <button class="btn btn-outline-danger btn-sm rounded-pill fw-semibold px-3">
                   Pogledajte ponudu <i class="bi bi-plus-lg ms-1"></i>
                 </button>
                   <!-- <span class="d-inline-flex align-items-center gap-1"><i class="bi bi-people"></i> 402</span>
                   <span class="d-inline-flex align-items-center gap-1"><i class="bi bi-heart"></i> 73</span> -->
                 </div>
-                
               </div>
             </div>
           </div>
@@ -268,27 +278,35 @@
 <br><br>
 </section>
 
+<!-- Reference -->
 <section class="text-light py-5">
   <div class="container">
-    <h2 class="text-center mb-4">Featured in:</h2>
+    <h3 class="text-center">Poverenje nam je ukazalo preko 2500 porodičnih,<br> malih i srednjih preduzeća</h3><br><br>
+    <div class="slider">
+      <div class="logos d-flex">
+        <img src="assets/images/2560px-Hikvision_logo.png" alt="Logo 1" class="logo-img">
+        <img src="assets/images/2560px-Hikvision_logo.png" alt="Logo 2" class="logo-img">
+        <img src="assets/images/2560px-Hikvision_logo.png" alt="Logo 3" class="logo-img">
+        <img src="assets/images/2560px-Hikvision_logo.png" alt="Logo 4" class="logo-img">
+        <img src="assets/images/2560px-Hikvision_logo.png" alt="Logo 5" class="logo-img">
 
-    <div class="logo-marquee bg-dark rounded px-2">
-      <div class="logo-track">
-        <!-- Your ONE set of logos (SVG/PNG). Add/remove as needed -->
-        <img class="logo-img" src="https://cdn.jsdelivr.net/npm/simple-icons@11/icons/apple.svg" alt="Apple">
-        <img class="logo-img" src="https://cdn.jsdelivr.net/npm/simple-icons@11/icons/google.svg" alt="Google">
-        <img class="logo-img" src="https://cdn.jsdelivr.net/npm/simple-icons@11/icons/microsoft.svg" alt="Microsoft">
-        <img class="logo-img" src="https://cdn.jsdelivr.net/npm/simple-icons@11/icons/ibm.svg" alt="IBM">
-        <img class="logo-img" src="https://cdn.jsdelivr.net/npm/simple-icons@11/icons/cisco.svg" alt="Cisco">
-        <img class="logo-img" src="https://cdn.jsdelivr.net/npm/simple-icons@11/icons/nvidia.svg" alt="NVIDIA">
+        <!-- Duplicate logos for seamless loop -->
+        <img src="assets/images/2560px-Hikvision_logo.png" alt="Logo 1" class="logo-img">
+        <img src="assets/images/2560px-Hikvision_logo.png" alt="Logo 2" class="logo-img">
+        <img src="assets/images/2560px-Hikvision_logo.png" alt="Logo 3" class="logo-img">
+        <img src="assets/images/2560px-Hikvision_logo.png" alt="Logo 4" class="logo-img">
+        <img src="assets/images/2560px-Hikvision_logo.png" alt="Logo 5" class="logo-img">
       </div>
-      <!-- JS will clone .logo-track once for seamless looping -->
     </div>
-  </div>
+    </div>
 </section>
+<!-- Reference -->
+<section class="text-dark py-5 bg-light">
+  <div class="container">
+    <h2 class="">Osigurajte bilo koji prostor </h2>
 
-
-  <div class="clearfix"></div>
+    </div>
+</section>
 </main>
 <div class="clearfix"></div>
 <footer class="footer-wrap mt-5 footer-position">
@@ -322,24 +340,12 @@
                 <li><a href="#">Server &amp; mreže</a></li>
               </ul>
             </div>
-            <div class="col-12 col-sm-4">
-              <h6 class="text-white mb-3">Rešenja</h6>
-              <ul class="list-unstyled footer-links">
-                <li><a href="#">Integracije</a></li>
-                <li><a href="#">Po meri</a></li>
-                <li><a href="#">Konsalting</a></li>
-                <li><a href="#">Održavanje</a></li>
-                <li><a href="#">Podrška 24/7</a></li>
-              </ul>
-            </div>
-            <div class="col-12 col-sm-4">
+            <div class="col-12 col-sm-6">
               <h6 class="text-white mb-3">Kompanija</h6>
               <ul class="list-unstyled footer-links">
-                <li><a href="#">O nama</a></li>
-                <li><a href="#">Novosti</a></li>
-                <li><a href="#">Karijera</a></li>
-                <li><a href="#">Kontakt</a></li>
-                <li><a href="#">Politika privatnosti</a></li>
+                <li><a href="#"> Cara Dušana 150, Nova pazova</a></li>
+                <li><a href="#"> maximus.secure@gmail.com</a></li>
+                <li><a href="tel:+38162421515"> 062/42 15 15</a></li>
               </ul>
             </div>
           </div>
@@ -349,7 +355,7 @@
       <!-- Optional thin divider + bottom row -->
       <hr class="footer-sep my-4">
       <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-2">
-        <small class="text-secondary">© 2025 Maximus Security. Sva prava zadržana.</small>
+        <small class="text-secondary">© 2025 Maximus Security. </small>
         <small class="text-secondary">sajt test <span class="text-white">Maximus</span></small>
       </div><br>
     </div>
@@ -361,39 +367,5 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script>
-  // Restore scroll-based blur
-  (function(){
-    const nav = document.querySelector('.main-navbar');
-    const onScroll = () => {
-      if(window.scrollY > 10){ nav.classList.add('scrolled'); }
-      else{ nav.classList.remove('scrolled'); }
-    };
-    onScroll();
-    window.addEventListener('scroll', onScroll, {passive:true});
-  })();
-
-  // Speed up closing animation by toggling a 'closing' class
-  (function(){
-    const collapseEl = document.getElementById('mainNav');
-    if(!collapseEl) return;
-    collapseEl.addEventListener('hide.bs.collapse', () => {
-      collapseEl.classList.add('closing');
-    });
-    collapseEl.addEventListener('hidden.bs.collapse', () => {
-      collapseEl.classList.remove('closing');
-    });
-  })();
-
-  // Ensure dropdown toggle loses focus after closing to revert color immediately
-  (function(){
-    document.addEventListener('hidden.bs.dropdown', function(){
-      const el = document.activeElement;
-      if (el && el.classList && el.classList.contains('dropdown-toggle')) {
-        el.blur();
-      }
-    });
-  })();
-</script>
 </body>
 </html>
