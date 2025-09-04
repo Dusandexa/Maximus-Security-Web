@@ -61,7 +61,9 @@
         const cs = getComputedStyle(items[i]);
         shift += parseFloat(cs.marginLeft) + parseFloat(cs.marginRight);
       }
-      track.style.setProperty('--marquee-shift', `-${Math.round(shift)}px`);
+  // Preserve subpixel precision for perfectly seamless loop; add tiny epsilon to avoid subpixel accumulation issues
+  const epsilon = 0.0001;
+  track.style.setProperty('--marquee-shift', `${-(shift + epsilon)}px`);
     };
 
     // Run after images load; recalculates on resize/orientation changes

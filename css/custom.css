@@ -5,6 +5,9 @@
       --nav-text:#cccccc;
     }
 
+/* Prevent horizontal page scroll while allowing internal animations to move */
+html, body { overflow-x: hidden; }
+
     /* Layout: fixed wrapper (pre-nav + navbar) */
     #site-header{position:fixed;top:0;left:0;right:0;z-index:1030}
     body{padding-top:0;} /* was 94px */
@@ -744,6 +747,10 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
 .logos {
   display: inline-flex;
   will-change: transform;
+  backface-visibility: hidden;         /* reduce flicker on mobile */
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);             /* force GPU compositing */
+  -webkit-transform: translateZ(0);
   animation-name: marquee;              /* use variable-driven shift */
   animation-duration: 25s;              /* desktop default */
   animation-timing-function: linear;
@@ -766,21 +773,20 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
 
 /* Variable-driven marquee to allow exact pixel shift from JS */
 @keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(var(--marquee-shift, -50%)); }
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(var(--marquee-shift, -50%), 0, 0); }
 }
 
-/* Faster on tablets */
+/* Mobile: 50% slower than previous values (tablet/phone) */
 @media (max-width: 768px) {
   .logos {
-    animation-duration: 10s;
+    animation-duration: 15s; /* was 10s */
   }
 }
 
-/* Even faster on very small screens */
 @media (max-width: 480px) {
   .logos {
-    animation-duration: 5s;
+    animation-duration: 7.5s; /* was 5s */
   }
 }
 
