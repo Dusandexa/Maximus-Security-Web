@@ -301,7 +301,13 @@
   content:"";
   position:absolute;
   inset:0;
-  background: rgba(0,0,0,0.55); /* darken image */
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,1) 0%,
+    rgba(0,0,0,1) 5%,       /* was 20% */
+    rgba(0,0,0,0.55) 15%,
+    rgba(0,0,0,0.55) 100%
+  ); /* darken image */
   z-index: 1;                   /* above image, below content */
   pointer-events:none;
 }
