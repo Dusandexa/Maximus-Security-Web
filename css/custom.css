@@ -15,6 +15,9 @@
   color:#bdbdbd;
   font-size:.95rem;
   border-bottom:1px solid #1b1b1b;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-inline: 20px; /* logical shorthand */
 }
 .pre-nav-text{
   font-weight:500;
@@ -703,7 +706,7 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
   margin: 0 30px;               /* spacing between logos */
   filter: brightness(0) invert(1); /* force solid white */
   flex-shrink: 0;               /* prevent resizing */
-  opacity: 0.3;
+  opacity: 0.4;
 }
 
 /* Pause on hover */
@@ -747,3 +750,21 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
   padding-right: 2rem; /* ili koliko ti treba */
 }
 
+/* Safe side spacing for full-width navbar */
+.main-navbar{
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-inline: 20px; /* logical property */
+}
+.section-breathe{ padding-block: clamp(4rem, 8vw, 10rem); }
+
+.reference-section{
+background: #380007;
+background: -webkit-linear-gradient(0deg,rgba(56, 0, 7, 1) 0%, rgba(0, 0, 0, 1) 55%);
+background: -moz-linear-gradient(0deg,rgba(56, 0, 7, 1) 0%, rgba(0, 0, 0, 1) 55%);
+background: linear-gradient(0deg,rgba(56, 0, 7, 1) 0%, rgba(0, 0, 0, 1) 55%);
+filter: progid:DXImageTransform.Microsoft.gradient(
+  startColorstr="#380007",
+  endColorstr="#000000",
+  GradientType=0
+);
