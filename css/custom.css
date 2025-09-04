@@ -745,6 +745,10 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
   position: relative;             /* isolate painting */
   isolation: isolate;
   contain: layout paint;          /* confine layout/paint to this element */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);       /* create own layer */
+  -webkit-transform: translateZ(0);
 }
 
 .logos {
@@ -754,6 +758,8 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
   -webkit-backface-visibility: hidden;
   transform: translateZ(0);             /* force GPU compositing */
   -webkit-transform: translateZ(0);
+  transform-style: preserve-3d;         /* keep 3D context */
+  contain: paint;                        /* confine painting */
   animation-name: marquee;              /* use variable-driven shift */
   animation-duration: 25s;              /* desktop default */
   animation-timing-function: linear;
@@ -767,6 +773,10 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
   filter: brightness(0) invert(1); /* force solid white */
   flex-shrink: 0;               /* prevent resizing */
   opacity: 0.4;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 
 /* Pause on hover */
@@ -783,13 +793,13 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
 /* Mobile: 50% slower than previous values (tablet/phone) */
 @media (max-width: 768px) {
   .logos {
-  animation-duration: 40s; /* slower */
+  animation-duration: 56s; /* 40% slower than 40s */
   }
 }
 
 @media (max-width: 480px) {
   .logos {
-  animation-duration: 25s; /* slower */
+  animation-duration: 35s; /* 40% slower than 25s */
   }
 }
 
