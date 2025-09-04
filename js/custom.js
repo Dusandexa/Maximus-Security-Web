@@ -45,24 +45,12 @@
     if(!slider || !track) return;
 
     const computeShift = () => {
-      // The markup duplicates the logos once; shift should equal width of the first half
-      // We take half of the track children as the first set
-      const items = Array.from(track.children);
-      if(items.length < 2) return;
-      const half = Math.floor(items.length / 2);
-      let shift = 0;
-      for(let i=0;i<half;i++){
-        shift += items[i].getBoundingClientRect().width;
-      }
-      // Include margins via computed style
-      // getBoundingClientRect already includes margins in layout? It doesn't, so add horizontal margins
-      // Sum margins explicitly
-      for(let i=0;i<half;i++){
-        const cs = getComputedStyle(items[i]);
-        shift += parseFloat(cs.marginLeft) + parseFloat(cs.marginRight);
-      }
-  // Preserve subpixel precision for perfectly seamless loop without rounding
-  track.style.setProperty('--marquee-shift', `${-shift}px`);
+      // Duplicate content is appended once; the shift equals exactly half the full track width
+      // Using scrollWidth captures the true layout width with margins inside flex
+      const fullWidth = track.scrollWidth; // width of both sets together
+      if(!fullWidth) return;
+      const halfWidth = fullWidth / 2;
+      track.style.setProperty('--marquee-shift', `${-halfWidth}px`);
     };
 
     // Run after images load; recalculates on resize/orientation changes

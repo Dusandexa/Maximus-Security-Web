@@ -744,7 +744,7 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
   white-space: nowrap;
   position: relative;             /* isolate painting */
   isolation: isolate;
-  contain: layout paint;          /* confine layout/paint to this element */
+  /* contain removed to prevent mobile jumping */
 }
 
 .logos {
