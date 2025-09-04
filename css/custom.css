@@ -231,11 +231,13 @@
 
       /* Make the hamburger panel scrollable and contain scroll chaining */
       .main-navbar .navbar-collapse{
-        max-height: calc(100vh - 80px); /* viewport minus top logo/spacing (~120-40) */
+        height: auto;                   /* let it size naturally */
+        max-height: calc(100dvh - 80px);/* viewport minus logo gap (matches padding-top 80px) */
         overflow-y: auto;
         overflow-x: hidden;
         -webkit-overflow-scrolling: touch;
-        overscroll-behavior: contain; /* prevent background scroll when reaching ends */
+        overscroll-behavior: contain;   /* prevent background scroll when reaching ends */
+        padding-bottom: max(env(safe-area-inset-bottom, 0px), 16px); /* reach last items above iOS bar */
       }
       /* Hide visible scrollbars but keep scroll functional */
       .main-navbar .navbar-collapse{
@@ -281,18 +283,14 @@
   box-sizing: border-box;         /* avoid right-edge overflow within padded nav */
       }
       .main-navbar .navbar-nav .dropdown-menu.show{
-        max-height: 60vh;               /* enough to show items */
+        /* Expand fully and let the parent collapse container handle scrolling */
+        max-height: none;
         opacity: 1;
         visibility: visible;
-  /* allow internal scroll if submenu list is very long */
-  overflow-y: auto;
+        overflow: visible;
+        padding-bottom: 12px; /* keep last item above bottom edge */
       }
-      /* Hide scrollbars for long dropdowns inside hamburger */
-      .main-navbar .navbar-nav .dropdown-menu.show{
-        -ms-overflow-style: none;  /* IE/Edge */
-        scrollbar-width: none;     /* Firefox */
-      }
-      .main-navbar .navbar-nav .dropdown-menu.show::-webkit-scrollbar{ display: none; } /* Chrome/Safari */
+  /* No inner scrollbar for dropdowns (we scroll the whole panel) */
 
       /* Dividers between main tabs (top-level items) only in hamburger menu */
       .main-navbar .navbar-collapse .navbar-nav > .nav-item + .nav-item{
