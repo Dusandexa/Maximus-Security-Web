@@ -15,9 +15,16 @@
     if(!collapseEl) return;
     collapseEl.addEventListener('hide.bs.collapse', () => {
       collapseEl.classList.add('closing');
+      document.body.classList.remove('nav-open');
     });
     collapseEl.addEventListener('hidden.bs.collapse', () => {
       collapseEl.classList.remove('closing');
+    });
+    collapseEl.addEventListener('show.bs.collapse', () => {
+      document.body.classList.add('nav-open');
+    });
+    collapseEl.addEventListener('shown.bs.collapse', () => {
+      document.body.classList.add('nav-open');
     });
   })();
 

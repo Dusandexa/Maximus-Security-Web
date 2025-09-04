@@ -226,7 +226,23 @@
       .main-navbar .navbar-collapse.collapsing,
       .main-navbar .navbar-collapse.show{
         padding-top: calc(120px + -40px); /* was 82px; align under larger logo */
+        /* When open, this area should scroll independently on small screens */
       }
+
+      /* Make the hamburger panel scrollable and contain scroll chaining */
+      .main-navbar .navbar-collapse{
+        max-height: calc(100vh - 80px); /* viewport minus top logo/spacing (~120-40) */
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain; /* prevent background scroll when reaching ends */
+      }
+      /* Hide visible scrollbars but keep scroll functional */
+      .main-navbar .navbar-collapse{
+        -ms-overflow-style: none;  /* IE/Edge */
+        scrollbar-width: none;     /* Firefox */
+      }
+      .main-navbar .navbar-collapse::-webkit-scrollbar{ display: none; } /* Chrome/Safari */
 
       /* ensure hero sits behind fixed header on mobile/tablet */
       .hero{
@@ -255,19 +271,28 @@
       .main-navbar .navbar-nav .dropdown-menu{
         position: static;               /* stack within flow */
         display: block !important;      /* keep for animation */
-        overflow: hidden;               /* hide contents while collapsed */
+  overflow: hidden;               /* hide contents while collapsed */
         max-height: 0;                  /* no height when hidden */
         opacity: 0;
         visibility: hidden;
         margin-top: 0;
         transform: none;                /* no slide on mobile, use height instead */
         transition: max-height .2s ease, opacity .18s ease;
+  box-sizing: border-box;         /* avoid right-edge overflow within padded nav */
       }
       .main-navbar .navbar-nav .dropdown-menu.show{
         max-height: 60vh;               /* enough to show items */
         opacity: 1;
         visibility: visible;
+  /* allow internal scroll if submenu list is very long */
+  overflow-y: auto;
       }
+      /* Hide scrollbars for long dropdowns inside hamburger */
+      .main-navbar .navbar-nav .dropdown-menu.show{
+        -ms-overflow-style: none;  /* IE/Edge */
+        scrollbar-width: none;     /* Firefox */
+      }
+      .main-navbar .navbar-nav .dropdown-menu.show::-webkit-scrollbar{ display: none; } /* Chrome/Safari */
 
       /* Dividers between main tabs (top-level items) only in hamburger menu */
       .main-navbar .navbar-collapse .navbar-nav > .nav-item + .nav-item{
@@ -762,6 +787,9 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
   padding-right: 20px;
   padding-inline: 20px; /* logical property */
 }
+
+/* When the nav is open, lock background scroll */
+body.nav-open{ overflow: hidden; }
 .section-breathe{ padding-block: clamp(4rem, 8vw, 10rem); }
 
 .reference-section{
