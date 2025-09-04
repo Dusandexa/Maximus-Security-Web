@@ -742,6 +742,9 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
 .slider {
   overflow: hidden;
   white-space: nowrap;
+  position: relative;             /* isolate painting */
+  isolation: isolate;
+  contain: layout paint;          /* confine layout/paint to this element */
 }
 
 .logos {
@@ -780,13 +783,13 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
 /* Mobile: 50% slower than previous values (tablet/phone) */
 @media (max-width: 768px) {
   .logos {
-    animation-duration: 15s; /* was 10s */
+  animation-duration: 40s; /* slower */
   }
 }
 
 @media (max-width: 480px) {
   .logos {
-    animation-duration: 7.5s; /* was 5s */
+  animation-duration: 25s; /* slower */
   }
 }
 
