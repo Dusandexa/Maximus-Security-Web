@@ -598,12 +598,17 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
   }
 
   /* Caret/chevron for submenu toggles inside the menu (optional) */
-  .dropdown-menu .dropdown-toggle::after{
-    content: "+";
-    float: right;
-    transform: none !important;
-    opacity: .8;
-  }
+.dropdown-menu .dropdown-toggle::after {
+  content: "+";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: .5rem;   /* razmak od teksta */
+  font-size: 1rem;
+  line-height: 1;
+  opacity: .8;
+  float: none;          /* ukini float */
+}
 }
 /* Collapse (below xl): make items full-width and left-aligned */
 @media (max-width: 1199.98px){
@@ -728,3 +733,17 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
     animation-duration: 5s;
   }
 }
+/* Samo top-level linkovi bez dropdowna -> nema underline-a */
+.main-navbar .navbar-nav > .nav-item > .nav-link:not(.dropdown-toggle)::after{
+  content: none !important;
+}
+.main-navbar .navbar-nav > .nav-item > .nav-link:not(.dropdown-toggle):hover::after,
+.main-navbar .navbar-nav > .nav-item > .nav-link:not(.dropdown-toggle):focus::after{
+  content: none !important;
+}
+
+/* Samo top-level linkovi koji nisu dropdown toggle */
+.main-navbar .navbar-nav > .nav-item > .nav-link:not(.dropdown-toggle) {
+  padding-right: 2rem; /* ili koliko ti treba */
+}
+
