@@ -787,7 +787,6 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
 }
 
 /* When the nav is open, lock background scroll */
-body.nav-open{ overflow: hidden; }
 .section-breathe{ padding-block: clamp(4rem, 8vw, 10rem); }
 
 .reference-section{
@@ -804,4 +803,19 @@ filter: progid:DXImageTransform.Microsoft.gradient(
 .alarmni-bg{
 background: #2b2b2b;
 background: radial-gradient(circle,rgba(43, 43, 43, 1) 0%, rgba(0, 0, 0, 1) 55%);
+}
+/* Mobile fix: ensure dropdown menus scroll within navbar-collapse */
+@media (max-width: 1199.98px) {
+  .main-navbar .navbar-nav .dropdown-menu.show {
+    max-height: none;
+    overflow: visible;
+    padding-bottom: 12px;
+  }
+
+  /* Let the parent collapse container scroll all content */
+  .main-navbar .navbar-collapse {
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
 }
