@@ -36,6 +36,7 @@
   background:transparent;
   line-height:1.2;
   white-space:nowrap;
+  text-decoration: none;              /* anchor default override */
 }
 .pre-nav .phone .bi{
   font-size:1rem;
@@ -44,9 +45,15 @@
   display:inline-block;
   transform: translateY(1px);
 }
-.pre-nav .phone:hover{
-  background:rgba(192,38,50,.12);
+.pre-nav .phone:hover,
+.pre-nav .phone:active{
+  background: var(--brand-red);
+  color: #fff;
   text-decoration:none;
+}
+.pre-nav .phone:hover .bi,
+.pre-nav .phone:active .bi{
+  color:#fff;                          /* icon turns white on hover/click */
 }
 
 
@@ -123,7 +130,7 @@
     /* Keep white only when dropdown is open */
     .navbar .dropdown.show > .dropdown-toggle,
     .navbar .dropdown-toggle[aria-expanded="true"]{
-      color:#ffffff;
+      color:white; 
     }
 
     /* Ensure caret has no background */
@@ -665,7 +672,7 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
     display: block;
     width: 100%;
     text-align: left !important;
-    padding: .85rem 1rem;
+  padding: .85rem 1rem .85rem 1rem; /* no bottom padding for tighter spacing with dividers */
   }
 
   /* Dropdowns inside the collapsed menu: inline & full width */
@@ -676,17 +683,27 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
     margin: 0 !important;
     border: 0;
     border-radius: 0;
-    box-shadow: none;
+  box-shadow: none;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important; /* remove inner padding so hr spacing is consistent */
   }
 
   /* Dividers: full width */
   .main-navbar .navbar-collapse hr,
   .main-navbar .navbar-nav .dropdown-divider{
     width: 100% !important;
-    margin: .25rem 0 !important;
+    margin: .35rem 0 !important; /* uniform spacing above/below all separators */
     border: 0;
     border-top: 1px solid rgba(255,255,255,.18);
     opacity: 1;
+  }
+
+  /* Inside dropdowns: remove bottom padding on link rows for even rhythm with hr */
+  .main-navbar .navbar-nav .dropdown-menu .dropdown-item{
+    padding-top: .75rem;
+    padding-bottom: .75rem; /* requested: 0px bottom padding */
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   /* Optional: small separators between top-level items */
@@ -726,7 +743,11 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
 
 .logos {
   display: inline-flex;
-  animation: slidein 25s linear infinite; /* desktop default */
+  will-change: transform;
+  animation-name: marquee;              /* use variable-driven shift */
+  animation-duration: 25s;              /* desktop default */
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
 
 .logo-img {
@@ -743,13 +764,10 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
   animation-play-state: paused;
 }
 
-@keyframes slidein {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
+/* Variable-driven marquee to allow exact pixel shift from JS */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(var(--marquee-shift, -50%)); }
 }
 
 /* Faster on tablets */
@@ -764,6 +782,27 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endC
   .logos {
     animation-duration: 5s;
   }
+}
+
+/* Mobile-only scroll indicator under cards-overlap */
+.scroll-indicator{
+  display: none;                 /* hidden by default */
+  text-align: center;
+  color: rgba(255,255,255,.8);
+  font-size: 1.75rem;            /* large enough tap target */
+  line-height: 1;
+  margin-top: .25rem;
+  animation: bob 1.8s ease-in-out infinite;
+}
+/* Show only on small screens */
+@media (max-width: 575.98px){
+  .scroll-indicator{ display: block; }
+}
+
+@keyframes bob{
+  0%   { transform: translateY(0);   opacity: .85; }
+  50%  { transform: translateY(6px); opacity: 1; }
+  100% { transform: translateY(0);   opacity: .85; }
 }
 /* Samo top-level linkovi bez dropdowna -> nema underline-a */
 .main-navbar .navbar-nav > .nav-item > .nav-link:not(.dropdown-toggle)::after{
@@ -818,4 +857,30 @@ background: radial-gradient(circle,rgba(43, 43, 43, 1) 0%, rgba(0, 0, 0, 1) 55%)
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
   }
+}
+
+/* Remove blue tap highlight on mobile/touch */
+a, button, .nav-link, .dropdown-toggle, .navbar-toggler {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Touch-only: suppress default focus ring/box-shadows (keep keyboard :focus-visible) */
+@media (pointer: coarse) {
+  .nav-link:focus,
+  .dropdown-toggle:focus,
+  .navbar-toggler:focus,
+  .btn:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Keep an accessible focus style for keyboard users */
+.nav-link:focus-visible,
+.dropdown-toggle:focus-visible,
+.navbar-toggler:focus-visible,
+.btn:focus-visible {
+  outline: 2px solid var(--brand-red);
+  outline-offset: 2px;
+  box-shadow: none; /* override your toggler’s focus shadow on keyboard if you prefer */
 }
