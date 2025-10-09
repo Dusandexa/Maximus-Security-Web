@@ -155,14 +155,15 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    // Mobile: first tap opens, second tap navigates
+    // Mobile: ALWAYS open dropdown on first tap, let user choose the "Pregled" link
     if (!expanded) {
-      e.preventDefault(); // let Bootstrap open it
-    } else {
-      e.preventDefault();
-      e.stopImmediatePropagation();
-      window.location.assign(href);
+      e.preventDefault(); // let Bootstrap open the dropdown
+      return;
     }
+    
+    // If already expanded and user taps toggle again, keep it open (don't navigate)
+    // User must tap the "Pregled (Parent)" link inside to navigate
+    e.preventDefault();
   }
   
   // Capture phase so we run before Bootstrap prevents default
