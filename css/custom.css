@@ -893,3 +893,27 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler {
   outline-offset: 2px;
   box-shadow: none; /* override your toggler’s focus shadow on keyboard if you prefer */
 }
+
+/* Desktop hover behavior & submenu positioning */
+@media (min-width: 1200px) and (hover: hover) and (pointer: fine) {
+  .main-navbar .dropdown-menu { display: none; }
+  .main-navbar .dropdown.show > .dropdown-menu,
+  .main-navbar .dropend.show > .dropdown-menu { display: block; }
+
+  .main-navbar .dropend { position: relative; }
+  .main-navbar .dropend > .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-left: .15rem;
+  }
+}
+
+/* Optional: + / – icon on items that have a submenu
+   Show “+” by default, “–” when open (.show) or aria-expanded=true */
+.main-navbar .dropdown-toggle::after {
+  /* keep Bootstrap caret if you want; or hide it and use +/– */
+  /* display: none; */
+}
+.main-navbar .dropdown-toggle .pm-icon::after { content: "+"; margin-left: .35rem; }
+.main-navbar .show > .dropdown-toggle .pm-icon::after,
+.main-navbar .dropdown-toggle[aria-expanded="true"] .pm-icon::after { content: "–"; }
