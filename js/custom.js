@@ -142,28 +142,63 @@ document.addEventListener('DOMContentLoaded', function () {
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
 
     const href = a.getAttribute('href');
-    if (!href || href === '#' || href.startsWith('javascript:')) return;
-
     const isDesktop = mqDesktop.matches;
     const expanded  = a.getAttribute('aria-expanded') === 'true';
+    
+    // Check if this is a nested dropdown (dropend)
+    const isNested = a.closest('.dropend') !== null;
 
     if (isDesktop) {
       // Desktop: hover handles opening; click should navigate
+      if (!href || href === '#' || href.startsWith('javascript:')) return;
       e.preventDefault();
       e.stopImmediatePropagation();
       window.location.assign(href);
       return;
     }
 
-    // Mobile: ALWAYS open dropdown on first tap, let user choose the "Pregled" link
-    if (!expanded) {
-      e.preventDefault(); // let Bootstrap open the dropdown
-      return;
+ // Mobile behavior
+if (isNested) {
+  e.preventDefault();
+  e.stopPropagation();
+
+  const parent = a.closest('.dropend');
+  const menu   = parent.querySelector(':scope > .dropdown-menu');
+
+  // Close open siblings inside the same dropdown-menu
+  const containerMenu = parent.parentElement; // UL.dropdown-menu
+  containerMenu.querySelectorAll(':scope > .dropend.show').forEach(sib => {
+    if (sib !== parent) {
+      const sibToggle = sib.querySelector(':scope > .dropdown-toggle');
+      const sibMenu   = sib.querySelector(':scope > .dropdown-menu');
+      sib.classList.remove('show');
+      if (sibToggle) sibToggle.setAttribute('aria-expanded', 'false');
+      if (sibMenu)   sibMenu.classList.remove('show');
     }
-    
-    // If already expanded and user taps toggle again, keep it open (don't navigate)
-    // User must tap the "Pregled (Parent)" link inside to navigate
-    e.preventDefault();
+  });
+
+  // Toggle current submenu
+  const expanded = a.getAttribute('aria-expanded') === 'true';
+  if (expanded) {
+    parent.classList.remove('show');
+    a.setAttribute('aria-expanded', 'false');
+    menu.classList.remove('show');
+  } else {
+    parent.classList.add('show');
+    a.setAttribute('aria-expanded', 'true');
+    menu.classList.add('show');
+  }
+  return;
+} else {
+      // For top-level dropdowns with real URLs
+      if (href && href !== '#' && !href.startsWith('javascript:')) {
+        if (expanded) {
+          // Already open, prevent navigation
+          e.preventDefault();
+        }
+        // Otherwise let Bootstrap handle it
+      }
+    }
   }
   
   // Capture phase so we run before Bootstrap prevents default

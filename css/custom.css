@@ -139,7 +139,11 @@ html, body { overflow-x: hidden; }
     /* Ensure caret has no background */
     .navbar .dropdown-toggle::after{ background:none !important; }
 
-    /* Replace caret with + / − and center vertically */
+/* =========================================
+   NAVBAR: + / − indicators (desktop & mobile)
+   ========================================= */
+
+/* Default: show "+" on every dropdown toggle */
 .navbar .dropdown-toggle::after{
   background: none !important;
   content: "+";
@@ -151,18 +155,70 @@ html, body { overflow-x: hidden; }
   margin-left: 0 !important;
   font-size: 1rem;
   line-height: 1;
-  vertical-align: middle;      /* center with text */
+  vertical-align: middle;
   border: 0 !important;
   opacity: .8;
-  transform: none !important;  /* override any rotations */
+  transform: none !important;
   transition: opacity .2s ease;
 }
-.navbar .dropdown.show .dropdown-toggle::after,
+
+/* Only the actually open item shows "−" */
+.navbar .dropdown.show > .dropdown-toggle::after,
+.navbar .dropend.show  > .dropdown-toggle::after,
 .navbar .dropdown-toggle[aria-expanded="true"]::after{
-  content: "−";                /* minus when open */
+  content: "−";
   opacity: 1;
-  transform: none !important;  /* ensure no rotation */
 }
+
+/* Submenu toggles inside dropdowns also use +/− correctly */
+.dropdown-menu .dropend > .dropdown-toggle::after { content: "+"; opacity: .8; }
+.dropdown-menu .dropend.show > .dropdown-toggle::after,
+.dropdown-menu .dropend > .dropdown-toggle[aria-expanded="true"]::after { content: "−"; opacity: 1; }
+
+/* IMPORTANT: remove any caret-rotation rules you still have.
+   If you see rules rotating .dropdown-toggle::after 180deg, delete them. */
+
+
+/* =========================================
+   MOBILE (≤1199.98px): nested submenu animation
+   ========================================= */
+@media (max-width: 1199.98px) {
+  /* Default: nested submenus are visually hidden but kept in flow for smooth height animation */
+  .main-navbar .navbar-nav .dropend > .dropdown-menu {
+    position: static !important;
+    display: block !important;   /* needed for stacking and height animation */
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    padding: 0;                  /* avoid ghost spacing when closed */
+    transition: max-height .2s ease, opacity .18s ease;
+  }
+
+  /* When a sub-parent is open, reveal its submenu */
+  .main-navbar .navbar-nav .dropend.show > .dropdown-menu {
+    max-height: 999px;           /* effectively 'auto' with animation */
+    opacity: 1;
+    visibility: visible;
+    overflow: visible;
+    padding-bottom: 12px;
+  }
+}
+
+
+/* Remove any old rules that rotate ::after. They conflict with +/−. */
+
+/* Submenu (inside dropdown) keeps “+” until IT opens */
+.dropdown-menu .dropend > .dropdown-toggle::after { content: "+"; opacity: .8; }
+.dropdown-menu .dropend.show > .dropdown-toggle::after,
+.dropdown-menu .dropend > .dropdown-toggle[aria-expanded="true"]::after { content: "−"; opacity: 1; }
+
+/* REMOVE the old rotate caret rules, they conflict with +/−
+   (delete any block that rotates ::after 180deg) */
+
 
 /* Remove/override older rotate rules if present */
 /* .navbar .dropdown-toggle::after{ transition: transform .2s ease; opacity:.6; }
@@ -170,14 +226,14 @@ html, body { overflow-x: hidden; }
    .navbar .dropdown-toggle[aria-expanded="true"]::after{ transform: rotate(180deg); } */
 
     /* Smooth rotate for caret: down (default) -> up (open) */
-    .navbar .dropdown-toggle::after{
+    /* .navbar .dropdown-toggle::after{
       transition: transform .2s ease;
       opacity: 0.6; /* 60% transparent caret */
-    }
-    .navbar .dropdown.show .dropdown-toggle::after,
+    
+    /* .navbar .dropdown.show .dropdown-toggle::after,
     .navbar .dropdown-toggle[aria-expanded="true"]::after{
       transform: rotate(180deg);
-    }
+    } */ 
 
     /* Apply underline only to non-dropdown links */
     .navbar .nav-link:hover:not(.dropdown-toggle)::after,
@@ -853,20 +909,31 @@ background: #2b2b2b;
 background: radial-gradient(circle,rgba(43, 43, 43, 1) 0%, rgba(0, 0, 0, 1) 55%);
 }
 /* Mobile fix: ensure dropdown menus scroll within navbar-collapse */
+/* Nested submenus stay closed until their parent .dropend is opened */
 @media (max-width: 1199.98px) {
-  .main-navbar .navbar-nav .dropdown-menu.show {
-    max-height: none;
+  .main-navbar .navbar-nav .dropend > .dropdown-menu {
+    position: static !important;
+    display: block !important;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    transition: max-height .2s ease, opacity .18s ease;
+  }
+  .main-navbar .navbar-nav .dropend.show > .dropdown-menu {
+    max-height: 999px;
+    opacity: 1;
+    visibility: visible;
     overflow: visible;
     padding-bottom: 12px;
   }
-
-  /* Let the parent collapse container scroll all content */
-  .main-navbar .navbar-collapse {
-    overflow-y: auto !important;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
-  }
 }
+
+
 
 /* Remove blue tap highlight on mobile/touch */
 a, button, .nav-link, .dropdown-toggle, .navbar-toggler {
