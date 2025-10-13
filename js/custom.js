@@ -1,3 +1,4 @@
+
 // Restore scroll-based blur
 (function(){
   const nav = document.querySelector('.main-navbar');
@@ -60,20 +61,17 @@
   window.addEventListener('orientationchange', computeShift);
 })();
 
-// Main dropdown navigation logic
+// ---------- Main dropdown navigation logic ----------
 document.addEventListener('DOMContentLoaded', function () {
   const mqDesktop = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 1200px)');
 
-  /* ---------- A) Desktop hover binder: add/remove .show ---------- */
   function show(li) {
     const toggle = li.querySelector(':scope > .dropdown-toggle');
     const menu   = li.querySelector(':scope > .dropdown-menu');
     if (!toggle || !menu) return;
-
     // close open siblings at the same level
-    const sibs = li.parentElement?.querySelectorAll(':scope > .dropdown.show, :scope > .dropend.show');
+    const sibs = li.parentElement?.querySelectorAll(':scope > .dropdown.show, :scope > .dropend.show, :scope > li.show');
     sibs && sibs.forEach(s => { if (s !== li) hide(s); });
-
     li.classList.add('show');
     toggle.setAttribute('aria-expanded', 'true');
     menu.classList.add('show');
@@ -83,11 +81,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const toggle = li.querySelector(':scope > .dropdown-toggle');
     const menu   = li.querySelector(':scope > .dropdown-menu');
     if (!toggle || !menu) return;
-    
     // Also hide any open children
-    const children = li.querySelectorAll('.dropdown.show, .dropend.show');
+    const children = li.querySelectorAll('.dropdown.show, .dropend.show, li.show');
     children.forEach(child => hide(child));
-    
     li.classList.remove('show');
     toggle.setAttribute('aria-expanded', 'false');
     menu.classList.remove('show');
@@ -117,21 +113,30 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   
   function unbindHover() {
-    document.querySelectorAll('.main-navbar .dropdown.show, .main-navbar .dropend.show').forEach(hide);
+    document.querySelectorAll('.main-navbar .dropdown.show, .main-navbar .dropend.show, .main-navbar li.show').forEach(hide);
     document.removeEventListener('keydown', onEscClose);
   }
   
   function onEscClose(e) {
     if (e.key === 'Escape') {
-      document.querySelectorAll('.main-navbar .dropdown.show, .main-navbar .dropend.show').forEach(hide);
+      document.querySelectorAll('.main-navbar .dropdown.show, .main-navbar .dropend.show, .main-navbar li.show').forEach(hide);
     }
   }
 
-  /* ---------- B) Keep parent/sub-parent links navigable ---------- */
+  // -------- Click handling (mobile & accessibility) --------
   function getToggleAnchorFromEvent(e) {
     let el = e.target;
     if (el && el.nodeType !== 1) el = el.parentElement;
     return el ? el.closest('.main-navbar a.dropdown-toggle') : null;
+  }
+
+  function findSubmenuElementsFromToggle(a){
+    // Works for .dropend structure and generic li > a + .dropdown-menu
+    const li = a.closest('.dropend, .dropdown, li') || a.parentElement;
+    const menu = a.nextElementSibling && a.nextElementSibling.classList.contains('dropdown-menu')
+      ? a.nextElementSibling
+      : li ? li.querySelector(':scope > .dropdown-menu') : null;
+    return { li, menu };
   }
   
   function onToggleClick(e) {
@@ -141,15 +146,12 @@ document.addEventListener('DOMContentLoaded', function () {
     // allow new-tab / modified clicks
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
 
-    const href = a.getAttribute('href');
+    const href = a.getAttribute('href') || '';
     const isDesktop = mqDesktop.matches;
-    const expanded  = a.getAttribute('aria-expanded') === 'true';
-    
-    // Check if this is a nested dropdown (dropend)
-    const isNested = a.closest('.dropend') !== null;
+    const insideDropdownMenu = !!a.closest('.dropdown-menu'); // robust nested check
 
     if (isDesktop) {
-      // Desktop: hover handles opening; click should navigate
+      // Desktop: hover handles opening; click should navigate if it has an URL
       if (!href || href === '#' || href.startsWith('javascript:')) return;
       e.preventDefault();
       e.stopImmediatePropagation();
@@ -157,46 +159,52 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
- // Mobile behavior
-if (isNested) {
-  e.preventDefault();
-  e.stopPropagation();
+    // ---- MOBILE BEHAVIOR ----
+    if (insideDropdownMenu) {
+      // Nested submenu toggle
+      e.preventDefault();
+      e.stopPropagation();
 
-  const parent = a.closest('.dropend');
-  const menu   = parent.querySelector(':scope > .dropdown-menu');
+      const { li, menu } = findSubmenuElementsFromToggle(a);
+      if (!li || !menu) return;
 
-  // Close open siblings inside the same dropdown-menu
-  const containerMenu = parent.parentElement; // UL.dropdown-menu
-  containerMenu.querySelectorAll(':scope > .dropend.show').forEach(sib => {
-    if (sib !== parent) {
-      const sibToggle = sib.querySelector(':scope > .dropdown-toggle');
-      const sibMenu   = sib.querySelector(':scope > .dropdown-menu');
-      sib.classList.remove('show');
-      if (sibToggle) sibToggle.setAttribute('aria-expanded', 'false');
-      if (sibMenu)   sibMenu.classList.remove('show');
-    }
-  });
+      // Close open siblings at the same level
+      const containerMenu = li.parentElement; // UL.dropdown-menu
+      if (containerMenu) {
+        containerMenu.querySelectorAll(':scope > .dropend.show, :scope > li.show').forEach(sib => {
+          if (sib !== li) {
+            const sibToggle = sib.querySelector(':scope > .dropdown-toggle');
+            const sibMenu   = sib.querySelector(':scope > .dropdown-menu');
+            sib.classList.remove('show');
+            if (sibToggle) sibToggle.setAttribute('aria-expanded', 'false');
+            if (sibMenu)   sibMenu.classList.remove('show');
+          }
+        });
+      }
 
-  // Toggle current submenu
-  const expanded = a.getAttribute('aria-expanded') === 'true';
-  if (expanded) {
-    parent.classList.remove('show');
-    a.setAttribute('aria-expanded', 'false');
-    menu.classList.remove('show');
-  } else {
-    parent.classList.add('show');
-    a.setAttribute('aria-expanded', 'true');
-    menu.classList.add('show');
-  }
-  return;
-} else {
-      // For top-level dropdowns with real URLs
+      // Toggle current submenu
+      const isOpen = li.classList.contains('show');
+      if (isOpen) {
+        li.classList.remove('show');
+        a.setAttribute('aria-expanded', 'false');
+        menu.classList.remove('show');
+      } else {
+        li.classList.add('show');
+        a.setAttribute('aria-expanded', 'true');
+        menu.classList.add('show');
+      }
+      return;
+    } else {
+      // Top-level dropdown in hamburger: let Bootstrap manage open/close,
+      // but prevent immediate navigation when it's already open (second tap should navigate).
       if (href && href !== '#' && !href.startsWith('javascript:')) {
+        const expanded  = a.getAttribute('aria-expanded') === 'true';
         if (expanded) {
-          // Already open, prevent navigation
+          // Already open -> prevent navigation on the same tap
           e.preventDefault();
-        }
-        // Otherwise let Bootstrap handle it
+        } // else allow Bootstrap to open it
+      } else {
+        // No real URL: just let Bootstrap toggle it
       }
     }
   }
@@ -207,7 +215,7 @@ if (isNested) {
     if (a) onToggleClick(e);
   }, true);
 
-  /* ---------- C) Disable Bootstrap's click toggle on desktop; restore on mobile ---------- */
+  // Disable Bootstrap's click toggle on desktop; restore on mobile
   function applyToggleAttrPolicy() {
     document.querySelectorAll('.main-navbar a.dropdown-toggle').forEach(a => {
       if (mqDesktop.matches) {
@@ -227,7 +235,6 @@ if (isNested) {
     });
   }
 
-  /* ---------- D) Orchestrate on breakpoint changes ---------- */
   function applyMode() {
     if (mqDesktop.matches) {
       applyToggleAttrPolicy();
