@@ -561,3 +561,14 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-
   outline-offset: 2px;
   box-shadow: none;
 }
+@media (min-width: 1200px) {
+  /* make sure the anchor li is the positioning context */
+  .main-navbar .navbar-nav > .nav-item { position: relative; }
+
+  /* emulate .dropdown-menu-end when Popper is disabled */
+  .main-navbar .navbar-nav > .nav-item .dropdown-menu-end {
+    right: 0;
+    left: auto;
+    margin-right: 0; /* optional: remove any inherited offset */
+  }
+}
