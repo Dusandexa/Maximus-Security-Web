@@ -1,3 +1,4 @@
+
 :root{
       --brand-red:#c02632;
       --pre-nav-bg:#0d0d0d;
@@ -8,12 +9,12 @@
 /* Prevent horizontal page scroll while allowing internal animations to move */
 html, body { overflow-x: hidden; }
 
-    /* Layout: fixed wrapper (pre-nav + navbar) */
-    #site-header{position:fixed;top:0;left:0;right:0;z-index:1030}
-    body{padding-top:0;} /* was 94px */
+/* Layout: fixed wrapper (pre-nav + navbar) */
+#site-header{position:fixed;top:0;left:0;right:0;z-index:1030}
+body{padding-top:0;} /* was 94px */
 
-    /* Pre-nav */
-    .pre-nav{
+/* Pre-nav */
+.pre-nav{
   background:#0d0d0d;
   color:#bdbdbd;
   font-size:.95rem;
@@ -59,85 +60,71 @@ html, body { overflow-x: hidden; }
   color:#fff;                          /* icon turns white on hover/click */
 }
 
+/* Main navbar */
+.main-navbar{
+  background: rgba(17,17,17,0.90);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition:background .25s ease, backdrop-filter .25s ease, box-shadow .25s ease;
+  border-bottom:0;
+  position:relative;
+}
+.main-navbar::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:0;
+  height:1px;
+  transform: scaleY(.8);
+  transform-origin: bottom;
+  background:linear-gradient(90deg,#2a0505 0%,#6e0e0e 4%,#b91111 7%,#b91111 14%,#6e0e0e 72%,#2a0505 100%);
+  pointer-events:none;
+}
+.main-navbar.scrolled{
+  background: rgba(17,17,17,0.90);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow:0 8px 24px rgba(0,0,0,.35);
+}
+.main-navbar.scrolled::after{ transform:scaleY(1); }
 
-    /* Main navbar */
-    .main-navbar{
-      background: rgba(17,17,17,0.90); /* was 0.9; darker but clearly transparent */
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      transition:background .25s ease, backdrop-filter .25s ease, box-shadow .25s ease;
-      border-bottom:0;
-      position:relative;
-    }
-    .main-navbar::after{
-      content:"";
-      position:absolute;
-      left:0; right:0; bottom:0;
-      height:1px;
-      transform: scaleY(.8);
-      transform-origin: bottom;
-      background:linear-gradient(90deg,
-        #2a0505 0%,
-        #6e0e0e 4%,
-        #b91111 7%,
-        #b91111 14%,
-        #6e0e0e 72%,
-        #2a0505 100%
-      );
-      pointer-events:none;
-    }
-    .main-navbar.scrolled{
-      background: rgba(17,17,17,0.90); /* match base transparency */
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      box-shadow:0 8px 24px rgba(0,0,0,.35);
-    }
-    .main-navbar.scrolled::after{
-      transform:scaleY(1);
-    }
+/* Brand */
+.navbar-brand{ display:flex; align-items:center; gap:.5rem; }
+.brand-img{
+  height:120px;
+  position:absolute;
+  top:10px;
+  z-index:2;
+}
 
-    /* Brand: logo larger & sticking out of nav bottom */
-    .navbar-brand{
-      display:flex; align-items:center; gap:.5rem;
-    }
-    .brand-img{
-      height:120px;             /* a bit taller than the bar */
-      position:absolute;
-      top:10px;                /* pushes it down to “stick out” */
-      z-index:2;
-    }
+/* Links */
+.navbar .nav-link{
+  color:var(--nav-text);
+  font-weight:500;
+  letter-spacing:.2px;
+  position:relative;
+  padding:.6rem .9rem;
+}
+/* Base underline only for non-dropdown links */
+.navbar .nav-link:not(.dropdown-toggle)::after{
+  content:"";
+  position:absolute;
+  left:.9rem; right:.9rem; bottom:.35rem;
+  height:2px;
+  background:transparent;
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform .2s ease, background-color .2s ease;
+}
 
-    /* Links */
-    .navbar .nav-link{
-      color:var(--nav-text);
-      font-weight:500;
-      letter-spacing:.2px;
-      position:relative;
-      padding:.6rem .9rem;
-    }
-    /* Base underline only for non-dropdown links */
-    .navbar .nav-link:not(.dropdown-toggle)::after{
-      content:"";
-      position:absolute;
-      left:.9rem; right:.9rem; bottom:.35rem;
-      height:2px;
-      background:transparent;
-      transform:scaleX(0);
-      transform-origin:left;
-      transition:transform .2s ease, background-color .2s ease;
-    }
+.navbar .nav-link:hover{ color:#ffffff; }
+.navbar .nav-link:focus{ color: var(--nav-text); } /* don’t stay white on focus */
 
-    .navbar .nav-link:hover{ color:#ffffff; }
-    .navbar .nav-link:focus{ color: var(--nav-text); } /* don’t stay white on focus */
+/* Keep white only when dropdown is open */
+.navbar .dropdown.show > .dropdown-toggle,
+.navbar .dropdown-toggle[aria-expanded="true"]{ color:white; }
 
-    /* Keep white only when dropdown is open */
-    .navbar .dropdown.show > .dropdown-toggle,
-    .navbar .dropdown-toggle[aria-expanded="true"]{
-      color:white; 
-    }
-
-    /* Ensure caret has no background */
-    .navbar .dropdown-toggle::after{ background:none !important; }
+/* Ensure caret has no background (we use +/−) */
+.navbar .dropdown-toggle::after{ background:none !important; }
 
 /* =========================================
    NAVBAR: + / − indicators (desktop & mobile)
@@ -145,7 +132,6 @@ html, body { overflow-x: hidden; }
 
 /* Default: show "+" on every dropdown toggle */
 .navbar .dropdown-toggle::after{
-  background: none !important;
   content: "+";
   display: inline-flex;
   align-items: center;
@@ -175,742 +161,102 @@ html, body { overflow-x: hidden; }
 .dropdown-menu .dropend.show > .dropdown-toggle::after,
 .dropdown-menu .dropend > .dropdown-toggle[aria-expanded="true"]::after { content: "−"; opacity: 1; }
 
-/* IMPORTANT: remove any caret-rotation rules you still have.
-   If you see rules rotating .dropdown-toggle::after 180deg, delete them. */
+/* Apply underline only to non-dropdown links */
+.navbar .nav-link:hover:not(.dropdown-toggle)::after,
+.navbar .nav-link:focus:not(.dropdown-toggle)::after,
+.navbar .nav-link.active:not(.dropdown-toggle)::after{
+  transform:scaleX(1);
+  background:#c02632 !important;
+}
 
+/* Dropdowns: dark */
+.dropdown-menu{
+  background: rgba(17, 17, 17, 0.90);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: .4rem;
+  min-width: 15rem;
+  border-radius: .5rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,.45);
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s;
+}
+.dropdown-menu.show{
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition-delay: 0s, 0s, 0s;
+}
+.dropdown-item{ color:#d7d7d7; border-radius:.375rem; }
+.dropdown-item:hover{ background:var(--brand-red); color:#fff; }
 
-/* =========================================
-   MOBILE (≤1199.98px): nested submenu animation
-   ========================================= */
-@media (max-width: 1199.98px) {
-  /* Default: nested submenus are visually hidden but kept in flow for smooth height animation */
-  .main-navbar .navbar-nav .dropend > .dropdown-menu {
-    position: static !important;
-    display: block !important;   /* needed for stacking and height animation */
+/* Dropdown divider */
+.dropdown-divider{
+  border-top:1px solid rgba(255,255,255,0.1) !important;
+  opacity:1;
+  margin:.25rem .5rem;
+}
+
+/* Toggler */
+.navbar-toggler{ border-color:#333; }
+.navbar-toggler:focus{ box-shadow:0 0 0 .15rem rgba(192,38,50,.35); }
+
+/* Small screens */
+@media (max-width: 1199.98px){
+  body{padding-top:0;} /* was 126px */
+
+  .main-navbar .navbar-collapse.collapsing,
+  .main-navbar .navbar-collapse.show{
+    padding-top: calc(120px + -40px);
+  }
+
+  /* Make the hamburger panel scrollable and contain scroll chaining */
+  .main-navbar .navbar-collapse{
+    height: auto;
+    max-height: calc(100dvh - 80px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    padding-bottom: max(env(safe-area-inset-bottom, 0px), 16px);
+    will-change: height, opacity;
+    opacity: 0;
+    transition: opacity .18s ease-out;
+  }
+  .main-navbar .navbar-collapse.collapsing,
+  .main-navbar .navbar-collapse.show{ opacity: 1; }
+  .main-navbar .navbar-collapse.collapsing.closing{
+    opacity: 0;
+    transition: opacity .12s ease-in, height .12s ease-in !important;
+  }
+
+  /* Fix mobile gaps: collapse hidden dropdowns, expand smoothly on show */
+  .main-navbar .navbar-nav .dropdown-menu{
+    position: static;
+    display: block !important;
     overflow: hidden;
     max-height: 0;
     opacity: 0;
     visibility: hidden;
-    margin: 0;
-    border: 0;
-    border-radius: 0;
-    padding: 0;                  /* avoid ghost spacing when closed */
+    margin-top: 0;
+    transform: none;
     transition: max-height .2s ease, opacity .18s ease;
+    box-sizing: border-box;
   }
-
-  /* When a sub-parent is open, reveal its submenu */
-  .main-navbar .navbar-nav .dropend.show > .dropdown-menu {
-    max-height: 999px;           /* effectively 'auto' with animation */
+  .main-navbar .navbar-nav .dropdown-menu.show{
+    max-height: none;
     opacity: 1;
     visibility: visible;
     overflow: visible;
     padding-bottom: 12px;
   }
-}
 
-
-/* Remove any old rules that rotate ::after. They conflict with +/−. */
-
-/* Submenu (inside dropdown) keeps “+” until IT opens */
-.dropdown-menu .dropend > .dropdown-toggle::after { content: "+"; opacity: .8; }
-.dropdown-menu .dropend.show > .dropdown-toggle::after,
-.dropdown-menu .dropend > .dropdown-toggle[aria-expanded="true"]::after { content: "−"; opacity: 1; }
-
-/* REMOVE the old rotate caret rules, they conflict with +/−
-   (delete any block that rotates ::after 180deg) */
-
-
-/* Remove/override older rotate rules if present */
-/* .navbar .dropdown-toggle::after{ transition: transform .2s ease; opacity:.6; }
-   .navbar .dropdown.show .dropdown-toggle::after,
-   .navbar .dropdown-toggle[aria-expanded="true"]::after{ transform: rotate(180deg); } */
-
-    /* Smooth rotate for caret: down (default) -> up (open) */
-    /* .navbar .dropdown-toggle::after{
-      transition: transform .2s ease;
-      opacity: 0.6; /* 60% transparent caret */
-    
-    /* .navbar .dropdown.show .dropdown-toggle::after,
-    .navbar .dropdown-toggle[aria-expanded="true"]::after{
-      transform: rotate(180deg);
-    } */ 
-
-    /* Apply underline only to non-dropdown links */
-    .navbar .nav-link:hover:not(.dropdown-toggle)::after,
-    .navbar .nav-link:focus:not(.dropdown-toggle)::after,
-    .navbar .nav-link.active:not(.dropdown-toggle)::after{
-      transform:scaleX(1);
-      background:#c02632 !important;
-    }
-
-
-    /* Dropdowns: dark */
-    .dropdown-menu{
-      background: rgba(17, 17, 17, 0.90);      /* 90% opacity */
-      backdrop-filter: blur(10px);          /* match navbar blur */
-      -webkit-backdrop-filter: blur(10px);  /* Safari */
-      border: 1px solid rgba(255,255,255,0.08);
-      padding: .4rem; 
-      min-width: 15rem;
-      border-radius: .5rem;
-      box-shadow: 0 8px 24px rgba(0,0,0,.45);
-      /* display: block !important; */
-      visibility: hidden;
-      opacity: 0;
-      transform: translateY(6px);
-      pointer-events: none;
-      transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s;
-    }
-    .dropdown-menu.show{
-      visibility: visible;
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
-      transition-delay: 0s, 0s, 0s;
-    }
-    .dropdown-item{ color:#d7d7d7; border-radius:.375rem; }
-    .dropdown-item:hover{ background:var(--brand-red); color:#fff; }
-
-    /* Dropdown divider (10% opacity) */
-    .dropdown-divider{
-      border-top:1px solid rgba(255,255,255,0.1) !important;
-      opacity:1;
-      margin:.25rem .5rem;
-    }
-
-    /* Toggler */
-    .navbar-toggler{
-      border-color:#333;
-    }
-    .navbar-toggler:focus{ box-shadow:0 0 0 .15rem rgba(192,38,50,.35); }
-
-    /* Small screens: tighten paddings */
-    @media (max-width: 1199.98px){
-      body{padding-top:0;} /* was 126px */
-
-      /* push the hamburger menu below the absolute logo instantly (during .collapsing and when .show) */
-      .main-navbar .navbar-collapse.collapsing,
-      .main-navbar .navbar-collapse.show{
-        padding-top: calc(120px + -40px); /* was 82px; align under larger logo */
-        /* When open, this area should scroll independently on small screens */
-      }
-
-      /* Make the hamburger panel scrollable and contain scroll chaining */
-      .main-navbar .navbar-collapse{
-        height: auto;                   /* let it size naturally */
-        max-height: calc(100dvh - 80px);/* viewport minus logo gap (matches padding-top 80px) */
-        overflow-y: auto;
-        overflow-x: hidden;
-        -webkit-overflow-scrolling: touch;
-        overscroll-behavior: contain;   /* prevent background scroll when reaching ends */
-        padding-bottom: max(env(safe-area-inset-bottom, 0px), 16px); /* reach last items above iOS bar */
-      }
-      /* Hide visible scrollbars but keep scroll functional */
-      .main-navbar .navbar-collapse{
-        -ms-overflow-style: none;  /* IE/Edge */
-        scrollbar-width: none;     /* Firefox */
-      }
-      .main-navbar .navbar-collapse::-webkit-scrollbar{ display: none; } /* Chrome/Safari */
-
-      /* ensure hero sits behind fixed header on mobile/tablet */
-      .hero{
-        margin-top:-126px;  /* pull under taller mobile header */
-        padding-top:126px;  /* keep text readable below header */
-      }
-
-      /* make the collapse animation faster and smoother on mobile breakpoint */
-      .main-navbar .collapse{ --bs-collapse-transition: height .18s ease-out; }
-      .main-navbar .collapsing{ transition: height .18s ease-out !important; }
-      .main-navbar .navbar-collapse{
-        will-change: height, opacity;         /* already anim height; add opacity hint */
-        opacity: 0;
-        transition: opacity .18s ease-out;    /* fade in on open */
-      }
-      .main-navbar .navbar-collapse.collapsing,
-      .main-navbar .navbar-collapse.show{
-        opacity: 1;
-      }
-      .main-navbar .navbar-collapse.collapsing.closing{
-        opacity: 0;                            /* fade out on close */
-        transition: opacity .12s ease-in, height .12s ease-in !important;
-      }
-
-      /* Fix mobile gaps: collapse hidden dropdowns, expand smoothly on show */
-      .main-navbar .navbar-nav .dropdown-menu{
-        position: static;               /* stack within flow */
-        display: block !important;      /* keep for animation */
-  overflow: hidden;               /* hide contents while collapsed */
-        max-height: 0;                  /* no height when hidden */
-        opacity: 0;
-        visibility: hidden;
-        margin-top: 0;
-        transform: none;                /* no slide on mobile, use height instead */
-        transition: max-height .2s ease, opacity .18s ease;
-  box-sizing: border-box;         /* avoid right-edge overflow within padded nav */
-      }
-      .main-navbar .navbar-nav .dropdown-menu.show{
-        /* Expand fully and let the parent collapse container handle scrolling */
-        max-height: none;
-        opacity: 1;
-        visibility: visible;
-        overflow: visible;
-        padding-bottom: 12px; /* keep last item above bottom edge */
-      }
-  /* No inner scrollbar for dropdowns (we scroll the whole panel) */
-
-      /* Dividers between main tabs (top-level items) only in hamburger menu */
-      .main-navbar .navbar-collapse .navbar-nav > .nav-item + .nav-item{
-        border-top:1px solid rgba(255,255,255,0.1); /* 10% opacity */
-        margin-top:.125rem;
-        padding-top:.125rem;
-      }
-    }
-
-    /* respect users who prefer reduced motion */
-    @media (prefers-reduced-motion: reduce){
-      .dropdown-menu{ transition: none; }
-      .dropdown-menu.show{ transform: none; }
-      .main-navbar .navbar-collapse{ transition: none; }
-      .main-navbar .collapsing{ transition: none !important; }
-    }
-
-   :root{ --brand-red:#ea3141; }
-.accent{ color:hsl(355, 81%, 55%); ; }
-
-/* Full width hero */
-.hero{
-  position: relative;
-  min-height: 60vh;
-  background: #000 url('../assets/images/gromobran.jpg') center/cover no-repeat;
-  margin-top:-94px;
-  padding-top:94px;
-  padding-bottom: 3.5rem;
-}
-.hero::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background: linear-gradient(
-    to top,
-    rgba(0,0,0,1) 0%,
-    rgba(0,0,0,1) 5%,       /* was 20% */
-    rgba(0,0,0,0.55) 15%,
-    rgba(0,0,0,0.55) 100%
-  ); /* darken image */
-  z-index: 1;                   /* above image, below content */
-  pointer-events:none;
-}
-/* Ensure hero content sits above the overlay */
-.hero .container,
-.hero .hero-inner{ position: relative; z-index: 2; }
-/* Keep blob under the overlay */
-.hero-blob{ z-index: 0; }
-
-/* Restore the soft red glow blob behind hero */
-.hero-blob{
-  position:absolute;
-  left:-20vw; bottom:-30vh;
-  width:70vw; height:70vw;
-  pointer-events:none;
-  background:
-    radial-gradient(closest-side, rgba(192,38,50,0.55), rgba(192,38,50,0.18) 40%, transparent 70%),
-    radial-gradient(closest-side, rgba(33,150,243,0.18), transparent 60%);
-  filter: blur(40px);
-  transform: translateZ(0);
-}
-
-/* Cap inner content width so full-width doesn't feel too wide */
-.hero-inner{ max-width: 960px; margin-top: 230px; margin-bottom: 100px; } /* add extra top space for content only */
-
-/* Smaller heading on purpose */
-.hero-title{
-  font-size: clamp(2.2rem, 5vw, 4rem);
-}
-
-/* Badge + ghost button */
-.hero-badge{
-  background: rgba(255,255,255,0.08);
-  color:#e8e8e8;
-  border:1px solid rgba(255,255,255,0.14);
-  font-weight:600;
-  letter-spacing:.2px;
-}
-.hero-ghost{
-  background: rgba(255,255,255,0.06);
-  border-color: rgba(255,255,255,0.28);
-}
-.hero-ghost:hover{
-  background: var(--brand-red);
-  border-color: var(--brand-red);
-  color:#fff;
-}
-
-/* Extra-tight on very small screens */
-@media (max-width: 575.98px){
-  .hero{ min-height: 70vh; padding-top: 2.5rem; padding-bottom: 2.5rem; }
-  .lead{ font-size: 1rem; }
-}
-
-/* Global font */
-html, body, .navbar, .dropdown-menu, .btn, .badge, .lead, h1, h2, h3, h4, h5, h6 {
-  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
-}
-body { font-weight:400; }
-.semibold { font-weight:600; }
-.bold { font-weight:700; }
-/* Make the logo a bit taller than the bar and push it down so it sticks out on the bottom */
-.brand-img{
-  height: 120px;
-  top: -4px;
-  position: absolute;
-  z-index: 2;
-}               /* pushes logo downward */
-
-@media (max-width: 1199.98px){
-  .brand-img{
-    height: 120px;
-    top: -1px;
-  }
-}
-
-/* If a second .dropdown-menu block appears later, delete it to avoid overrides */
-/* Footer */
-.footer-wrap{
-  background: var(--brand-red); /* full-width red background */
-}
-
-.footer-card{
-background: #1f1f1f;
-background: -webkit-linear-gradient(180deg, rgba(31, 31, 31, 1) 0%, rgba(23, 23, 23, 1) 7%, rgba(0, 0, 0, 1) 100%);
-background: -moz-linear-gradient(180deg, rgba(31, 31, 31, 1) 0%, rgba(23, 23, 23, 1) 7%, rgba(0, 0, 0, 1) 100%);
-background: linear-gradient(180deg, rgba(31, 31, 31, 1) 0%, rgba(23, 23, 23, 1) 7%, rgba(0, 0, 0, 1) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1F1F1F", endColorstr="#000000", GradientType=0);
-  border: 1px solid rgba(255,255,255,.08);
-  box-shadow: 0 12px 30px rgba(0,0,0,.35);
-  margin-block: 1.25rem;               /* space from red background (top/bottom) */
-}
-
-.footer-logo{
-  display:block;
-  object-fit:contain;
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));
-}
-
-/* Links */
-.footer-links li + li{ margin-top:.35rem; }
-.footer-links a{
-  color:#cfcfcf;
-  text-decoration:none;
-  transition: color .15s ease, opacity .15s ease;
-  display:inline-block;
-}
-.footer-links a:hover{
-  color:#ffffff;
-  opacity:.95;
-}
-
-/* Divider */
-.footer-sep{
-  border:0;
-  height:1px;
-  background: linear-gradient(90deg,
-    rgba(255,255,255,.50), rgba(255,255,255,.50), rgba(255,255,255,.50));
-}
-
-/* Small screens: tighten spacing */
-@media (max-width: 575.98px){
-  .footer-card{ padding: 1.25rem !important; }
-}
-.footer-card {
-  position: relative;
-  overflow: hidden;                          /* keep the band inside rounded edges */
-  padding-bottom: calc(1.5rem + 20px);       /* push content above the band */
-  top: -52px;
-}
-
-.footer-card::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 20px;                              /* band height */
-  background: repeating-linear-gradient(
-    -45deg,
-    #000 0 20px,
-    var(--brand-red) 20px 40px
-  );
-  border-bottom-left-radius: inherit;
-  border-bottom-right-radius: inherit;
-  pointer-events: none;
-}
-
-.white{
-  color: white !important;
-}
-
-.footer-position{
-  position: absolute;
-  width: 100%;
-}
-
-.profile-card{
-  aspect-ratio: 3 / 3.5;        /* shorter: ~40% less tall than before */
-  border-top-left-radius: 22px;
-  border-top-right-radius: 22px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  overflow: hidden;
-  position: relative; /* ensure positioning for overlay */
-  background: #0f0f0f;
-  box-shadow: 0 12px 40px rgba(0,0,0,.45), inset 0 -1px 0 rgba(220,53,69,.5); /* 50% opacity */
-}
-
-/* Darken image with a soft top->bottom gradient */
-.profile-card::before{
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(0,0,0,0.70) 0%,
-    rgba(0,0,0,0.55) 35%,
-    rgba(0,0,0,0.35) 65%,
-    rgba(0,0,0,0.15) 85%,
-    rgba(0,0,0,0.00) 100%
-  );
-  z-index: 1;              /* above image, below blur/meta */
-  pointer-events: none;
-  border-radius: inherit;               /* match card (rounded top, flat bottom) */
-}
-
-.pc-img{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* Blur only bottom half with smooth gradient transition */
-.pc-blur{
-  content:"";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 40%;                      /* bottom portion */
-  backdrop-filter: blur(1px);
-  -webkit-backdrop-filter: blur(1px);
-  background: linear-gradient(
-    to top,
-    rgba(0,0,0,0.85) 0%,
-    rgba(0,0,0,0.65) 25%,
-    rgba(0,0,0,0.45) 50%,
-    rgba(0,0,0,0.25) 80%,
-    rgba(0,0,0,0) 100%
-  );
-  z-index: 2;              /* was 1; above overlay */
-}
-
-/* Meta text sits inside blurred zone */
-.pc-meta{
-  position: absolute;
-  bottom: 0;
-  left: 0; right: 0;
-  padding: 16px 20px;
-  z-index: 4; /* was 3 */
-}
-
-.pc-name{ letter-spacing: .2px; }
-.text-white-75{ color: rgba(255,255,255,.75); }
-
-.profile-card:hover .pc-img{
-  transform: scale(1.03);
-  transition: transform .4s ease;
-}
-/* Overlap hero section by 50px */
-.cards-overlap {
-  margin-top: -50px;   /* pull upward to overlap hero */
-  z-index: 5;          /* stay above hero background */
-}
-
-/* Fix card height at 200px up to XL */
-@media (max-width: 991.98px) {
-  .cards-overlap .profile-card {
-    aspect-ratio: auto !important; /* cancel the ratio */
-    height: 220px !important;  /* force height */
-  }
-  .cards-overlap .pc-img {
-    height: 100% !important;
-    object-fit: cover;
-    display: block;
-  }
-  /* If .h-100 is present, make sure our fixed height wins */
-  .cards-overlap .profile-card.h-100 {
-    height: 220px !important;
-  }
-}
-
-/* Desktop (XL and up): fix dropdown/submenu closing flash + keep blur */
-@media (min-width: 1200px){
-
-  /* Let Bootstrap control display again (defuse the old !important) */
-  .main-navbar .navbar-nav > .nav-item .dropdown-menu{
-    display: none !important;                 /* hidden by default */
-    opacity: 0;
-    visibility: hidden;
-    transform: none;                           /* no slide on desktop */
-    transition: opacity .15s ease, visibility 0s linear .15s;
-    /* keep your frosted look in one place */
-    background: rgba(17,17,17,.90);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-  }
-  .main-navbar .navbar-nav > .nav-item .dropdown-menu.show{
-    display: block !important;
-    opacity: 1;
-    visibility: visible;
-    transition-delay: 0s, 0s;
-  }
-
-  /* Submenu (dropend) – always open to the right, no reflow under the tab */
-  .dropdown-menu .dropend .dropdown-menu{
-    top: 0;
-    left: 100%;
-    margin-left: .25rem;
-    margin-top: 0;
-  }
-
-  /* Optional: tiny nudge animation for submenus (no vertical slide) */
-  .dropdown-menu .dropend > .dropdown-menu{
-    transform: translateX(6px);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity .12s ease, transform .12s ease, visibility 0s linear .12s;
-  }
-  .dropdown-menu .dropend.show > .dropdown-menu{
-    transform: none;
-    opacity: 1;
-    visibility: visible;
-    transition-delay: 0s,0s,0s;
-  }
-
-  /* Caret/chevron for submenu toggles inside the menu (optional) */
-.dropdown-menu .dropdown-toggle::after {
-  content: "+";
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: .5rem;   /* razmak od teksta */
-  font-size: 1rem;
-  line-height: 1;
-  opacity: .8;
-  float: none;          /* ukini float */
-}
-}
-/* Collapse (below xl): make items full-width and left-aligned */
-@media (max-width: 1199.98px){
-
-  /* Stop the LG centering that leaks into the collapsed state */
-  .main-navbar .navbar-collapse{
-    justify-content: flex-start !important;  /* overrides justify-content-lg-end */
-  }
-
-  .main-navbar .navbar-collapse .navbar-nav{
-    align-items: stretch !important;         /* overrides align-items-lg-center */
-    width: 100%;
-  }
-
-  /* Each top-level item spans 100% */
-  .main-navbar .navbar-nav > .nav-item{
-    width: 100%;
-  }
-
-  /* Links look like a proper list */
-  .main-navbar .navbar-nav .nav-link{
-    display: block;
-    width: 100%;
-    text-align: left !important;
-  padding: .85rem 1rem .85rem 1rem; /* no bottom padding for tighter spacing with dividers */
-  }
-
-  /* Dropdowns inside the collapsed menu: inline & full width */
-  .main-navbar .navbar-nav .dropdown-menu{
-    position: static !important;
-    float: none !important;
-    width: 100% !important;
-    margin: 0 !important;
-    border: 0;
-    border-radius: 0;
-  box-shadow: none;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important; /* remove inner padding so hr spacing is consistent */
-  }
-
-  /* Dividers: full width */
-  .main-navbar .navbar-collapse hr,
-  .main-navbar .navbar-nav .dropdown-divider{
-    width: 100% !important;
-    margin: .35rem 0 !important; /* uniform spacing above/below all separators */
-    border: 0;
-    border-top: 1px solid rgba(255,255,255,.18);
-    opacity: 1;
-  }
-
-  /* Inside dropdowns: remove bottom padding on link rows for even rhythm with hr */
-  .main-navbar .navbar-nav .dropdown-menu .dropdown-item{
-    padding-top: .75rem;
-    padding-bottom: .75rem; /* requested: 0px bottom padding */
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-
-  /* Optional: small separators between top-level items */
-  .main-navbar .navbar-collapse .navbar-nav > .nav-item + .nav-item{
-    border-top:1px solid rgba(255,255,255,0.10);
-    margin-top:.125rem;
-    padding-top:.125rem;
-  }
-}
-
-/* Replace any previous ::after border with bottom-half side fades only */
-.profile-card::after{
-  content:"";
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
-  height: 50%;                 /* only bottom half */
-  border-radius: inherit;
-  pointer-events:none;
-  z-index: 3;                  /* above image/blur, below text */
-
-  /* Left/Right fades + Bottom solid 1px line */
-  background:
-    linear-gradient(to right, rgba(220,53,69,.5), rgba(220,53,69,.5)) bottom / 100% 1px no-repeat, /* 50% opacity */
-    linear-gradient(to top, rgba(220,53,69,.5) 0%, rgba(220,53,69,0) 100%) left bottom / 1px 100% no-repeat,
-    linear-gradient(to top, rgba(220,53,69,.5) 0%, rgba(220,53,69,0) 100%) right bottom / 1px 100% no-repeat; /* 50% -> 0% */
-}
-.underline{
-  text-decoration: underline;
-}
-
-.slider {
-  overflow: hidden;
-  white-space: nowrap;
-  position: relative;             /* isolate painting */
-  isolation: isolate;
-  /* contain removed to prevent mobile jumping */
-}
-
-.logos {
-  display: inline-flex;
-  will-change: transform;
-  backface-visibility: hidden;         /* reduce flicker on mobile */
-  -webkit-backface-visibility: hidden;
-  transform: translateZ(0);             /* force GPU compositing */
-  -webkit-transform: translateZ(0);
-  animation-name: marquee;              /* use variable-driven shift */
-  animation-duration: 25s;              /* desktop default */
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-.logo-img {
-  height: 20px;                 /* fixed height */
-  width: auto;                  /* keep aspect ratio */
-  margin: 0 30px;               /* spacing between logos */
-  filter: brightness(0) invert(1); /* force solid white */
-  flex-shrink: 0;               /* prevent resizing */
-  opacity: 0.4;
-}
-
-/* Pause on hover */
-.slider:hover .logos {
-  animation-play-state: paused;
-}
-
-/* Variable-driven marquee to allow exact pixel shift from JS */
-@keyframes marquee {
-  from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(var(--marquee-shift, -50%), 0, 0); }
-}
-
-/* Mobile: 50% slower than previous values (tablet/phone) */
-@media (max-width: 768px) {
-  .logos {
-  animation-duration: 40s; /* slower */
-  }
-}
-
-@media (max-width: 480px) {
-  .logos {
-  animation-duration: 25s; /* slower */
-  }
-}
-
-/* Mobile-only scroll indicator under cards-overlap */
-.scroll-indicator{
-  display: none;                 /* hidden by default */
-  text-align: center;
-  color: rgba(255,255,255,.8);
-  font-size: 1.75rem;            /* large enough tap target */
-  line-height: 1;
-  margin-top: .25rem;
-  animation: bob 1.8s ease-in-out infinite;
-}
-/* Show only on small screens */
-@media (max-width: 575.98px){
-  .scroll-indicator{ display: block; }
-}
-
-@keyframes bob{
-  0%   { transform: translateY(0);   opacity: .85; }
-  50%  { transform: translateY(6px); opacity: 1; }
-  100% { transform: translateY(0);   opacity: .85; }
-}
-/* Samo top-level linkovi bez dropdowna -> nema underline-a */
-.main-navbar .navbar-nav > .nav-item > .nav-link:not(.dropdown-toggle)::after{
-  content: none !important;
-}
-.main-navbar .navbar-nav > .nav-item > .nav-link:not(.dropdown-toggle):hover::after,
-.main-navbar .navbar-nav > .nav-item > .nav-link:not(.dropdown-toggle):focus::after{
-  content: none !important;
-}
-
-/* Samo top-level linkovi koji nisu dropdown toggle */
-.main-navbar .navbar-nav > .nav-item > .nav-link:not(.dropdown-toggle) {
-  padding-right: 2rem; /* ili koliko ti treba */
-}
-
-/* Safe side spacing for full-width navbar */
-.main-navbar{
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-inline: 20px; /* logical property */
-}
-
-/* When the nav is open, lock background scroll */
-.section-breathe{ padding-block: clamp(4rem, 8vw, 10rem); }
-
-.reference-section{
-background: #380007;
-background: -webkit-linear-gradient(0deg,rgba(56, 0, 7, 1) 0%, rgba(0, 0, 0, 1) 55%);
-background: -moz-linear-gradient(0deg,rgba(56, 0, 7, 1) 0%, rgba(0, 0, 0, 1) 55%);
-background: linear-gradient(0deg,rgba(56, 0, 7, 1) 0%, rgba(0, 0, 0, 1) 55%);
-filter: progid:DXImageTransform.Microsoft.gradient(
-  startColorstr="#380007",
-  endColorstr="#000000",
-  GradientType=0
-);
-}
-.alarmni-bg{
-background: #2b2b2b;
-background: radial-gradient(circle,rgba(43, 43, 43, 1) 0%, rgba(0, 0, 0, 1) 55%);
-}
-/* Mobile fix: ensure dropdown menus scroll within navbar-collapse */
-/* Nested submenus stay closed until their parent .dropend is opened */
-@media (max-width: 1199.98px) {
+  /* Nested submenus stay closed until their parent .dropend is opened */
   .main-navbar .navbar-nav .dropend > .dropdown-menu {
     position: static !important;
     display: block !important;
@@ -931,56 +277,287 @@ background: radial-gradient(circle,rgba(43, 43, 43, 1) 0%, rgba(0, 0, 0, 1) 55%)
     overflow: visible;
     padding-bottom: 12px;
   }
+
+  /* Dividers between main tabs */
+  .main-navbar .navbar-collapse .navbar-nav > .nav-item + .nav-item{
+    border-top:1px solid rgba(255,255,255,0.1);
+    margin-top:.125rem;
+    padding-top:.125rem;
+  }
+
+  /* Links look like a proper list */
+  .main-navbar .navbar-nav .nav-link{
+    display: block;
+    width: 100%;
+    text-align: left !important;
+    padding: .85rem 1rem;
+  }
 }
 
+/* respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .dropdown-menu{ transition: none; }
+  .dropdown-menu.show{ transform: none; }
+  .main-navbar .navbar-collapse{ transition: none; }
+  .main-navbar .collapsing{ transition: none !important; }
+}
 
+/* Color var override */
+:root{ --brand-red:#ea3141; }
+.accent{ color:hsl(355, 81%, 55%); }
+
+/* Full width hero */
+.hero{
+  position: relative;
+  min-height: 60vh;
+  background: #000 url('../assets/images/gromobran.jpg') center/cover no-repeat;
+  margin-top:-94px;
+  padding-top:94px;
+  padding-bottom: 3.5rem;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 5%, rgba(0,0,0,0.55) 15%, rgba(0,0,0,0.55) 100%);
+  z-index: 1;
+  pointer-events:none;
+}
+.hero .container,
+.hero .hero-inner{ position: relative; z-index: 2; }
+.hero-blob{ z-index: 0; }
+
+.hero-blob{
+  position:absolute;
+  left:-20vw; bottom:-30vh;
+  width:70vw; height:70vw;
+  pointer-events:none;
+  background:
+    radial-gradient(closest-side, rgba(192,38,50,0.55), rgba(192,38,50,0.18) 40%, transparent 70%),
+    radial-gradient(closest-side, rgba(33,150,243,0.18), transparent 60%);
+  filter: blur(40px);
+  transform: translateZ(0);
+}
+
+/* Cap inner content width */
+.hero-inner{ max-width: 960px; margin-top: 230px; margin-bottom: 100px; }
+.hero-title{ font-size: clamp(2.2rem, 5vw, 4rem); }
+
+.hero-badge{
+  background: rgba(255,255,255,0.08);
+  color:#e8e8e8;
+  border:1px solid rgba(255,255,255,0.14);
+  font-weight:600;
+  letter-spacing:.2px;
+}
+.hero-ghost{ background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.28); }
+.hero-ghost:hover{ background: var(--brand-red); border-color: var(--brand-red); color:#fff; }
+
+/* Extra-tight on very small screens */
+@media (max-width: 575.98px){
+  .hero{ min-height: 70vh; padding-top: 2.5rem; padding-bottom: 2.5rem; }
+  .lead{ font-size: 1rem; }
+}
+
+/* Global font */
+html, body, .navbar, .dropdown-menu, .btn, .badge, .lead, h1, h2, h3, h4, h5, h6 {
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+}
+body { font-weight:400; }
+.semibold { font-weight:600; }
+.bold { font-weight:700; }
+
+/* Make the logo a bit taller than the bar and push it down */
+.brand-img{ height: 120px; top: -4px; position: absolute; z-index: 2; }
+@media (max-width: 1199.98px){
+  .brand-img{ height: 120px; top: -1px; }
+}
+
+/* Footer */
+.footer-wrap{ background: var(--brand-red); }
+
+.footer-card{
+  background: linear-gradient(180deg, #1f1f1f 0%, #171717 7%, #000 100%);
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 12px 30px rgba(0,0,0,.35);
+  margin-block: 1.25rem;
+  position: relative;
+  overflow: hidden;
+  padding-bottom: calc(1.5rem + 20px);
+  top: -52px;
+}
+.footer-card::after{
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 20px;
+  background: repeating-linear-gradient(-45deg, #000 0 20px, var(--brand-red) 20px 40px);
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+  pointer-events: none;
+}
+
+.footer-logo{ display:block; object-fit:contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,.35)); }
+.footer-links li + li{ margin-top:.35rem; }
+.footer-links a{
+  color:#cfcfcf;
+  text-decoration:none;
+  transition: color .15s ease, opacity .15s ease;
+  display:inline-block;
+}
+.footer-links a:hover{ color:#ffffff; opacity:.95; }
+.footer-sep{
+  border:0;
+  height:1px;
+  background: linear-gradient(90deg, rgba(255,255,255,.50), rgba(255,255,255,.50), rgba(255,255,255,.50));
+}
+@media (max-width: 575.98px){ .footer-card{ padding: 1.25rem !important; } }
+
+.white{ color: white !important; }
+.footer-position{ position: absolute; width: 100%; }
+
+/* Speaker cards */
+.profile-card{
+  aspect-ratio: 3 / 3.5;
+  border-top-left-radius: 22px;
+  border-top-right-radius: 22px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  overflow: hidden;
+  position: relative;
+  background: #0f0f0f;
+  box-shadow: 0 12px 40px rgba(0,0,0,.45), inset 0 -1px 0 rgba(220,53,69,.5);
+}
+.profile-card::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.70) 0%, rgba(0,0,0,0.55) 35%, rgba(0,0,0,0.35) 65%, rgba(0,0,0,0.15) 85%, rgba(0,0,0,0.00) 100%);
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+}
+.pc-img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+.pc-blur{
+  content:"";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 40%;
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.65) 25%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.25) 80%, rgba(0,0,0,0) 100%);
+  z-index: 2;
+}
+.pc-meta{ position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 20px; z-index: 4; }
+.pc-name{ letter-spacing: .2px; }
+.text-white-75{ color: rgba(255,255,255,.75); }
+.profile-card:hover .pc-img{ transform: scale(1.03); transition: transform .4s ease; }
+
+/* Overlap hero section by 50px */
+.cards-overlap { margin-top: -50px; z-index: 5; }
+
+/* Fix card height at 200px up to XL */
+@media (max-width: 991.98px) {
+  .cards-overlap .profile-card { aspect-ratio: auto !important; height: 220px !important; }
+  .cards-overlap .pc-img { height: 100% !important; object-fit: cover; display: block; }
+  .cards-overlap .profile-card.h-100 { height: 220px !important; }
+}
+
+/* Desktop (XL and up): dropdown/submenu behavior */
+@media (min-width: 1200px){
+  .main-navbar .navbar-nav > .nav-item .dropdown-menu{
+    display: none !important;
+    opacity: 0;
+    visibility: hidden;
+    transform: none;
+    transition: opacity .15s ease, visibility 0s linear .15s;
+    background: rgba(17,17,17,.90);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .main-navbar .navbar-nav > .nav-item .dropdown-menu.show{
+    display: block !important;
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s, 0s;
+  }
+
+  .dropdown-menu .dropend .dropdown-menu{
+    top: 0;
+    left: 100%;
+    margin-left: .25rem;
+    margin-top: 0;
+  }
+  .dropdown-menu .dropend > .dropdown-menu{
+    transform: translateX(6px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .12s ease, transform .12s ease, visibility 0s linear .12s;
+  }
+  .dropdown-menu .dropend.show > .dropdown-menu{
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s,0s,0s;
+  }
+
+  /* Optional + sign for submenu toggles inside the menu */
+  .dropdown-menu .dropdown-toggle::after {
+    content: "+";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: .5rem;
+    font-size: 1rem;
+    line-height: 1;
+    opacity: .8;
+    float: none;
+  }
+}
+
+/* Misc */
+.underline{ text-decoration: underline; }
+.slider { overflow: hidden; white-space: nowrap; position: relative; isolation: isolate; }
+.logos { display: inline-flex; will-change: transform; backface-visibility: hidden; -webkit-backface-visibility: hidden; transform: translateZ(0); -webkit-transform: translateZ(0); animation-name: marquee; animation-duration: 25s; animation-timing-function: linear; animation-iteration-count: infinite; }
+.logo-img { height: 20px; width: auto; margin: 0 30px; filter: brightness(0) invert(1); flex-shrink: 0; opacity: 0.4; }
+.slider:hover .logos { animation-play-state: paused; }
+@keyframes marquee { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(var(--marquee-shift, -50%), 0, 0); } }
+@media (max-width: 768px) { .logos { animation-duration: 40s; } }
+@media (max-width: 480px) { .logos { animation-duration: 25s; } }
+
+/* Remove underline on top-level links without dropdown */
+.main-navbar .navbar-nav > .nav-item > .nav-link:not(.dropdown-toggle)::after{ content: none !important; }
+.main-navbar .navbar-nav > .nav-item > .nav-link:not(.dropdown-toggle):hover::after,
+.main-navbar .navbar-nav > .nav-item > .nav-link:not(.dropdown-toggle):focus::after{ content: none !important; }
+
+/* Extra spacing for non-dropdown top-level links */
+.main-navbar .navbar-nav > .nav-item > .nav-link:not(.dropdown-toggle) { padding-right: 2rem; }
+
+/* Safe side spacing for full-width navbar */
+.main-navbar{ padding-left: 20px; padding-right: 20px; padding-inline: 20px; }
+
+/* Section spacing */
+.section-breathe{ padding-block: clamp(4rem, 8vw, 10rem); }
+
+.reference-section{
+  background: linear-gradient(0deg,rgba(56, 0, 7, 1) 0%, rgba(0, 0, 0, 1) 55%);
+}
+.alarmni-bg{ background: radial-gradient(circle,rgba(43, 43, 43, 1) 0%, rgba(0, 0, 0, 1) 55%); }
 
 /* Remove blue tap highlight on mobile/touch */
-a, button, .nav-link, .dropdown-toggle, .navbar-toggler {
-  -webkit-tap-highlight-color: transparent;
-}
+a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-color: transparent; }
 
 /* Touch-only: suppress default focus ring/box-shadows (keep keyboard :focus-visible) */
 @media (pointer: coarse) {
-  .nav-link:focus,
-  .dropdown-toggle:focus,
-  .navbar-toggler:focus,
-  .btn:focus {
+  .nav-link:focus, .dropdown-toggle:focus, .navbar-toggler:focus, .btn:focus {
     outline: none !important;
     box-shadow: none !important;
   }
 }
 
 /* Keep an accessible focus style for keyboard users */
-.nav-link:focus-visible,
-.dropdown-toggle:focus-visible,
-.navbar-toggler:focus-visible,
-.btn:focus-visible {
+.nav-link:focus-visible, .dropdown-toggle:focus-visible, .navbar-toggler:focus-visible, .btn:focus-visible {
   outline: 2px solid var(--brand-red);
   outline-offset: 2px;
-  box-shadow: none; /* override your toggler’s focus shadow on keyboard if you prefer */
+  box-shadow: none;
 }
-
-/* Desktop hover behavior & submenu positioning */
-@media (min-width: 1200px) and (hover: hover) and (pointer: fine) {
-  .main-navbar .dropdown-menu { display: none; }
-  .main-navbar .dropdown.show > .dropdown-menu,
-  .main-navbar .dropend.show > .dropdown-menu { display: block; }
-
-  .main-navbar .dropend { position: relative; }
-  .main-navbar .dropend > .dropdown-menu {
-    top: 0;
-    left: 100%;
-    margin-left: .15rem;
-  }
-}
-
-/* Optional: + / – icon on items that have a submenu
-   Show “+” by default, “–” when open (.show) or aria-expanded=true */
-.main-navbar .dropdown-toggle::after {
-  /* keep Bootstrap caret if you want; or hide it and use +/– */
-  /* display: none; */
-}
-.main-navbar .dropdown-toggle .pm-icon::after { content: "+"; margin-left: .35rem; }
-.main-navbar .show > .dropdown-toggle .pm-icon::after,
-.main-navbar .dropdown-toggle[aria-expanded="true"] .pm-icon::after { content: "–"; }
