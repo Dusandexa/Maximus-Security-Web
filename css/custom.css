@@ -247,6 +247,8 @@ body{padding-top:0;} /* was 94px */
     transform: none;
     transition: max-height .2s ease, opacity .18s ease;
     box-sizing: border-box;
+    margin:0px; 
+    padding: 0px;
   }
   .main-navbar .navbar-nav .dropdown-menu.show{
     max-height: none;
