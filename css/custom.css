@@ -157,7 +157,7 @@ body{padding-top:0;} /* was 94px */
 }
 
 /* Submenu toggles inside dropdowns also use +/− correctly */
-.dropdown-menu .dropend > .dropdown-toggle::after { content: "+"; opacity: .8; }
+.dropdown-menu .dropend > .dropdown-toggle::after { content: "+"; opacity: .8;}
 .dropdown-menu .dropend.show > .dropdown-toggle::after,
 .dropdown-menu .dropend > .dropdown-toggle[aria-expanded="true"]::after { content: "−"; opacity: 1; }
 
@@ -192,7 +192,7 @@ body{padding-top:0;} /* was 94px */
   pointer-events: auto;
   transition-delay: 0s, 0s, 0s;
 }
-.dropdown-item{ color:#d7d7d7; border-radius:.375rem; }
+.dropdown-item{ color:#d7d7d7; border-radius:.375rem; margin-top: 4px; }
 .dropdown-item:hover{ background:var(--brand-red); color:#fff; }
 
 /* Dropdown divider */
@@ -249,6 +249,7 @@ body{padding-top:0;} /* was 94px */
     box-sizing: border-box;
     margin:0px; 
     padding: 0px;
+    border: 1px solid rgba(255, 0, 0, 0.3);
   }
   .main-navbar .navbar-nav .dropdown-menu.show{
     max-height: none;
@@ -256,6 +257,8 @@ body{padding-top:0;} /* was 94px */
     visibility: visible;
     overflow: visible;
     padding-bottom: 12px;
+    border: 1px solid rgba(255, 0, 0, 0.3);
+    padding: 7px;
   }
 
   /* Nested submenus stay closed until their parent .dropend is opened */
@@ -278,6 +281,8 @@ body{padding-top:0;} /* was 94px */
     visibility: visible;
     overflow: visible;
     padding-bottom: 12px;
+    border: 1px solid rgba(255, 0, 0, 0.3);
+border-top: none;
   }
 
   /* Dividers between main tabs */
@@ -476,6 +481,7 @@ body { font-weight:400; }
     background: rgba(17,17,17,.90);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 0, 0, 0.4);
   }
   .main-navbar .navbar-nav > .nav-item .dropdown-menu.show{
     display: block !important;
