@@ -417,7 +417,7 @@ border-top: none;
 }
 
 /* Cap inner content width */
-.hero-inner{ max-width: 960px; margin-top: 230px; margin-bottom: 100px; }
+.hero-inner{ max-width: 960px; margin-top: 270px; margin-bottom: 100px; }
 .hero-inner-landing{ margin-top: 230px; margin-bottom: 100px; margin-left: 0px; }
 .hero-title{ font-size: clamp(2.2rem, 5vw, 4rem); }
 
@@ -657,7 +657,7 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-
   /* Grid parameters – scoped instead of :root */
   --grid-size: 65px;      /* cell size */
   --grid-line: 1px;       /* line thickness */
-  --grid-alpha: 0.5;     /* grid opacity */
+  --grid-alpha: 0.2;     /* grid opacity */
   --focus-x: 30%;         /* focus horizontal position */
   --focus-y: 60%;         /* focus vertical position */
 
@@ -958,7 +958,7 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-
   color: #fff;
 
   border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  /* box-shadow: 0 10px 30px rgba(0,0,0,0.6); */
   transition: transform .3s ease, box-shadow .3s ease;
 
   display: grid;                        /* header stays aligned */
@@ -1030,4 +1030,34 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-
   .camera-card.dark-card { min-height: 440px; }
   .camera-logo { height: 20px; }
   .camera-card h3 { font-size: 1.2rem; }
+}
+.h1-below{
+  font-weight: normal;
+  font-size: 1rem;
+}
+.h1-below {
+  font-weight: normal !important; /* or 300 if you want lighter */
+  font-size: 0.7em; /* relative to h1’s size, so it scales with it */
+  display: inline-block;
+}
+/* Responsive layout for Google review badge */
+.google-review {
+  flex-direction: row;
+}
+
+@media (max-width: 576px) {
+  .google-review {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.25rem;
+    padding: 0.75rem 1.25rem;
+  }
+
+  .google-review .rating {
+    justify-content: center;
+  }
+
+  .google-review .review-link {
+    margin-top: 2px;
+  }
 }
