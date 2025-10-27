@@ -1,10 +1,63 @@
-
 :root{
       --brand-red:#c02632;
       --pre-nav-bg:#0d0d0d;
       --nav-bg:#111111;
       --nav-text:#cccccc;
     }
+
+/* =========================
+   Utility spacing classes (custom px values)
+   ========================= */
+
+/* Padding Top */
+.pt-5 { padding-top: 5px; }
+.pt-10 { padding-top: 10px; }
+.pt-20 { padding-top: 20px; }
+.pt-30 { padding-top: 30px; }
+.pt-35 { padding-top: 35px; }
+.pt-40 { padding-top: 40px; }
+.pt-50 { padding-top: 50px; }
+.pt-80 { padding-top: 80px; }
+
+/* Padding Bottom */
+.pb-5 { padding-bottom: 5px; }
+.pb-10 { padding-bottom: 10px; }
+.pb-20 { padding-bottom: 20px; }
+.pb-30 { padding-bottom: 30px; }
+.pb-35 { padding-bottom: 35px; }
+.pb-40 { padding-bottom: 40px; }
+.pb-50 { padding-bottom: 50px; }
+.pb-80 { padding-bottom: 80px; }
+
+/* Margin Top */
+.mt-5 { margin-top: 5px; }
+.mt-10 { margin-top: 10px; }
+.mt-20 { margin-top: 20px; }
+.mt-30 { margin-top: 30px; }
+.mt-35 { margin-top: 35px; }
+.mt-40 { margin-top: 40px; }
+.mt-50 { margin-top: 50px; }
+.mt-80 { margin-top: 80px; }
+
+/* Margin Bottom */
+.mb-5 { margin-bottom: 5px; }
+.mb-10 { margin-bottom: 10px; }
+.mb-20 { margin-bottom: 20px; }
+.mb-30 { margin-bottom: 30px; }
+.mb-35 { margin-bottom: 35px; }
+.mb-40 { margin-bottom: 40px; }
+.mb-50 { margin-bottom: 50px; }
+.mb-80 { margin-bottom: 80px; }
+
+
+.active-nav-item{
+  font-weight: 600 !important;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 22px;
+  text-decoration-color: #ea3141;
+  color: White !important;
+}
 
 /* Prevent horizontal page scroll while allowing internal animations to move */
 html, body { overflow-x: hidden; }
@@ -314,15 +367,30 @@ border-top: none;
 .accent{ color:hsl(355, 81%, 55%); }
 
 /* Full width hero */
-.hero{
+.hero,
+.hero-landing{
   position: relative;
   min-height: 60vh;
-  background: #000 url('../assets/images/gromobran.jpg') center/cover no-repeat;
-  margin-top:-94px;
+  margin-top:-132px;
   padding-top:94px;
-  padding-bottom: 3.5rem;
+  padding-bottom: 0px !important;
+  background-color: #000;
 }
-.hero::after{
+.hero{
+  background-image: url('../assets/images/gromobran.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.hero-landing{
+  background-image:
+    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: center;
+}
+.hero::after,
+.hero-landing::after{
   content:"";
   position:absolute;
   inset:0;
@@ -331,7 +399,9 @@ border-top: none;
   pointer-events:none;
 }
 .hero .container,
-.hero .hero-inner{ position: relative; z-index: 2; }
+.hero .hero-inner,
+.hero-landing .container,
+.hero-landing .hero-inner{ position: relative; z-index: 2; }
 .hero-blob{ z-index: 0; }
 
 .hero-blob{
@@ -348,6 +418,7 @@ border-top: none;
 
 /* Cap inner content width */
 .hero-inner{ max-width: 960px; margin-top: 230px; margin-bottom: 100px; }
+.hero-inner-landing{ margin-top: 230px; margin-bottom: 100px; margin-left: 0px; }
 .hero-title{ font-size: clamp(2.2rem, 5vw, 4rem); }
 
 .hero-badge{
@@ -362,7 +433,8 @@ border-top: none;
 
 /* Extra-tight on very small screens */
 @media (max-width: 575.98px){
-  .hero{ min-height: 70vh; padding-top: 2.5rem; padding-bottom: 2.5rem; }
+  .hero,
+  .hero-landing{ min-height: 70vh; padding-top: 2.5rem; padding-bottom: 2.5rem; }
   .lead{ font-size: 1rem; }
 }
 
@@ -579,4 +651,383 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-
     left: auto;
     margin-right: 0; /* optional: remove any inherited offset */
   }
+}
+/* === HERO-LANDING: scoped grid + blackout focus (page-specific) === */
+.hero-landing {
+  /* Grid parameters – scoped instead of :root */
+  --grid-size: 65px;      /* cell size */
+  --grid-line: 1px;       /* line thickness */
+  --grid-alpha: 0.5;     /* grid opacity */
+  --focus-x: 30%;         /* focus horizontal position */
+  --focus-y: 60%;         /* focus vertical position */
+
+  position: relative;
+  min-height: 60vh;
+  margin-top: -120px;
+  padding-top: 94px;
+  padding-bottom: 3.5rem;
+  background-color: #000;
+
+  /* Subtle gray grid (transparent lines over black) */
+  background-image:
+    linear-gradient(rgba(255, 255, 255, var(--grid-alpha)) var(--grid-line), transparent var(--grid-line)),
+    linear-gradient(90deg, rgba(255, 255, 255, var(--grid-alpha)) var(--grid-line), transparent var(--grid-line));
+  background-size: var(--grid-size) var(--grid-size), var(--grid-size) var(--grid-size);
+  background-position: center;
+}
+
+/* Blackout gradient patch behind hero text */
+.hero-landing::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background:
+    radial-gradient(
+      900px 520px at var(--focus-x) var(--focus-y),
+      rgba(0, 0, 0, 0.9) 0%,
+      rgba(0, 0, 0, 0.75) 35%,
+      rgba(0, 0, 0, 0.5) 55%,
+      rgba(0, 0, 0, 0.25) 75%,
+      rgba(0, 0, 0, 0) 90%
+    );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Top/bottom fade you already use */
+.hero-landing::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 5%,
+    rgba(0, 0, 0, 0.55) 15%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Keep hero content above overlays */
+.hero-landing .container,
+.hero-landing .hero-inner-landing {
+  position: relative;
+  z-index: 2;
+}
+
+/* Mobile adjustments */
+@media (max-width: 575.98px) {
+  .hero-landing {
+    min-height: 70vh;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+}
+/* Google review badge */
+.text-center .bi-star-fill {
+  font-size: 1.1rem;
+  vertical-align: middle;
+}
+.text-center .bg-dark {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* === "Cut-corner" buttons with visible angled outline === */
+.btn-cut {
+  --cut: 15px; /* size of the diagonal cut */
+  position: relative;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0.6rem 1.4rem;
+  font-weight: 600;
+  letter-spacing: .3px;
+  transition: all 0.25s ease-in-out;
+  clip-path: polygon(var(--cut) 0, 100% 0, 100% 100%, 0 100%, 0 var(--cut));
+  isolation: isolate; /* keep pseudo-element inside */
+}
+
+
+/* pseudo-element draws the angled border inside the clip */
+.btn-cut::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  border: 1.5px solid currentColor;
+  clip-path: inherit; /* match the same cut */
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.btn-cut span, 
+.btn-cut i { position: relative; z-index: 1; } /* keep text/icons above */
+
+/* Solid (light) version */
+.btn-light.btn-cut {
+  color: #000;
+  background-color: #fff;
+}
+.btn-light.btn-cut:hover {
+  background-color: var(--brand-red);
+}
+
+/* Outlined (ghost) version */
+.btn-outline-light.btn-cut {
+  color: #fff;
+  background-color: transparent;
+}
+.btn-outline-light.btn-cut::before {
+  border-color: rgba(255,255,255,0.6);
+}
+.btn-outline-light.btn-cut:hover {
+  background-color: var(--brand-red);
+  color: #fff;
+}
+.btn-outline-light.btn-cut:hover::before {
+  border-color: var(--brand-red);
+  opacity: 1;
+}
+
+/* Hover motion */
+.btn-cut:hover {
+  transform: translateY(-2px);
+}
+
+/* === Straight-edge button (no cut corner) === */
+.btn-straight {
+  border-radius: 0 !important;     /* sharp edges */
+  border: 1.5px solid rgba(255,255,255,0.6);
+  background: transparent;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: .3px;
+  padding: 0.65rem 1.4rem;
+  transition: all 0.25s ease;
+}
+
+.btn-straight:hover {
+  background: var(--brand-red);
+  border-color: var(--brand-red);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* Match ghost-style tone if used beside .btn-cut */
+.hero-ghost.btn-straight {
+  border-color: rgba(255,255,255,0.4);
+}
+.hero-ghost.btn-straight:hover {
+  border-color: var(--brand-red);
+}
+/* === Brand red version of .btn-cut === */
+.btn-cut-primary {
+  --cut: 15px; /* same diagonal as .btn-cut */
+  position: relative;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0.6rem 1.4rem;
+  font-weight: 600;
+  letter-spacing: .3px;
+  transition: all 0.25s ease-in-out;
+  clip-path: polygon(var(--cut) 0, 100% 0, 100% 100%, 0 100%, 0 var(--cut));
+  isolation: isolate;
+
+  /* color scheme */
+  background-color: var(--brand-red);
+  color: #fff;
+}
+
+/* white diagonal border (same logic as .btn-cut) */
+.btn-cut-primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  clip-path: inherit;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+/* keep text/icons above */
+.btn-cut-primary span,
+.btn-cut-primary i {
+  position: relative;
+  z-index: 1;
+}
+
+/* hover effect */
+.btn-cut-primary:hover {
+  background-color:  var(--brand-red);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* subtle focus ring for accessibility */
+.btn-cut-primary:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.35);
+  outline-offset: 3px;
+}
+/* === Modern tech cards (Hikvision / Dahua) === */
+.tech-card {
+  border: 1px solid rgba(0,0,0,0.05);
+  border-radius: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.tech-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+}
+
+/* Logos at top */
+.tech-logo {
+  height: 26px;
+  width: auto;
+  filter: brightness(0);
+}
+
+/* Light variant */
+.light-card {
+  background: #fff;
+  color: #111;
+}
+
+/* Dark variant */
+.dark-card {
+  background: #000;
+  border-color: rgba(255,255,255,0.08);
+  color: #fff;
+}
+
+/* Subtle background pattern effect */
+.tech-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.08;
+  pointer-events: none;
+  background-repeat: repeat;
+  background-size: 160px 160px;
+  z-index: 0;
+}
+
+.pattern-light {
+  background-image: url('assets/images/pattern-light.svg');
+  mix-blend-mode: multiply;
+}
+
+.pattern-dark {
+  background-image: url('assets/images/pattern-dark.svg');
+  mix-blend-mode: lighten;
+  opacity: 0.12;
+}
+
+/* Inner content above background pattern */
+.tech-card > *:not(.tech-pattern) {
+  position: relative;
+  z-index: 2;
+}
+
+/* Responsive tuning */
+@media (max-width: 767.98px) {
+  .tech-card {
+    padding: 2rem 1.5rem;
+  }
+  .tech-logo {
+    height: 22px;
+  }
+}
+
+/* === DARK CAMERA CARDS (BG on element, responsive width, dim overlay) === */
+.camera-card.dark-card {
+  position: relative;
+  background-color: #000; /* fallback */
+  /* your inline style supplies background-image: url('...') */
+  background-position: top center;      /* show from TOP */
+  background-repeat: no-repeat;
+  background-size: 100% auto;           /* follow card WIDTH (no crop) */
+  color: #fff;
+
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  transition: transform .3s ease, box-shadow .3s ease;
+
+  display: grid;                        /* header stays aligned */
+  grid-template-rows: 1fr;
+  min-height: 520px;                    /* adjust if you want less height */
+  width: 100%;
+}
+
+/* Dim overlay for readability */
+.camera-card.dark-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.25) 0%,
+    rgba(0,0,0,0.45) 50%,
+    rgba(0,0,0,0.65) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Hover lift (no zoom on bg so it stays aligned to width) */
+.camera-card.dark-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 45px rgba(0,0,0,0.8);
+}
+
+/* Content layer sits above overlay */
+.camera-content {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-rows: auto 1fr;  /* header fixed at top, body flexes */
+  row-gap: 8rem;
+  padding-bottom: 1.25rem;
+  height: 100%;
+}
+
+/* Header = logo + title, always aligned across cards */
+.camera-header { display: block; }
+
+/* Small brand logo (“pill”) */
+.camera-logo {
+  height: 20px;      /* tweak if you want smaller/larger */
+  width: auto;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.95;
+}
+
+/* Typography */
+.camera-card h3 {
+  font-size: clamp(1.25rem, 1.6vw, 1.6rem);
+  font-weight: 600;
+}
+.camera-body p {
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+/* Equal-height columns so both cards line up */
+.row.g-5 > [class*="col-"] { display: flex; }
+.row.g-5 > [class*="col-"] > .camera-card { flex: 1 1 auto; }
+
+/* Responsive tweaks */
+@media (max-width: 767.98px) {
+  .camera-card.dark-card { min-height: 440px; }
+  .camera-logo { height: 20px; }
+  .camera-card h3 { font-size: 1.2rem; }
 }
