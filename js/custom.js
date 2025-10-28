@@ -248,3 +248,99 @@ document.addEventListener('DOMContentLoaded', function () {
   applyMode();
   mqDesktop.addEventListener('change', applyMode);
 });
+
+
+
+// ====== FORM: jQuery Validation + reCAPTCHA (FINAL VERSION) ======
+$(function () {
+  const $form = $('#offerForm');
+  if (!$form.length) return;
+
+  // Custom phone format check
+  $.validator.addMethod("srPhone", function (value, element) {
+    return /^[0-9+\s\/\-()]{6,}$/.test(value.trim());
+  }, "Unesite važeći broj telefona.");
+
+  // jQuery Validate setup
+  $form.validate({
+    errorElement: "div",
+    errorClass: "error-text",
+    focusInvalid: false,
+
+    rules: {
+  ime: { required: true, minlength: 2 },
+  email: { required: true, email: true },
+  telefon: { required: true, srPhone: true },
+  vrstaUsluge: { required: true }   // ✅ new required select
+},
+messages: {
+  ime: { required: "Molimo unesite ime." },
+  email: {
+    required: "Molimo unesite email adresu.",
+    email: "Molimo unesite ispravan format email adrese."
+  },
+  telefon: {
+    required: "Molimo unesite broj telefona.",
+    srPhone: "Unesite ispravan broj telefona."
+  },
+  vrstaUsluge: { required: "Molimo izaberite vrstu usluge." } // ✅ new message
+},
+
+    // === Error message placement ===
+    errorPlacement: function (error, element) {
+      // place error below input field
+      error.insertAfter(element);
+    },
+
+    // === When invalid ===
+    highlight: function (element) {
+      $(element)
+        .addClass("is-invalid")
+        .removeClass("is-valid")
+        .css({
+          backgroundColor: "#fff5f5",
+          borderColor: "#dc3545",
+          color: "#000"
+        });
+    },
+
+    // === When valid ===
+    unhighlight: function (element) {
+      $(element)
+        .removeClass("is-invalid")
+        .addClass("is-valid")
+        .css({
+          backgroundColor: "#fff",
+          borderColor: "#ccc",
+          color: "#000"
+        });
+    },
+
+    // === Submit handler ===
+    submitHandler: function (form) {
+      const captchaResponse = grecaptcha.getResponse();
+      if (!captchaResponse) {
+        $("#captchaError")
+          .text("Molimo potvrdite reCAPTCHA.")
+          .show();
+        return false;
+      } else {
+        $("#captchaError").hide().text("");
+      }
+
+      alert("Hvala! Vaš zahtev je uspešno poslat.");
+      form.reset();
+      grecaptcha.reset();
+
+      // reset visuals
+      $form.find("input, textarea, select").removeClass("is-valid").css({
+        backgroundColor: "#fff",
+        borderColor: "#ccc",
+        color: "#000"
+      });
+
+      return false;
+    }
+  });
+});
+
