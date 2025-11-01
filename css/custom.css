@@ -4,7 +4,9 @@
       --nav-bg:#111111;
       --nav-text:#cccccc;
     }
-
+body{
+  background-color:white;
+}
 /* =========================
    Utility spacing classes (custom px values)
    ========================= */
@@ -617,7 +619,10 @@ body { font-weight:400; }
 .main-navbar{ padding-left: 20px; padding-right: 20px; padding-inline: 20px; }
 
 /* Section spacing */
-.section-breathe{ padding-block: clamp(4rem, 8vw, 10rem); }
+.section-breathe{ padding-block: clamp(4rem, 8vw, 7rem); }
+
+.section-breathe-2{ padding-block: clamp(4rem, 8vw, 10rem); }
+
 
 .reference-section{
   background: linear-gradient(0deg,rgba(56, 0, 7, 1) 0%, rgba(0, 0, 0, 1) 55%);
@@ -1060,4 +1065,50 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-
   .google-review .review-link {
     margin-top: 2px;
   }
+}
+
+
+/* === FORM STYLE FIXES (White inputs, clear messages) === */
+#offerForm .form-control,
+#offerForm .form-select,
+#offerForm textarea {
+  background-color: #fff !important;
+  color: #000 !important;
+  border: 1px solid #ccc;
+  transition: all 0.2s ease;
+}
+
+#offerForm .form-control:focus,
+#offerForm .form-select:focus,
+#offerForm textarea:focus {
+  border-color: #d00;
+  box-shadow: 0 0 0 .15rem rgba(220,53,69,0.15);
+}
+
+#offerForm .error-text {
+  color: #d00;
+  font-size: 0.9rem;
+  margin-top: 4px;
+  display: block;
+}
+
+/* Input states */
+#offerForm .is-valid {
+  border-color: #28a745 !important;
+}
+#offerForm .is-invalid {
+  border-color: #dc3545 !important;
+  background-color: #fff5f5 !important;
+}
+
+/* reCAPTCHA error message */
+#captchaError {
+  color: #d00;
+  font-size: 0.9rem;
+  margin-top: 6px;
+}
+.section-border{
+  border-radius: 50px;
+  background-color: #ebebeb;
+  padding: 20px;
 }
