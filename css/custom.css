@@ -51,6 +51,33 @@ body{
 .mb-50 { margin-bottom: 50px; }
 .mb-80 { margin-bottom: 80px; }
 
+/* === FONT SIZE UTILITIES === */
+.fs-12 { font-size: 14px; }
+.fs-13 { font-size: 14px; }
+.fs-14 { font-size: 14px; }
+.fs-15 { font-size: 15px; }
+.fs-16 { font-size: 16px; }
+.fs-18 { font-size: 18px; }
+.fs-20 { font-size: 20px; }
+.fs-22 { font-size: 22px; }
+.fs-24 { font-size: 24px; }
+.fs-26 { font-size: 26px; }
+.fs-28 { font-size: 28px; }
+.fs-30 { font-size: 30px; }
+.fs-32 { font-size: 32px; }
+.fs-34 { font-size: 34px; }
+.fs-36 { font-size: 36px; }
+.fs-38 { font-size: 38px; }
+.fs-40 { font-size: 40px; }
+.fs-45 { font-size: 45px; }
+.fs-50 { font-size: 50px; }
+.fs-55 { font-size: 55px; }
+.fs-60 { font-size: 60px; }
+.fs-65 { font-size: 65px; }
+.fs-70 { font-size: 70px; }
+.fs-75 { font-size: 75px; }
+.fs-80 { font-size: 80px; }
+
 
 .active-nav-item{
   font-weight: 600 !important;
@@ -378,28 +405,7 @@ border-top: none;
   padding-bottom: 0px !important;
   background-color: #000;
 }
-.hero{
-  background-image: url('../assets/images/gromobran.jpg');
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-.hero-landing{
-  background-image:
-    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
-  background-size: 48px 48px;
-  background-position: center;
-}
-.hero::after,
-.hero-landing::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 5%, rgba(0,0,0,0.55) 15%, rgba(0,0,0,0.55) 100%);
-  z-index: 1;
-  pointer-events:none;
-}
+
 .hero .container,
 .hero .hero-inner,
 .hero-landing .container,
@@ -662,7 +668,7 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-
   /* Grid parameters – scoped instead of :root */
   --grid-size: 65px;      /* cell size */
   --grid-line: 1px;       /* line thickness */
-  --grid-alpha: 0.2;     /* grid opacity */
+  --grid-alpha: 0.4;     /* grid opacity */
   --focus-x: 30%;         /* focus horizontal position */
   --focus-y: 60%;         /* focus vertical position */
 
@@ -1111,4 +1117,95 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-
   border-radius: 50px;
   background-color: #ebebeb;
   padding: 20px;
+}
+
+/* === Metrics strip === */
+/* .metrics-strip{
+  background: #f3f3f3;
+  border-top: 1px solid rgba(0,0,0,.06);
+  border-bottom: 1px solid rgba(0,0,0,.06);
+} */
+.metric-card{
+  background: #fff;
+  border-right: 1px solid rgba(0,0,0,.06);
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+.metric-card:last-child{ border-right: 0; }
+@media (max-width: 1199.98px){ .metric-card { border-right: 0; border-bottom: 1px solid rgba(0,0,0,.06); } }
+@media (min-width: 1200px){ .metric-card { min-height: 230px; display:flex; flex-direction:column; justify-content:center; } }
+
+.metric-value{ font-weight: 700; font-size: clamp(2.2rem, 5vw, 3.5rem); color: #ea3141; line-height: 1; }
+.metric-label{ text-transform: uppercase; font-weight: 700; letter-spacing: .4px; font-size: .85rem; color:#ea3141; margin-top:.35rem; }
+.metric-desc{ color:#555; font-size: .975rem; margin-top:.35rem; }
+/* === Google inline rating badge === */
+.google-rating {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50px;
+  padding: 6px 14px;
+  backdrop-filter: blur(6px);
+}
+
+.google-rating .stars i {
+  color: #ffc107; /* filled yellow stars */
+  font-size: 0.95rem;
+  vertical-align: middle;
+}
+
+.google-rating .rating-value {
+  line-height: 1;
+}
+
+.google-rating .google-link i {
+  color: rgba(255, 255, 255, 0.85);
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.google-rating .google-link:hover i {
+  color: #fff;
+  transform: scale(1.15);
+}
+/* === Modern Review Cards === */
+.review-card {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 0;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Cut-off top-left corner */
+.review-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-top: 32px solid #f8f9fa; /* same as bg */
+  border-right: 32px solid transparent;
+  width: 0;
+  height: 0;
+}
+
+/* Hover effect */
+.review-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+/* Reviewer name and stars */
+.review-card .reviewer {
+  font-size: 1rem;
+}
+
+.review-card .stars i {
+  color: #ffc107; /* gold stars */
+  font-size: 1rem;
+}
+
+/* Mobile */
+@media (max-width: 767.98px) {
+  .review-card {
+    padding: 1.25rem;
+    font-size: 0.95rem;
+  }
 }
