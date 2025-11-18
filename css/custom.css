@@ -87,6 +87,11 @@ body{
   text-decoration-color: #ea3141;
   color: White !important;
 }
+.active-nav-item-sub{
+  font-weight: 600 !important;
+  color: White !important;
+  background-color: var(--brand-red);
+}
 
 /* Prevent horizontal page scroll while allowing internal animations to move */
 html, body { overflow-x: hidden; }
@@ -1146,6 +1151,7 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-
 
 .metric-value{ font-weight: 700; font-size: clamp(2.2rem, 5vw, 3.5rem); color: #ea3141; line-height: 1; }
 .metric-label{ text-transform: uppercase; font-weight: 700; letter-spacing: .4px; font-size: .85rem; color:#ea3141; margin-top:.35rem; }
+.metric-label-vrata{ text-transform: uppercase; font-weight: 700; letter-spacing: .4px; font-size: 1.2rem; color:#ea3141; margin-top:.35rem; }
 .metric-desc{ color:#555; font-size: .975rem; margin-top:.35rem; }
 /* === Google inline rating badge === */
 .google-rating {
@@ -1480,5 +1486,217 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-
   .hero__chunks {
     justify-content: center;
     margin-top: 1rem;
+  }
+}
+/* === MD usage cards (cube style with cut top-left corner) === */
+.md-usage-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;   /* SADA JE 1:1 KVADRAT */
+  overflow: hidden;
+  background: #000;
+  clip-path: polygon(44px 0, 100% 0, 100% 100%, 0 100%, 0 44px); /* isti cut efekat kao alarm-card */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.20);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.md-usage-card__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scale(1.02);
+  transition: transform .4s ease;
+}
+
+/* crni gradient pri dnu za tekst */
+.md-usage-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.85) 0%,
+    rgba(0,0,0,0.75) 25%,
+    rgba(0,0,0,0.35) 55%,
+    rgba(0,0,0,0.00) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.md-usage-card__meta {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1.25rem 1.4rem 1.4rem;
+  z-index: 2;
+}
+
+.md-usage-card__title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.35rem;
+}
+
+.md-usage-card__text {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.80);
+  margin-bottom: 0;
+}
+
+.md-usage-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 45px rgba(0,0,0,0.35);
+}
+
+.md-usage-card:hover .md-usage-card__bg {
+  transform: scale(1.06);
+}
+
+/* Responsive tuning */
+
+
+  .md-usage-card__meta {
+    padding: 1rem 1.1rem 1.1rem;
+  }
+
+  .md-usage-card__title {
+    font-size: 1.8rem;
+  }
+
+  .md-usage-card__text {
+    font-size: 0.9rem;
+  }
+
+/* === HORIZONTAL STEPS (koraci 1–5) === */
+
+.md-steps-h {
+  max-width: 1100px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: space-between;
+}
+
+/* Svaki korak kao kolona/kartica */
+.md-step-h {
+  flex: 1 1 180px;
+  max-width: 210px;
+  display: flex;
+  flex-direction: column;
+  color: #000;
+}
+
+/* Indikator (broj + linija ka sledećem) */
+.md-step-h__indicator {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.md-step-h__badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 2px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  background-color: #fff;
+  color: #000;
+  z-index: 2;
+}
+
+.md-step-h__line {
+  flex: 1;
+  height: 2px;
+  margin-left: 0.4rem;
+  background: linear-gradient(to right, rgba(0,0,0,0.7), rgba(0,0,0,0.2));
+  opacity: 0.8;
+}
+
+/* poslednji nema liniju */
+.md-step-h--last .md-step-h__line {
+  display: none;
+}
+
+/* Kartica */
+.md-step-h__card {
+  border: 1px solid #000;
+  border-radius: 14px;
+  padding: 1.1rem 1.2rem 1.2rem;
+  background-color: #fff;
+  color: #000;
+  position: relative;
+}
+
+/* mali label gore */
+.md-step-h__label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+  color: #000;
+}
+
+/* naslov koraka */
+.md-step-h__title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: #000;
+}
+
+/* sav tekst unutar kartice crn */
+.md-step-h__card p {
+  color: #000;
+}
+
+/* hover efekat kao na premium karticama */
+@media (hover: hover) {
+  .md-step-h__card:hover {
+    box-shadow: 0 14px 35px rgba(0,0,0,0.12);
+    transform: translateY(-2px);
+    transition: all 0.25s ease;
+  }
+}
+
+/* RESPONSIVE: lomljenje kolona */
+@media (max-width: 1199.98px) {
+  .md-step-h {
+    max-width: none;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .md-steps-h {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .md-steps-h {
+    flex-direction: column;
+    max-width: 600px;
+  }
+
+  .md-step-h {
+    max-width: 100%;
+  }
+
+  .md-step-h__indicator {
+    margin-bottom: 0.4rem;
+  }
+
+  .md-step-h__line {
+    max-width: 120px;
   }
 }
