@@ -832,6 +832,31 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-
   transform: translateY(-2px);
 }
 
+.btn-straight.btn-black-fill {
+  background: #000;
+  border-color: #000;
+  color: #fff;
+}
+
+.btn-straight.btn-black-fill:hover {
+  background: var(--brand-red);
+  border-color: var(--brand-red);
+  color: #fff;
+}
+
+/* Outline variant for model cards */
+.btn-straight.btn-model-outline {
+  border: 1.5px solid #000;
+  color: #000;
+  background: transparent;
+}
+
+.btn-straight.btn-model-outline:hover {
+  background: var(--brand-red);
+  border-color: var(--brand-red);
+  color: #fff;
+}
+
 /* Match ghost-style tone if used beside .btn-cut */
 .hero-ghost.btn-straight {
   border-color: rgba(255,255,255,0.4);
@@ -1581,6 +1606,7 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-
   flex-wrap: wrap;
   gap: 1.5rem;
   justify-content: space-between;
+  align-items: stretch;
 }
 
 /* Svaki korak kao kolona/kartica */
@@ -1635,6 +1661,9 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-
   background-color: #fff;
   color: #000;
   position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 /* mali label gore */
