@@ -432,6 +432,7 @@ border-top: none;
 /* Cap inner content width */
 .hero-inner{ max-width: 960px; margin-top: 270px; margin-bottom: 100px; }
 .hero-inner-landing{ margin-top: 230px; margin-bottom: 100px; margin-left: 0px; }
+.hero-inner-content{ margin-top: 100px; margin-bottom: 100px; margin-left: 26px; }
 .hero-title{ font-size: clamp(2.2rem, 5vw, 4rem); }
 
 .hero-badge{
@@ -1727,5 +1728,62 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-
 
   .md-step-h__line {
     max-width: 120px;
+  }
+}
+
+/* =========================
+   White Hero Section (for subpages)
+   ========================= */
+.hero-white{
+  min-height: 50vh;
+  background: #ffffff;
+  padding-top: 94px;
+}
+.hero-white .hero-inner-landing{
+  margin-top: 80px;
+}
+.hero-white .h1-below{
+  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+  font-weight: 400;
+}
+.hero-inner-white{
+  max-width: 800px;
+}
+.hero-title-dark{
+  color: #111111;
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+.hero-badge-dark{
+  background: rgba(0,0,0,0.06);
+  color: #333;
+  border: 1px solid rgba(0,0,0,0.12);
+  font-weight: 600;
+  letter-spacing: .2px;
+}
+/* Dark button variant for white hero */
+.hero-white .btn-cut-primary{
+  background: #111;
+  color: #fff;
+  border: none;
+}
+.hero-white .btn-cut-primary:hover{
+  background: #333;
+  color: #fff;
+}
+.hero-white .btn-straight{
+  border-color: #333;
+  color: #333;
+}
+.hero-white .btn-straight:hover{
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
+@media (max-width: 1199.98px){
+  .hero-white{
+    padding-top: 0px;
+  }
+  .hero-white .hero-inner-landing{
+    margin-top: 160px;
   }
 }
