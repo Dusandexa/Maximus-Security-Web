@@ -587,107 +587,26 @@ Od početne analize rizika, preko izbora optimalnih kamera i snimača, do komple
               <!-- === FORM: Besplatna ponuda === -->
 <div class="row justify-content-center mb-80">
   <div class="col-lg-8">
-    <form id="offerForm" novalidate>
-      <div class="row g-3">
-                <!-- Samo obuka (checkbox optional) -->
-        <div class="col-md-12 pt-20 d-flex align-items-center">
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="obuka" name="obuka" value="Da">
-            <label class="form-check-label" for="obuka">
-            Želim obuku za video nadzor 
-            </label>
-        </div>
-        </div>
+    <form id="offerForm" data-ms-form="kamere" action="/php/send-offer.php" method="POST" novalidate>
+      
+      <!-- Fields container - will be populated by forms.js -->
+      <div class="row g-3" data-ms-fields></div>
 
-        <!-- Ime (required) -->
-        <div class="col-md-6 pt-20">
-          <label for="ime" class="form-label"><strong>Ime</strong> <span class="text-danger">*</span></label>
-          <input type="text" class="form-control form-control-lg rounded-3" id="ime" name="ime" placeholder="Vaše ime">
-          <div class="invalid-feedback"></div>
-        </div>
-
-        <!-- Prezime (optional) -->
-        <div class="col-md-6 pt-20">
-          <label for="prezime" class="form-label"><strong>Prezime</strong></label>
-          <input type="text" class="form-control form-control-lg rounded-3" id="prezime" name="prezime" placeholder="Vaše prezime">
-          <div class="invalid-feedback"></div>
-        </div>
-
-        <!-- Email (required) -->
-        <div class="col-md-6 pt-20">
-          <label for="email" class="form-label"><strong>Email adresa</strong> <span class="text-danger">*</span></label>
-          <input type="email" class="form-control form-control-lg rounded-3" id="email" name="email" placeholder="npr. ime@domen.com">
-          <div class="invalid-feedback"></div>
-        </div>
-
-        <!-- Telefon (required) -->
-        <div class="col-md-6 pt-20">
-          <label for="telefon" class="form-label"><strong>Broj telefona</strong> <span class="text-danger">*</span></label>
-          <input type="tel" class="form-control form-control-lg rounded-3" id="telefon" name="telefon" placeholder="0611234567">
-          <div class="invalid-feedback"></div>
-        </div>
-
-        <!-- Tip prostora (select) -->
-        <div class="col-md-6 pt-20">
-          <label for="tipProstora" class="form-label"><strong>Izaberite tip prostora</strong></label>
-          <select id="tipProstora" name="tipProstora" class="form-select form-select-lg rounded-3">
-            <option>Stan</option>
-            <option>Kuća</option>
-            <option>Poslovni prostor</option>
-            <option>Drugo</option>
-          </select>
-          <div class="invalid-feedback"></div>
-        </div>
-        <!-- Vrsta usluge (required) -->
-        <div class="col-md-6 pt-20">
-        <label for="vrstaUsluge" class="form-label"><strong>Vrsta usluge</strong> <span class="text-danger">*</span></label>
-        <select id="vrstaUsluge" name="vrstaUsluge" class="form-select form-select-lg rounded-3">
-            <option value="">Kompletna ugradnja video nadzora</option>
-            <option>Instalacije za video nadzor</option>
-            <option>Samo oprema</option>
-            <option>Servis</option>
-            <option>Drugo</option>
-        </select>
-        </div>
-        <!-- Broj kamera (select) -->
-        <div class="col-md-6 pt-20">
-          <label for="brojKamera" class="form-label"><strong>Broj kamera</strong></label>
-          <select id="brojKamera" name="brojKamera" class="form-select form-select-lg rounded-3">
-            <option>Izaberite</option>
-            <option>Od 1-2</option>
-            <option>Od 3-4</option>
-            <option>4-8</option>
-            <option>Ne znam tačno, pozovite me</option>
-          </select>
-          <div class="invalid-feedback"></div>
-        </div>
-
-        
-
-
-
-        <!-- Napomena (textarea) -->
-        <div class="col-12 pt-30">
-          <label for="napomena" class="form-label"><strong>Napomena</strong></label>
-          <textarea id="napomena" name="napomena" rows="4" class="form-control form-control-lg rounded-3" placeholder="Dodatne informacije"></textarea>
-          <div class="invalid-feedback"></div>
-        </div>
-
-        <!-- reCAPTCHA (required last) -->
-        <div class="col-12 pt-20">
-          <div class="form-label mb-2"><strong>Proverite da niste robot</strong> <span class="text-danger">*</span></div>
-          <div id="captchaWrap" class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div>
-          <div id="captchaError" class="invalid-feedback d-block mt-2" style="display:none;"></div>
-        </div>
-
-        <!-- Submit -->
-        <div class="col-12 text-center pt-30">
-  <button type="submit" class="btn btn-success btn-lg rounded-pill px-4 fw-semibold d-inline-flex align-items-center gap-2">
-    <i class="bi bi-send-fill"></i>
-    Pošalji podatke
-  </button>
-</div>
+      <!-- reCAPTCHA - kept outside fields container -->
+      <div class="col-12 pt-20">
+        <div class="form-label mb-2"><strong>Proverite da niste robot</strong> <span class="text-danger">*</span></div>
+        <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY" data-ms-captcha></div>
+        <div class="invalid-feedback d-block mt-2" data-ms-captcha-error style="display:none;"></div>
       </div>
+
+      <!-- Submit button - kept outside fields container -->
+      <div class="col-12 text-center pt-30">
+        <button type="submit" class="btn btn-success btn-lg rounded-pill px-4 fw-semibold d-inline-flex align-items-center gap-2">
+          <i class="bi bi-send-fill"></i>
+          Pošalji podatke
+        </button>
+      </div>
+
     </form>
   </div>
 </div>
@@ -800,6 +719,7 @@ Od početne analize rizika, preko izbora optimalnih kamera i snimača, do komple
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
   <script defer src="js/custom.js"></script>
+  <script defer src="js/forms.js"></script>
 </body>
 
 </html>

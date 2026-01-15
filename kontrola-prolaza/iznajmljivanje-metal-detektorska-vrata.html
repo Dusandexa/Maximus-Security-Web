@@ -677,95 +677,26 @@ Naši sistemi nude i mogućnost integracije sa video nadzorom i pametnim uređaj
 <!-- === FORM: Besplatna ponuda === -->
 <div class="row justify-content-center mb-80">
   <div class="col-lg-8">
-    <form id="offerForm" novalidate>
-      <div class="row g-3">
+    <form id="offerForm" data-ms-form="metal" action="/php/send-offer.php" method="POST" novalidate>
+      
+      <!-- Fields container - will be populated by forms.js -->
+      <div class="row g-3" data-ms-fields></div>
 
-        <!-- Ime (required) -->
-        <div class="col-md-6 pt-20">
-          <label for="ime" class="form-label"><strong>Ime</strong> <span class="text-danger">*</span></label>
-          <input type="text" class="form-control form-control-lg rounded-3" id="ime" name="ime" placeholder="Vaše ime">
-          <div class="invalid-feedback"></div>
-        </div>
-
-        <!-- Prezime (optional) -->
-        <div class="col-md-6 pt-20">
-          <label for="prezime" class="form-label"><strong>Prezime</strong></label>
-          <input type="text" class="form-control form-control-lg rounded-3" id="prezime" name="prezime" placeholder="Vaše prezime">
-          <div class="invalid-feedback"></div>
-        </div>
-
-        <!-- Email (required) -->
-        <div class="col-md-6 pt-20">
-          <label for="email" class="form-label"><strong>Email adresa</strong> <span class="text-danger">*</span></label>
-          <input type="email" class="form-control form-control-lg rounded-3" id="email" name="email" placeholder="npr. ime@domen.com">
-          <div class="invalid-feedback"></div>
-        </div>
-
-        <!-- Telefon (required) -->
-        <div class="col-md-6 pt-20">
-          <label for="telefon" class="form-label"><strong>Broj telefona</strong> <span class="text-danger">*</span></label>
-          <input type="tel" class="form-control form-control-lg rounded-3" id="telefon" name="telefon" placeholder="0611234567">
-          <div class="invalid-feedback"></div>
-        </div>
-
-        <!-- Broj vrata (select) -->
-        <div class="col-md-6 pt-20">
-          <label for="tipProstora" class="form-label"><strong>Broj vrata</strong></label>
-          <select id="tipProstora" name="tipProstora" class="form-select form-select-lg rounded-3">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-            <option>7</option>
-            <option>8</option>
-            <option>9</option>
-            <option>10</option>
-            <option>Više</option>
-          </select>
-          <div class="invalid-feedback"></div>
-        </div>
-
-        <!-- Vrsta događaja (select) -->
-        <div class="col-md-6 pt-20">
-          <label for="vrstaDogadjaja" class="form-label"><strong>Vrsta događaja</strong></label>
-          <select id="vrstaDogadjaja" name="vrstaDogadjaja" class="form-select form-select-lg rounded-3">
-            <option>Koncerti i muzički festivali</option>
-            <option>Škole i obrazovne ustanove</option>
-             <option>Aerodromi i stanice</option>
-            <option>Sudovi i državne institucije</option>
-             <option>Kompanije i industrijski objekti</option>
-            <option>Sportske manifestacije i arene</option>
-             <option>Sajmovi i konferencije</option>
-              <option>Drugo, kontaktirajte me</option>
-          </select>
-          <div class="invalid-feedback"></div>
-        </div>
-
-        <!-- Napomena (textarea) -->
-        <div class="col-12 pt-30">
-          <label for="napomena" class="form-label"><strong>Napomena</strong></label>
-          <textarea id="napomena" name="napomena" rows="4" class="form-control form-control-lg rounded-3" placeholder="Dodatne informacije"></textarea>
-          <div class="invalid-feedback"></div>
-        </div>
-
-        <!-- reCAPTCHA (required last) -->
-        <div class="col-12 pt-20">
-          <div class="form-label mb-2"><strong>Potvrdite da niste robot</strong> <span class="text-danger">*</span></div>
-          <div id="captchaWrap" class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div>
-          <div id="captchaError" class="invalid-feedback d-block mt-2" style="display:none;"></div>
-        </div>
-
-        <!-- Submit -->
-        <div class="col-12 text-center pt-30">
-          <button type="submit" class="btn btn-success btn-lg rounded-pill px-4 fw-semibold d-inline-flex align-items-center gap-2">
-            <i class="bi bi-send-fill"></i>
-            Pošalji podatke
-          </button>
-        </div>
-
+      <!-- reCAPTCHA - kept outside fields container -->
+      <div class="col-12 pt-20">
+        <div class="form-label mb-2"><strong>Potvrdite da niste robot</strong> <span class="text-danger">*</span></div>
+        <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY" data-ms-captcha></div>
+        <div class="invalid-feedback d-block mt-2" data-ms-captcha-error style="display:none;"></div>
       </div>
+
+      <!-- Submit button - kept outside fields container -->
+      <div class="col-12 text-center pt-30">
+        <button type="submit" class="btn btn-success btn-lg rounded-pill px-4 fw-semibold d-inline-flex align-items-center gap-2">
+          <i class="bi bi-send-fill"></i>
+          Pošalji podatke
+        </button>
+      </div>
+
     </form>
   </div>
 </div>
@@ -879,6 +810,7 @@ Naši sistemi nude i mogućnost integracije sa video nadzorom i pametnim uređaj
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
   <script defer src="../js/custom.js"></script>
+  <script defer src="../js/forms.js"></script>
 </body>
 
 </html>
