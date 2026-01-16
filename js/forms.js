@@ -374,9 +374,16 @@ function ms_fallbackValidate(formEl, config) {
 }
 
 async function ms_submitForm(formEl, config) {
+  console.log("=== ms_submitForm CALLED ===");
+  console.log("Config:", config);
+  
   const endpoint = formEl.dataset.msEndpoint || config.endpoint;
   const subject = formEl.dataset.msSubject || config.subject;
   const formKey = formEl.dataset.msFormKey || config.formKey;
+
+  console.log("Endpoint:", endpoint);
+  console.log("Subject:", subject);
+  console.log("FormKey:", formKey);
 
   // reCAPTCHA (optional, but if present -> required)
   const captchaEl = ms_getCaptchaEl(formEl);
@@ -424,23 +431,36 @@ async function ms_submitForm(formEl, config) {
       fd.append("g-recaptcha-response", captchaResponse);
     }
 
+    console.log("=== AJAX SEND ===");
+    console.log("Endpoint:", endpoint);
+    console.log("FormData entries:", Array.from(fd.entries()));
+    
     const res = await fetch(endpoint, { method: "POST", body: fd });
+    
+    console.log("=== AJAX RESPONSE ===");
+    console.log("Status:", res.status, res.statusText);
+    console.log("OK:", res.ok);
+    console.log("Headers:", Object.fromEntries(res.headers.entries()));
 
     const ct = (res.headers.get("content-type") || "").toLowerCase();
     let payload;
     if (ct.includes("application/json")) {
       payload = await res.json();
+      console.log("JSON Payload:", payload);
     } else {
       const text = await res.text();
+      console.log("Text Response:", text);
       payload = { ok: res.ok, message: text };
     }
 
     if (!res.ok || payload?.ok === false) {
       const msg = payload?.message || "Došlo je do greške. Pokušajte ponovo.";
+      console.error("=== ERROR ===", msg);
       alert(msg);
       return;
     }
 
+    console.log("=== SUCCESS ===", payload?.message);
     alert(payload?.message || "Hvala! Vaš zahtev je uspešno poslat.");
     formEl.reset();
 
