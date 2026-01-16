@@ -71,8 +71,8 @@ const MS_FORM_CONFIGS = {
       { name: "email", label: "Email adresa", type: "email", required: true, placeholder: "npr. ime@domen.com", col: "col-md-6 pt-20" },
       { name: "telefon", label: "Broj telefona", type: "tel", required: true, placeholder: "npr. +381 6x xxx xxxx", col: "col-md-6 pt-20" },
 
-      { name: "brojUlaza", label: "Broj ulaza", type: "select", required: true, col: "col-md-6 pt-20",
-        options: ["1","2","3","4","5","6","7","8","9","10"] },
+      { name: "brojVrata", label: "Broj vrata", type: "select", required: true, col: "col-md-6 pt-20",
+        options: ["1","2","3","4","5","6","7","8","9","10","Više od 10"] },
 
       { name: "vrstaDogadjaja", label: "Vrsta događaja", type: "select", required: true, col: "col-md-6 pt-20",
         options: [
@@ -163,6 +163,7 @@ function ms_renderFormInto(formEl, config) {
 
     const requiredMark = f.required ? ' <span class="text-danger">*</span>' : "";
     const inputClass = ms_escapeHtml(f.inputClass || "form-control form-control-lg rounded-3");
+    const selectClass = ms_escapeHtml(f.selectClass || "form-select form-select-lg rounded-3");
 
     if (f.type === "checkbox") {
       parts.push(`
@@ -186,7 +187,7 @@ function ms_renderFormInto(formEl, config) {
       parts.push(`
         <div class="${ms_escapeHtml(colClass)}">
           <label class="form-label" for="${ms_escapeHtml(id)}"><strong>${ms_escapeHtml(f.label)}</strong>${requiredMark}</label>
-          <select class="${inputClass}" id="${ms_escapeHtml(id)}" name="${ms_escapeHtml(f.name)}">
+          <select class="${selectClass}" id="${ms_escapeHtml(id)}" name="${ms_escapeHtml(f.name)}">
             ${opts}
           </select>
           <div class="invalid-feedback"></div>

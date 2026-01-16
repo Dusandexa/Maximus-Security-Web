@@ -70,25 +70,27 @@ function verify_recaptcha_v2(string $secret, string $token, string $remoteIp = '
 }
 
 /* ==========================
-   CONFIG (EDIT THIS)
+   CONFIG (EDIT THIS BEFORE GOING LIVE)
    ========================== */
 
-// Put your real secret here (SERVER secret key, not site key)
-$RECAPTCHA_SECRET = 'PUT_YOUR_RECAPTCHA_SECRET_HERE';
+// ⚠️ TODO: Put your real reCAPTCHA secret here (SERVER secret key, not site key)
+// Get it from: https://www.google.com/recaptcha/admin
+$RECAPTCHA_SECRET = '6LcMoUwsAAAAAAnw1E0J2C_SZgd5diRFg1zlOZIk';
 
+// ⚠️ TODO: Set your real email addresses below
 // Who receives emails per formKey
 $FORM_RECIPIENTS = [
-  'video-nadzor' => ['sales@yourdomain.com', 'office@yourdomain.com'],
-  'alarmni-sistemi' => ['sales@yourdomain.com'],
-  'iznajmljivanje-metal-detektorska-vrata' => ['rentals@yourdomain.com', 'sales@yourdomain.com'],
-  'generic' => ['office@yourdomain.com'],
+  'video-nadzor' => ['dusandjordjevic008@gmail.com'],
+  'alarmni-sistemi' => ['dusandjordjevic008@gmail.com'],
+  'iznajmljivanje-metal-detektorska-vrata' => ['dusandjordjevic008@gmail.com'],
+  'generic' => ['dusandjordjevic008@gmail.com'],
 ];
 
 // Fallback recipients if formKey not listed
-$DEFAULT_RECIPIENTS = ['office@yourdomain.com'];
+$DEFAULT_RECIPIENTS = ['dusandjordjevic008@gmail.com'];
 
-// From domain (must match your domain for best deliverability)
-$FROM_EMAIL = 'no-reply@yourdomain.com';
+// ⚠️ TODO: From domain (must match your hosting domain for best deliverability)
+$FROM_EMAIL = 'no-reply@yourdomain.com';  // Change to your domain
 $FROM_NAME  = 'Maximus Security Website';
 
 /* ==========================
