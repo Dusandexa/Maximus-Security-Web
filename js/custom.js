@@ -271,6 +271,14 @@ $(function () {
     errorElement: "div",
     errorClass: "error-text",
     focusInvalid: false,
+    onkeyup: false, // Don't validate on every keystroke
+    onfocusout: function(element) {
+      // Validate when user leaves the field (if it has content)
+      const val = String($(element).val() || "").trim();
+      if (val !== "") {
+        this.element(element);
+      }
+    },
 
     rules: {
   ime: { required: true, minlength: 2 },
