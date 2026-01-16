@@ -3,3 +3,11 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/maximuss/public_html/
     - /bin/rsync -av --delete --exclude ".git" --exclude ".github" ./ $DEPLOYPATH
+
+    # Permissions that work even if group/ownership flips
+    - /usr/bin/find $DEPLOYPATH -type d -exec /bin/chmod 755 {} \;
+    - /usr/bin/find $DEPLOYPATH -type f -exec /bin/chmod 644 {} \;
+
+    # Health check file (easy to test in browser)
+    - /bin/echo "ok" > $DEPLOYPATH/health.txt
+    - /bin/chmod 644 $DEPLOYPATH/health.txt

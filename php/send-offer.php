@@ -62,9 +62,18 @@ function verify_recaptcha_v2(string $secret, string $token, string $remoteIp = '
   $err  = curl_error($ch);
   curl_close($ch);
 
-  if ($resp === false) return false;
+  if ($resp === false) {
+    error_log("reCAPTCHA curl error: " . $err);
+    return false;
+  }
 
   $json = json_decode($resp, true);
+  
+  // Debug log - remove after fixing
+  if (!empty($json['error-codes'])) {
+    error_log("reCAPTCHA errors: " . implode(', ', $json['error-codes']));
+  }
+  
   // For reCAPTCHA v2 checkbox: success is enough
   return is_array($json) && !empty($json['success']);
 }
