@@ -1,3 +1,6 @@
+RewriteEngine On
+RewriteRule ^$ index.php [L]
+
 # Maximus Security Website - Apache Configuration
 # ================================================
 
@@ -29,11 +32,7 @@ ServerSignature Off
     Deny from all
 </FilesMatch>
 
-# Block access to PHP files in specific directories
-<FilesMatch "\.php$">
-    Order Deny,Allow
-    Deny from all
-</FilesMatch>
+
 <Directory ~ "/(php)/">
     <FilesMatch "\.php$">
         Order Allow,Deny
