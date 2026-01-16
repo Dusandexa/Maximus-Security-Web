@@ -20,7 +20,13 @@
 
 header('Content-Type: application/json; charset=utf-8');
 
+// ✅ LOG: Script started
+error_log("===== send-offer.php: Script started at " . date('Y-m-d H:i:s') . " =====");
+error_log("REQUEST_METHOD: " . ($_SERVER['REQUEST_METHOD'] ?? 'N/A'));
+error_log("POST data: " . print_r($_POST, true));
+
 function respond(bool $ok, string $message, int $httpCode = 200): void {
+  error_log("===== send-offer.php: Responding with ok=$ok, message='$message', httpCode=$httpCode =====");
   http_response_code($httpCode);
   echo json_encode(["ok" => $ok, "message" => $message], JSON_UNESCAPED_UNICODE);
   exit;
