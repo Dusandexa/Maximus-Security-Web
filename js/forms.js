@@ -122,14 +122,14 @@ function ms_showSuccessModal() {
     const modalHtml = `
       <div class="modal fade" id="msSuccessModal" tabindex="-1" aria-labelledby="msSuccessModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content bg-dark text-white border-0" style="border-radius: 16px;">
+          <div class="modal-content bg-white text-dark border-0" style="border-radius: 16px;">
             <div class="modal-body text-center py-5 px-4">
               <div class="mb-4">
                 <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
               </div>
-              <h2 class="fw-bold mb-3" id="msSuccessModalLabel">Hvala! Vaš zahtev je uspešno poslat.</h2>
-              <p class="text-secondary mb-4 fs-5">Naš tim će vas kontaktirati u što kraćem roku.</p>
-              <p class="mb-4">Ipak ne želite da čekate? <a href="tel:+38162421515" class="text-danger fw-semibold text-decoration-none">Pozovite nas <i class="bi bi-telephone-fill"></i></a></p>
+              <h2 class="fw-bold mb-3 text-dark" id="msSuccessModalLabel">Hvala! Vaš zahtev je uspešno poslat.</h2>
+              <p class="text-dark mb-4 fs-5">Naš tim će vas kontaktirati u što kraćem roku.</p>
+              <p class="text-dark mb-4">Ipak ne želite da čekate? <a href="tel:+38162421515" class="text-danger fw-semibold text-decoration-none">Pozovite nas <i class="bi bi-telephone-fill"></i></a></p>
               <button type="button" class="btn btn-outline-danger btn-lg rounded-pill px-4 fw-semibold" data-bs-dismiss="modal">
                 Zatvori
               </button>
