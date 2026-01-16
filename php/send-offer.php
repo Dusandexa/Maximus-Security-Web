@@ -20,13 +20,20 @@
 
 header('Content-Type: application/json; charset=utf-8');
 
-// ✅ LOG: Script started
-error_log("===== send-offer.php: Script started at " . date('Y-m-d H:i:s') . " =====");
-error_log("REQUEST_METHOD: " . ($_SERVER['REQUEST_METHOD'] ?? 'N/A'));
-error_log("POST data: " . print_r($_POST, true));
+// ✅ CUSTOM DEBUG LOG - Write directly to file
+$LOG_FILE = __DIR__ . '/../debug-email.log';
+function debug_log($message) {
+  global $LOG_FILE;
+  $timestamp = date('Y-m-d H:i:s');
+  file_put_contents($LOG_FILE, "[$timestamp] $message\n", FILE_APPEND);
+}
+
+debug_log("===== send-offer.php: Script started =====");
+debug_log("REQUEST_METHOD: " . ($_SERVER['REQUEST_METHOD'] ?? 'N/A'));
+debug_log("POST data: " . print_r($_POST, true));
 
 function respond(bool $ok, string $message, int $httpCode = 200): void {
-  error_log("===== send-offer.php: Responding with ok=$ok, message='$message', httpCode=$httpCode =====");
+  debug_log("===== Responding with ok=$ok, message='$message', httpCode=$httpCode =====");
   http_response_code($httpCode);
   echo json_encode(["ok" => $ok, "message" => $message], JSON_UNESCAPED_UNICODE);
   exit;
@@ -69,7 +76,7 @@ function verify_recaptcha_v2(string $secret, string $token, string $remoteIp = '
   curl_close($ch);
 
   if ($resp === false) {
-    error_log("reCAPTCHA curl error: " . $err);
+    debug_log("reCAPTCHA curl error: " . $err);
     return false;
   }
 
@@ -77,7 +84,7 @@ function verify_recaptcha_v2(string $secret, string $token, string $remoteIp = '
   
   // Debug log - remove after fixing
   if (!empty($json['error-codes'])) {
-    error_log("reCAPTCHA errors: " . implode(', ', $json['error-codes']));
+    debug_log("reCAPTCHA errors: " . implode(', ', $json['error-codes']));
   }
   
   // For reCAPTCHA v2 checkbox: success is enough
@@ -256,16 +263,16 @@ $message .= $bodyHtml . "\r\n\r\n";
 $message .= "--{$boundary}--\r\n";
 
 // Log email attempt
-error_log("Attempting to send email to: " . $to);
-error_log("Subject: " . $subject);
-error_log("From: " . $fromEmail);
+debug_log("Attempting to send email to: " . $to);
+debug_log("Subject: " . $subject);
+debug_log("From: " . $fromEmail);
 
 $sent = @mail($to, $subject, $message, implode("\r\n", $headers));
 
 if (!$sent) {
-  error_log("mail() returned false - email NOT sent");
+  debug_log("mail() returned false - email NOT sent");
   respond(false, 'Email nije poslat. Proverite mail() konfiguraciju na serveru ili koristite SMTP.', 500);
 }
 
-error_log("mail() returned true - email sent successfully");
+debug_log("mail() returned true - email sent successfully");
 respond(true, 'Hvala! Vaš zahtev je uspešno poslat.');
