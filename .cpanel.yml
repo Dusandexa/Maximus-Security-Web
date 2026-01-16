@@ -4,8 +4,14 @@ deployment:
     - export DEPLOYPATH=/home/maximuss/public_html/
     - /bin/rsync -av --delete --exclude ".git" --exclude ".github" ./ $DEPLOYPATH
 
+    # Set directory permissions
     - /usr/bin/find $DEPLOYPATH -type d -exec /bin/chmod 0755 {} \;
-    - /usr/bin/find $DEPLOYPATH -type f -exec /bin/chmod 0640 {} \;
+    
+    # Set default file permissions
+    - /usr/bin/find $DEPLOYPATH -type f -exec /bin/chmod 0644 {} \;
+    
+    # Set stricter permissions for PHP files only
+    - /usr/bin/find $DEPLOYPATH -type f -name "*.php" -exec /bin/chmod 0640 {} \;
     
     # Health check file
     - /bin/echo "ok" > $DEPLOYPATH/health.txt
@@ -13,4 +19,4 @@ deployment:
 
     # Deploy log
     - /bin/echo "Deploy OK $(/bin/date)" >> $DEPLOYPATH/deployment.log
-    - /bin/chmod 0640 $DEPLOYPATH/deployment.log
+    - /bin/chmod 0644 $DEPLOYPATH/deployment.log

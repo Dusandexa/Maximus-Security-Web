@@ -1,24 +1,12 @@
-RewriteEngine On
-RewriteRule ^$ index.php [L]
-
 # Maximus Security Website - Apache Configuration
 # ================================================
 
 # Set default index files
 DirectoryIndex index.html index.php
 
-# Disable directory browsing
-Options -Indexes
-
-# Enable FollowSymLinks (required for mod_rewrite)
-Options +FollowSymLinks
-
 # ================================================
 # SECURITY
 # ================================================
-
-# Disable server signature
-ServerSignature Off
 
 # Protect sensitive files
 <FilesMatch "^\.">
