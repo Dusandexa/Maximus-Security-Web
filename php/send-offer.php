@@ -99,7 +99,7 @@ $FORM_RECIPIENTS = [
 $DEFAULT_RECIPIENTS = ['dusandjordjevic008@gmail.com'];
 
 // ⚠️ TODO: From domain (must match your hosting domain for best deliverability)
-$FROM_EMAIL = 'no-reply@yourdomain.com';  // Change to your domain
+$FROM_EMAIL = 'no-reply@maximussecurity.rs';
 $FROM_NAME  = 'Maximus Security Website';
 
 /* ==========================
