@@ -235,6 +235,11 @@ function ms_setupJqueryValidate(formEl, config) {
 
   const $form = window.jQuery(formEl);
 
+  // Track when select elements are actually changed by user
+  $form.find('select').on('change', function() {
+    window.jQuery(this).attr('data-touched', 'true');
+  });
+
   // Destroy previous validator if any (important for pages with partial reloads)
   try { $form.validate().destroy(); } catch (_) {}
 
@@ -291,9 +296,23 @@ function ms_setupJqueryValidate(formEl, config) {
       if ($fb.length) $fb.show();
     },
     unhighlight: function (element) {
-      // Only remove invalid class, don't add valid class to avoid green on empty fields
-      window.jQuery(element).removeClass("is-invalid");
-      const $fb = window.jQuery(element).closest("div").find(".invalid-feedback").first();
+      const $el = window.jQuery(element);
+      const val = String($el.val() || "").trim();
+      const isSelect = $el.is('select');
+      const isTouched = $el.attr('data-touched') === 'true';
+      
+      $el.removeClass("is-invalid");
+      
+      // Only add is-valid class if:
+      // - For inputs/textareas: field has content
+      // - For selects: user has actually changed the value (touched)
+      if (val !== "" && (!isSelect || isTouched)) {
+        $el.addClass("is-valid");
+      } else {
+        $el.removeClass("is-valid");
+      }
+      
+      const $fb = $el.closest("div").find(".invalid-feedback").first();
       if ($fb.length) $fb.hide().text("");
     },
     errorPlacement: function (error, element) {

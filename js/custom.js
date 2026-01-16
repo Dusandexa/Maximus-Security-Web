@@ -256,6 +256,11 @@ $(function () {
   const $form = $('#offerForm');
   if (!$form.length) return;
 
+  // Track when select elements are actually changed by user
+  $form.find('select').on('change', function() {
+    $(this).attr('data-touched', 'true');
+  });
+
   // Custom phone format check
   $.validator.addMethod("srPhone", function (value, element) {
     return /^[0-9+\s\/\-()]{6,}$/.test(value.trim());
@@ -306,14 +311,29 @@ messages: {
 
     // === When valid ===
     unhighlight: function (element) {
-      $(element)
-        .removeClass("is-invalid")
-        .addClass("is-valid")
-        .css({
+      const $el = $(element);
+      const val = String($el.val() || "").trim();
+      const isSelect = $el.is('select');
+      const isTouched = $el.attr('data-touched') === 'true';
+      
+      $el.removeClass("is-invalid");
+      
+      // Only add is-valid class if:
+      // - For inputs/textareas: field has content
+      // - For selects: user has actually changed the value (touched)
+      if (val !== "" && (!isSelect || isTouched)) {
+        $el.addClass("is-valid").css({
+          backgroundColor: "#fff",
+          borderColor: "#28a745",
+          color: "#000"
+        });
+      } else {
+        $el.removeClass("is-valid").css({
           backgroundColor: "#fff",
           borderColor: "#ccc",
           color: "#000"
         });
+      }
     },
 
     // === Submit handler ===
