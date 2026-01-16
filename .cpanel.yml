@@ -10,6 +10,11 @@ deployment:
     
     # Set group ownership to 'nobody' so webserver can access files
     - /bin/chgrp -R nobody $DEPLOYPATH || true
+    
+    # Ensure critical files have correct permissions
+    - /bin/chmod 0644 $DEPLOYPATH/.htaccess || true
+    - /bin/chmod 0644 $DEPLOYPATH/index.html || true
+    - /bin/chmod 0644 $DEPLOYPATH/index.php || true
 
     # Health check file
     - /bin/echo "ok" > $DEPLOYPATH/health.txt
