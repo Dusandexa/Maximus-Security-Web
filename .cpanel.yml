@@ -4,14 +4,17 @@ deployment:
     - export DEPLOYPATH=/home/maximuss/public_html/
     - /bin/rsync -av --delete --exclude ".git" --exclude ".github" ./ $DEPLOYPATH
 
-    # SAFE permissions – do NOT depend on group ownership
-    - /usr/bin/find $DEPLOYPATH -type d -exec /bin/chmod 755 {} \;
-    - /usr/bin/find $DEPLOYPATH -type f -exec /bin/chmod 644 {} \;
+    # Set permissions as hosting recommends: 0750 for dirs, 0640 for files
+    - /usr/bin/find $DEPLOYPATH -type d -exec /bin/chmod 0750 {} \;
+    - /usr/bin/find $DEPLOYPATH -type f -exec /bin/chmod 0640 {} \;
+    
+    # Set group ownership to 'nobody' so webserver can access files
+    - /bin/chgrp -R nobody $DEPLOYPATH || true
 
     # Health check file
     - /bin/echo "ok" > $DEPLOYPATH/health.txt
-    - /bin/chmod 644 $DEPLOYPATH/health.txt
+    - /bin/chmod 0644 $DEPLOYPATH/health.txt
 
-    # Deploy log (optional)
+    # Deploy log
     - /bin/echo "Deploy OK $(/bin/date)" >> $DEPLOYPATH/deployment.log
-    - /bin/chmod 644 $DEPLOYPATH/deployment.log
+    - /bin/chmod 0640 $DEPLOYPATH/deployment.log
