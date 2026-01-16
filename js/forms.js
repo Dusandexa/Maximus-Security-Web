@@ -13,7 +13,7 @@ const MS_FORM_CONFIGS = {
   // Video nadzor / kamere
   kamere: {
     formKey: "video-nadzor",
-    subject: "Upit za ponudu — Video nadzor (kamere)",
+    subject: "Upit za ponudu - Video nadzor (kamere)",
     endpoint: "/php/send-offer.php",
     fields: [
       { name: "obuka", label: "Želim obuku za video nadzor", type: "checkbox", value: "Da", col: "col-12 pt-20" },
@@ -40,7 +40,7 @@ const MS_FORM_CONFIGS = {
   // Alarmni sistemi
   alarm: {
     formKey: "alarmni-sistemi",
-    subject: "Upit za ponudu — Alarmni sistemi",
+    subject: "Upit za ponudu - Alarmni sistemi",
     endpoint: "/php/send-offer.php",
     fields: [
       { name: "ime", label: "Ime", type: "text", required: true, placeholder: "Vaše ime", col: "col-md-6 pt-20" },
@@ -62,7 +62,7 @@ const MS_FORM_CONFIGS = {
   // Iznajmljivanje metal detektorskih vrata
   metal: {
     formKey: "iznajmljivanje-metal-detektorska-vrata",
-    subject: "Upit za ponudu — Iznajmljivanje metal detektorskih vrata",
+    subject: "Upit za ponudu - Iznajmljivanje metal detektorskih vrata",
     endpoint: "/php/send-offer.php",
     fields: [
       { name: "ime", label: "Ime", type: "text", required: true, placeholder: "Vaše ime", col: "col-md-6 pt-20" },
