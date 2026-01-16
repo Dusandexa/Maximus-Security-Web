@@ -309,12 +309,7 @@ messages: {
     highlight: function (element) {
       $(element)
         .addClass("is-invalid")
-        .removeClass("is-valid")
-        .css({
-          backgroundColor: "#fff5f5",
-          borderColor: "#dc3545",
-          color: "#000"
-        });
+        .removeClass("is-valid");
     },
 
     // === When valid ===
@@ -330,17 +325,9 @@ messages: {
       // - For inputs/textareas: field has content
       // - For selects: user has actually changed the value (touched)
       if (val !== "" && (!isSelect || isTouched)) {
-        $el.addClass("is-valid").css({
-          backgroundColor: "#fff",
-          borderColor: "#28a745",
-          color: "#000"
-        });
+        $el.addClass("is-valid");
       } else {
-        $el.removeClass("is-valid").css({
-          backgroundColor: "#fff",
-          borderColor: "#ccc",
-          color: "#000"
-        });
+        $el.removeClass("is-valid");
       }
     },
 
@@ -370,11 +357,7 @@ messages: {
       $form.find('select[data-touched]').removeAttr('data-touched');
 
       // reset visuals
-      $form.find("input, textarea, select").removeClass("is-valid").css({
-        backgroundColor: "#fff",
-        borderColor: "#ccc",
-        color: "#000"
-      });
+      $form.find("input, textarea, select").removeClass("is-valid is-invalid");
 
       return false;
     }

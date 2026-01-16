@@ -1140,9 +1140,12 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-
 }
 
 /* Input states */
-#offerForm .is-valid {
+#offerForm .form-control.is-valid,
+#offerForm .form-select.is-valid,
+#offerForm textarea.is-valid {
   border-color: #28a745 !important;
   padding-right: calc(1.5em + 0.75rem) !important;
+  background-color: #fff !important;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2328a745' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e") !important;
   background-repeat: no-repeat !important;
   background-position: right calc(0.375em + 0.1875rem) center !important;
@@ -1156,7 +1159,9 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-
   background-size: 16px 12px, calc(0.75em + 0.375rem) calc(0.75em + 0.375rem) !important;
 }
 
-#offerForm .is-invalid {
+#offerForm .form-control.is-invalid,
+#offerForm .form-select.is-invalid,
+#offerForm textarea.is-invalid {
   border-color: #dc3545 !important;
   background-color: #fff5f5 !important;
   padding-right: calc(1.5em + 0.75rem) !important;
