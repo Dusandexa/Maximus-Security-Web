@@ -1115,6 +1115,17 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-
 }
 
 
+/* === Autofill detection animation === */
+@keyframes onAutoFillStart {
+  from { opacity: 0.99; }
+  to { opacity: 1; }
+}
+
+#offerForm input:-webkit-autofill {
+  animation-name: onAutoFillStart;
+  animation-duration: 0.001s;
+}
+
 /* === FORM STYLE FIXES (White inputs, clear messages) === */
 #offerForm .form-control,
 #offerForm .form-select,
