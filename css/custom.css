@@ -1166,6 +1166,16 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-
   background-repeat: no-repeat !important;
   background-position: right calc(0.375em + 0.1875rem) center !important;
   background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem) !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
+
+/* Force Chrome/Safari to show background image */
+#offerForm input.is-valid::-webkit-contacts-auto-fill-button,
+#offerForm input.is-valid::-webkit-credentials-auto-fill-button {
+  visibility: hidden;
+  pointer-events: none;
+  position: absolute;
 }
 
 #offerForm select.is-valid {
@@ -1192,6 +1202,8 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-
   background-repeat: no-repeat !important;
   background-position: right calc(0.375em + 0.1875rem) center !important;
   background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem) !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
 }
 
 #offerForm select.is-invalid {
