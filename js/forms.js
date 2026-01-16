@@ -291,7 +291,8 @@ function ms_setupJqueryValidate(formEl, config) {
       if ($fb.length) $fb.show();
     },
     unhighlight: function (element) {
-      window.jQuery(element).removeClass("is-invalid").addClass("is-valid");
+      // Only remove invalid class, don't add valid class to avoid green on empty fields
+      window.jQuery(element).removeClass("is-invalid");
       const $fb = window.jQuery(element).closest("div").find(".invalid-feedback").first();
       if ($fb.length) $fb.hide().text("");
     },
