@@ -291,7 +291,8 @@ function ms_setupJqueryValidate(formEl, config) {
       if ($fb.length) $fb.show();
     },
     unhighlight: function (element) {
-      window.jQuery(element).removeClass("is-invalid").addClass("is-valid");
+      // Only remove invalid class, don't add valid class to avoid green on empty fields
+      window.jQuery(element).removeClass("is-invalid");
       const $fb = window.jQuery(element).closest("div").find(".invalid-feedback").first();
       if ($fb.length) $fb.hide().text("");
     },
@@ -354,9 +355,16 @@ function ms_fallbackValidate(formEl, config) {
 }
 
 async function ms_submitForm(formEl, config) {
+  console.log("=== ms_submitForm CALLED ===");
+  console.log("Config:", config);
+  
   const endpoint = formEl.dataset.msEndpoint || config.endpoint;
   const subject = formEl.dataset.msSubject || config.subject;
   const formKey = formEl.dataset.msFormKey || config.formKey;
+
+  console.log("Endpoint:", endpoint);
+  console.log("Subject:", subject);
+  console.log("FormKey:", formKey);
 
   // reCAPTCHA (optional, but if present -> required)
   const captchaEl = ms_getCaptchaEl(formEl);
