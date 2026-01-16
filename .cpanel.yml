@@ -10,8 +10,8 @@ deployment:
     # Set default file permissions
     - /usr/bin/find $DEPLOYPATH -type f -exec /bin/chmod 0644 {} \;
     
-    # Set stricter permissions for PHP files only
-    - /usr/bin/find $DEPLOYPATH -type f -name "*.php" -exec /bin/chmod 0640 {} \;
+    # Set same permissions for PHP files (0644 for webserver access)
+    - /usr/bin/find $DEPLOYPATH -type f -name "*.php" -exec /bin/chmod 0644 {} \;
     
     # Health check file
     - /bin/echo "ok" > $DEPLOYPATH/health.txt
