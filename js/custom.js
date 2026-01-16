@@ -261,25 +261,15 @@ $(function () {
     $(this).attr('data-touched', 'true');
   });
 
-  // Handle autofill detection and validation
-  $form.find('input').on('animationstart', function(e) {
-    if (e.originalEvent.animationName === 'onAutoFillStart') {
-      $(this).trigger('blur');
-    }
-  });
-
-  // Alternative autofill detection for Chrome/Edge
-  $form.find('input').on('change input', function() {
-    const $input = $(this);
-    if ($input.is(':-webkit-autofill') || $input.val() !== '') {
-      $input.valid();
-    }
-  });
-
-  // Custom phone format check
-  $.validator.addMethod("srPhone", function (value, element) {
-    return /^[0-9+\s\/\-()]{6,}$/.test(value.trim());
-  }, "Unesite važeći broj telefona.");
+    // Handle autofill detection with delay to avoid flickering
+    setTimeout(function() {
+      $form.find('input:-webkit-autofill').each(function() {
+        const $input = $(this);
+        if ($input.val() !== '') {
+          $input.valid();
+        }
+      });
+    }, 500);
 
   // jQuery Validate setup
   $form.validate({

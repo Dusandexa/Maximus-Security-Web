@@ -273,20 +273,15 @@ function ms_setupJqueryValidate(formEl, config) {
     window.jQuery(this).attr('data-touched', 'true');
   });
 
-  // Handle autofill detection and validation
-  $form.find('input').on('animationstart', function(e) {
-    if (e.originalEvent.animationName === 'onAutoFillStart') {
-      window.jQuery(this).trigger('blur');
-    }
-  });
-
-  // Alternative autofill detection for Chrome/Edge
-  $form.find('input').on('change input', function() {
-    const $input = window.jQuery(this);
-    if ($input.is(':-webkit-autofill') || $input.val() !== '') {
-      $input.valid();
-    }
-  });
+  // Handle autofill detection with delay to avoid flickering
+  setTimeout(function() {
+    $form.find('input:-webkit-autofill').each(function() {
+      const $input = window.jQuery(this);
+      if ($input.val() !== '') {
+        $input.valid();
+      }
+    });
+  }, 500);
 
   // Destroy previous validator if any (important for pages with partial reloads)
   try { $form.validate().destroy(); } catch (_) {}
