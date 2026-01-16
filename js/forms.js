@@ -114,6 +114,39 @@ function ms_escapeHtml(str) {
     .replaceAll("'", "&#039;");
 }
 
+// Success modal helper
+function ms_showSuccessModal() {
+  // Create modal if it doesn't exist
+  let modal = document.getElementById('msSuccessModal');
+  if (!modal) {
+    const modalHtml = `
+      <div class="modal fade" id="msSuccessModal" tabindex="-1" aria-labelledby="msSuccessModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content bg-dark text-white border-0" style="border-radius: 16px;">
+            <div class="modal-body text-center py-5 px-4">
+              <div class="mb-4">
+                <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
+              </div>
+              <h2 class="fw-bold mb-3" id="msSuccessModalLabel">Hvala! Vaš zahtev je uspešno poslat.</h2>
+              <p class="text-secondary mb-4 fs-5">Naš tim će vas kontaktirati u što kraćem roku.</p>
+              <p class="mb-4">Ipak ne želite da čekate? <a href="tel:+38162421515" class="text-danger fw-semibold text-decoration-none">Pozovite nas <i class="bi bi-telephone-fill"></i></a></p>
+              <button type="button" class="btn btn-outline-danger btn-lg rounded-pill px-4 fw-semibold" data-bs-dismiss="modal">
+                Zatvori
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+    modal = document.getElementById('msSuccessModal');
+  }
+  
+  // Show modal using Bootstrap
+  const bsModal = new bootstrap.Modal(modal);
+  bsModal.show();
+}
+
 function ms_isRecaptchaReady() {
   return typeof window.grecaptcha !== "undefined" && typeof window.grecaptcha.getResponse === "function";
 }
@@ -461,8 +494,13 @@ async function ms_submitForm(formEl, config) {
     }
 
     console.log("=== SUCCESS ===", payload?.message);
-    alert(payload?.message || "Hvala! Vaš zahtev je uspešno poslat.");
+    ms_showSuccessModal();
     formEl.reset();
+
+    // Reset select touched states
+    formEl.querySelectorAll('select[data-touched]').forEach(el => {
+      el.removeAttribute('data-touched');
+    });
 
     if (captchaEl && ms_isRecaptchaReady()) {
       window.grecaptcha.reset();

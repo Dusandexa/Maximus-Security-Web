@@ -348,9 +348,18 @@ messages: {
         $("#captchaError").hide().text("");
       }
 
-      alert("Hvala! Vaš zahtev je uspešno poslat.");
+      // Show success modal (uses function from forms.js)
+      if (typeof ms_showSuccessModal === 'function') {
+        ms_showSuccessModal();
+      } else {
+        alert("Hvala! Vaš zahtev je uspešno poslat.");
+      }
+      
       form.reset();
       grecaptcha.reset();
+
+      // Reset select touched states
+      $form.find('select[data-touched]').removeAttr('data-touched');
 
       // reset visuals
       $form.find("input, textarea, select").removeClass("is-valid").css({
