@@ -1144,10 +1144,15 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-
 
 /* Input states */
 #offerForm input.form-control.is-valid,
+#offerForm input.form-control-lg.is-valid,
 #offerForm input.is-valid,
 #offerForm .form-control.is-valid,
+#offerForm .form-control-lg.is-valid,
 #offerForm .form-select.is-valid,
-#offerForm textarea.is-valid {
+#offerForm textarea.is-valid,
+#offerForm input[type="text"].is-valid,
+#offerForm input[type="email"].is-valid,
+#offerForm input[type="tel"].is-valid {
   border-color: #28a745 !important;
   padding-right: calc(1.5em + 0.75rem) !important;
   background-color: #fff !important;
@@ -1165,10 +1170,15 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-
 }
 
 #offerForm input.form-control.is-invalid,
+#offerForm input.form-control-lg.is-invalid,
 #offerForm input.is-invalid,
 #offerForm .form-control.is-invalid,
+#offerForm .form-control-lg.is-invalid,
 #offerForm .form-select.is-invalid,
-#offerForm textarea.is-invalid {
+#offerForm textarea.is-invalid,
+#offerForm input[type="text"].is-invalid,
+#offerForm input[type="email"].is-invalid,
+#offerForm input[type="tel"].is-invalid {
   border-color: #dc3545 !important;
   background-color: #fff5f5 !important;
   padding-right: calc(1.5em + 0.75rem) !important;
