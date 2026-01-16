@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/maximuss/public_html/
+    - /bin/rsync -av --delete --exclude ".git" --exclude ".github" ./ $DEPLOYPATH
