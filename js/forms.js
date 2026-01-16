@@ -502,8 +502,20 @@ function ms_initForms() {
   }
 }
 
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", ms_initForms);
-} else {
+// Wait for both DOM and reCAPTCHA to be ready
+function ms_initialize() {
+  // Check if reCAPTCHA is loaded
+  if (typeof grecaptcha === 'undefined' || !grecaptcha.render) {
+    // reCAPTCHA not ready yet, wait a bit
+    setTimeout(ms_initialize, 100);
+    return;
+  }
+  // Both DOM and reCAPTCHA ready, initialize forms
   ms_initForms();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", ms_initialize);
+} else {
+  ms_initialize();
 }
