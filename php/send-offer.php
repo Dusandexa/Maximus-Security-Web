@@ -249,10 +249,17 @@ $message .= "Content-Transfer-Encoding: 8bit\r\n\r\n";
 $message .= $bodyHtml . "\r\n\r\n";
 $message .= "--{$boundary}--\r\n";
 
+// Log email attempt
+error_log("Attempting to send email to: " . $to);
+error_log("Subject: " . $subject);
+error_log("From: " . $fromEmail);
+
 $sent = @mail($to, $subject, $message, implode("\r\n", $headers));
 
 if (!$sent) {
+  error_log("mail() returned false - email NOT sent");
   respond(false, 'Email nije poslat. Proverite mail() konfiguraciju na serveru ili koristite SMTP.', 500);
 }
 
+error_log("mail() returned true - email sent successfully");
 respond(true, 'Hvala! Vaš zahtev je uspešno poslat.');
