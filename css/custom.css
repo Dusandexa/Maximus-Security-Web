@@ -1118,16 +1118,19 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-
 /* === FORM STYLE FIXES (White inputs, clear messages) === */
 #offerForm .form-control,
 #offerForm .form-select,
-#offerForm textarea {
+#offerForm textarea,
+#offerForm input {
   background-color: #fff !important;
   color: #000 !important;
   border: 1px solid #ccc;
   transition: all 0.2s ease;
+  background-image: none;
 }
 
 #offerForm .form-control:focus,
 #offerForm .form-select:focus,
-#offerForm textarea:focus {
+#offerForm textarea:focus,
+#offerForm input:focus {
   border-color: #d00;
   box-shadow: 0 0 0 .15rem rgba(220,53,69,0.15);
 }
@@ -1140,6 +1143,8 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-
 }
 
 /* Input states */
+#offerForm input.form-control.is-valid,
+#offerForm input.is-valid,
 #offerForm .form-control.is-valid,
 #offerForm .form-select.is-valid,
 #offerForm textarea.is-valid {
@@ -1159,6 +1164,8 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-
   background-size: 16px 12px, calc(0.75em + 0.375rem) calc(0.75em + 0.375rem) !important;
 }
 
+#offerForm input.form-control.is-invalid,
+#offerForm input.is-invalid,
 #offerForm .form-control.is-invalid,
 #offerForm .form-select.is-invalid,
 #offerForm textarea.is-invalid {
