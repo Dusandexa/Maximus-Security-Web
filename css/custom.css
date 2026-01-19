@@ -693,23 +693,6 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-
   background-position: center;
 }
 
-/* Blackout gradient patch behind hero text */
-.hero-landing::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  background:
-    radial-gradient(
-      900px 520px at var(--focus-x) var(--focus-y),
-      rgba(0, 0, 0, 0.9) 0%,
-      rgba(0, 0, 0, 0.75) 35%,
-      rgba(0, 0, 0, 0.5) 55%,
-      rgba(0, 0, 0, 0.25) 75%,
-      rgba(0, 0, 0, 0) 90%
-    );
-  z-index: 1;
-  pointer-events: none;
-}
 
 /* Top/bottom fade you already use */
 .hero-landing::after {
@@ -1137,11 +1120,27 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-
   transition: all 0.2s ease;
 }
 
+/* Default select arrow */
+#offerForm .form-select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 0.75rem center !important;
+  background-size: 16px 12px !important;
+}
+
 #offerForm .form-control:not(.is-valid):not(.is-invalid),
 #offerForm .form-select:not(.is-valid):not(.is-invalid),
 #offerForm textarea:not(.is-valid):not(.is-invalid),
 #offerForm input:not(.is-valid):not(.is-invalid) {
   background-image: none !important;
+}
+
+/* Keep arrow on select even when not validated */
+#offerForm .form-select:not(.is-valid):not(.is-invalid) {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 0.75rem center !important;
+  background-size: 16px 12px !important;
 }
 
 #offerForm .form-control:focus,
