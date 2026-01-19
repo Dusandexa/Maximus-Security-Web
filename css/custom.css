@@ -1863,3 +1863,196 @@ a, button, .nav-link, .dropdown-toggle, .navbar-toggler { -webkit-tap-highlight-
     margin-top: 160px;
   }
 }
+
+/* ===============================
+   Hero Split Columns Section
+   =============================== */
+.hero-split {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+.hero-column {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-column__link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-column__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.6s ease;
+  overflow: hidden;
+}
+
+/* Overlay for better text readability */
+.hero-column__inner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  transition: all 0.6s ease;
+  z-index: 1;
+}
+
+.hero-column__content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 3rem 2rem;
+  max-width: 400px;
+}
+
+.hero-column__title {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.hero-column__subtitle {
+  font-size: clamp(0.95rem, 1.5vw, 1.125rem);
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+}
+
+/* Badge at bottom of card */
+.hero-column__badge {
+  position: absolute;
+  bottom: 2rem;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: fit-content;
+  border: 2px solid var(--brand-red);
+  color: #fff;
+  background: transparent;
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+  z-index: 3;
+  transition: all 0.3s ease;
+}
+
+.hero-column:hover .hero-column__badge {
+  background: rgba(192, 38, 50, 0.2);
+}
+
+/* Button styling for hero columns */
+.btn-hero-column {
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  color: #fff;
+  background: transparent;
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.4s ease;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+/* Hover effects */
+.hero-column:hover .hero-column__inner {
+  transform: scale(1.1);
+}
+
+.hero-column:hover .hero-column__inner::before {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.hero-column:hover .btn-straight {
+  background: var(--brand-red);
+  border-color: var(--brand-red);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.hero-column:hover .btn-hero-column {
+  background-color: var(--brand-red);
+  border-color: var(--brand-red);
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(192, 38, 50, 0.4);
+}
+
+/* Desktop layout - cards at 70vh */
+@media (min-width: 992px) {
+  .hero-split {
+    display: flex !important;
+    height: 80vh !important;
+  }
+  
+  .hero-split .row {
+    height: 100%;
+    width: 100%;
+  }
+  
+  .hero-column {
+    flex: 1 !important;
+    height: 80vh !important;
+  }
+  
+  .hero-column__link {
+    height: 80vh !important;
+  }
+  
+  .hero-column__inner {
+    min-height: 80vh !important;
+    height: 80vh !important;
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 991.98px) {
+  .hero-column {
+    min-height: 350px;
+  }
+  
+  .hero-column__inner {
+    min-height: 350px;
+  }
+
+  .hero-column__content {
+    padding: 1rem 1.5rem;
+  }
+  
+  /* Hide badges on mobile */
+  .hero-column__badge {
+    display: none;
+  }
+  
+  /* First card only: extra top margin for navigation */
+  .hero-column:first-child {
+    margin-top: 20%;
+  }
+  
+  .hero-column__title {
+    font-size: 1.75rem;
+  }
+  
+  .hero-column__subtitle {
+    font-size: 1rem;
+  }
+}
+
