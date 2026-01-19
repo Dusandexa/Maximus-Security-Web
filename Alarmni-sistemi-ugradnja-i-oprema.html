@@ -27,7 +27,7 @@ Naši sistemi nude i mogućnost integracije sa video nadzorom i pametnim uređaj
   <!-- Poppins font (300/400/600/700) -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/custom.css">
+  <link rel="stylesheet" href="css/custom.css?v=2">
   <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 </head>
@@ -528,10 +528,12 @@ Naši sistemi nude i mogućnost integracije sa video nadzorom i pametnim uređaj
       <div class="row g-3" data-ms-fields></div>
 
       <!-- reCAPTCHA - kept outside fields container -->
-      <div class="col-12 pt-20">
+      <div class="col-12 pt-20 text-center">
         <div class="form-label mb-2"><strong>Proverite da niste robot</strong> <span class="text-danger">*</span></div>
         <!-- TODO: Replace YOUR_RECAPTCHA_SITE_KEY with your actual reCAPTCHA v2 site key -->
-        <div class="g-recaptcha" data-sitekey="6LcMoUwsAAAAAEeJE_zwm_-FMqAXfDdRXx0-r9G3" data-ms-captcha></div>
+        <div class="d-inline-block">
+          <div class="g-recaptcha" data-sitekey="6LcMoUwsAAAAAEeJE_zwm_-FMqAXfDdRXx0-r9G3" data-ms-captcha></div>
+        </div>
         <div class="invalid-feedback d-block mt-2" data-ms-captcha-error style="display:none;"></div>
       </div>
 

@@ -114,6 +114,39 @@ function ms_escapeHtml(str) {
     .replaceAll("'", "&#039;");
 }
 
+// Success modal helper
+function ms_showSuccessModal() {
+  // Create modal if it doesn't exist
+  let modal = document.getElementById('msSuccessModal');
+  if (!modal) {
+    const modalHtml = `
+      <div class="modal fade" id="msSuccessModal" tabindex="-1" aria-labelledby="msSuccessModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content bg-white text-dark border-0" style="border-radius: 16px;">
+            <div class="modal-body text-center py-5 px-4">
+              <div class="mb-4">
+                <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
+              </div>
+              <h2 class="fw-bold mb-3 text-dark" id="msSuccessModalLabel">Hvala! Vaš zahtev je uspešno poslat.</h2>
+              <p class="text-dark mb-4 fs-5">Naš tim će vas kontaktirati u što kraćem roku.</p>
+              <p class="text-dark mb-4">Ipak ne želite da čekate? <a href="tel:+38162421515" class="text-danger fw-semibold text-decoration-none">Pozovite nas <i class="bi bi-telephone-fill"></i></a></p>
+              <button type="button" class="btn btn-outline-danger btn-lg rounded-pill px-4 fw-semibold" data-bs-dismiss="modal">
+                Zatvori
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+    modal = document.getElementById('msSuccessModal');
+  }
+  
+  // Show modal using Bootstrap
+  const bsModal = new bootstrap.Modal(modal);
+  bsModal.show();
+}
+
 function ms_isRecaptchaReady() {
   return typeof window.grecaptcha !== "undefined" && typeof window.grecaptcha.getResponse === "function";
 }
@@ -235,6 +268,21 @@ function ms_setupJqueryValidate(formEl, config) {
 
   const $form = window.jQuery(formEl);
 
+  // Track when select elements are actually changed by user
+  $form.find('select').on('change', function() {
+    window.jQuery(this).attr('data-touched', 'true');
+  });
+
+  // Handle autofill detection with delay to avoid flickering
+  setTimeout(function() {
+    $form.find('input:-webkit-autofill').each(function() {
+      const $input = window.jQuery(this);
+      if ($input.val() !== '') {
+        $input.valid();
+      }
+    });
+  }, 500);
+
   // Destroy previous validator if any (important for pages with partial reloads)
   try { $form.validate().destroy(); } catch (_) {}
 
@@ -282,6 +330,14 @@ function ms_setupJqueryValidate(formEl, config) {
     errorElement: "div",
     errorClass: "error-text",
     focusInvalid: false,
+    onkeyup: false, // Don't validate on every keystroke
+    onfocusout: function(element) {
+      // Validate when user leaves the field (if it has content)
+      const val = String(window.jQuery(element).val() || "").trim();
+      if (val !== "") {
+        this.element(element);
+      }
+    },
     rules,
     messages,
 
@@ -291,9 +347,23 @@ function ms_setupJqueryValidate(formEl, config) {
       if ($fb.length) $fb.show();
     },
     unhighlight: function (element) {
-      // Only remove invalid class, don't add valid class to avoid green on empty fields
-      window.jQuery(element).removeClass("is-invalid");
-      const $fb = window.jQuery(element).closest("div").find(".invalid-feedback").first();
+      const $el = window.jQuery(element);
+      const val = String($el.val() || "").trim();
+      const isSelect = $el.is('select');
+      const isTouched = $el.attr('data-touched') === 'true';
+      
+      $el.removeClass("is-invalid");
+      
+      // Only add is-valid class if:
+      // - For inputs/textareas: field has content
+      // - For selects: user has actually changed the value (touched)
+      if (val !== "" && (!isSelect || isTouched)) {
+        $el.addClass("is-valid");
+      } else {
+        $el.removeClass("is-valid");
+      }
+      
+      const $fb = $el.closest("div").find(".invalid-feedback").first();
       if ($fb.length) $fb.hide().text("");
     },
     errorPlacement: function (error, element) {
@@ -442,8 +512,13 @@ async function ms_submitForm(formEl, config) {
     }
 
     console.log("=== SUCCESS ===", payload?.message);
-    alert(payload?.message || "Hvala! Vaš zahtev je uspešno poslat.");
+    ms_showSuccessModal();
     formEl.reset();
+
+    // Reset select touched states
+    formEl.querySelectorAll('select[data-touched]').forEach(el => {
+      el.removeAttribute('data-touched');
+    });
 
     if (captchaEl && ms_isRecaptchaReady()) {
       window.grecaptcha.reset();

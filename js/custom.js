@@ -256,16 +256,34 @@ $(function () {
   const $form = $('#offerForm');
   if (!$form.length) return;
 
-  // Custom phone format check
-  $.validator.addMethod("srPhone", function (value, element) {
-    return /^[0-9+\s\/\-()]{6,}$/.test(value.trim());
-  }, "Unesite važeći broj telefona.");
+  // Track when select elements are actually changed by user
+  $form.find('select').on('change', function() {
+    $(this).attr('data-touched', 'true');
+  });
+
+    // Handle autofill detection with delay to avoid flickering
+    setTimeout(function() {
+      $form.find('input:-webkit-autofill').each(function() {
+        const $input = $(this);
+        if ($input.val() !== '') {
+          $input.valid();
+        }
+      });
+    }, 500);
 
   // jQuery Validate setup
   $form.validate({
     errorElement: "div",
     errorClass: "error-text",
     focusInvalid: false,
+    onkeyup: false, // Don't validate on every keystroke
+    onfocusout: function(element) {
+      // Validate when user leaves the field (if it has content)
+      const val = String($(element).val() || "").trim();
+      if (val !== "") {
+        this.element(element);
+      }
+    },
 
     rules: {
   ime: { required: true, minlength: 2 },
@@ -296,24 +314,26 @@ messages: {
     highlight: function (element) {
       $(element)
         .addClass("is-invalid")
-        .removeClass("is-valid")
-        .css({
-          backgroundColor: "#fff5f5",
-          borderColor: "#dc3545",
-          color: "#000"
-        });
+        .removeClass("is-valid");
     },
 
     // === When valid ===
     unhighlight: function (element) {
-      $(element)
-        .removeClass("is-invalid")
-        .addClass("is-valid")
-        .css({
-          backgroundColor: "#fff",
-          borderColor: "#ccc",
-          color: "#000"
-        });
+      const $el = $(element);
+      const val = String($el.val() || "").trim();
+      const isSelect = $el.is('select');
+      const isTouched = $el.attr('data-touched') === 'true';
+      
+      $el.removeClass("is-invalid");
+      
+      // Only add is-valid class if:
+      // - For inputs/textareas: field has content
+      // - For selects: user has actually changed the value (touched)
+      if (val !== "" && (!isSelect || isTouched)) {
+        $el.addClass("is-valid");
+      } else {
+        $el.removeClass("is-valid");
+      }
     },
 
     // === Submit handler ===
@@ -328,16 +348,21 @@ messages: {
         $("#captchaError").hide().text("");
       }
 
-      alert("Hvala! Vaš zahtev je uspešno poslat.");
+      // Show success modal (uses function from forms.js)
+      if (typeof ms_showSuccessModal === 'function') {
+        ms_showSuccessModal();
+      } else {
+        alert("Hvala! Vaš zahtev je uspešno poslat.");
+      }
+      
       form.reset();
       grecaptcha.reset();
 
+      // Reset select touched states
+      $form.find('select[data-touched]').removeAttr('data-touched');
+
       // reset visuals
-      $form.find("input, textarea, select").removeClass("is-valid").css({
-        backgroundColor: "#fff",
-        borderColor: "#ccc",
-        color: "#000"
-      });
+      $form.find("input, textarea, select").removeClass("is-valid is-invalid");
 
       return false;
     }
