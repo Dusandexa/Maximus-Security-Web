@@ -117,7 +117,8 @@ $FROM_NAME  = 'Maximus Security';
 
 // ⚠️ SMTP Configuration (for authenticated email delivery)
 $SMTP_HOST = 'mail.maximussecurity.rs';
-$SMTP_PORT = 465; // SSL port
+$SMTP_PORT = 587; // TLS/STARTTLS port (recommended)
+$SMTP_USE_TLS = true; // Use STARTTLS encryption
 $SMTP_USERNAME = 'kontakt@maximussecurity.rs';
 $SMTP_PASSWORD = 'kontaktmaximussecurityrsnalog1!!2026';
 
@@ -299,42 +300,92 @@ $emailContent .= "Content-Transfer-Encoding: 8bit\r\n\r\n";
 $emailContent .= $bodyHtml . "\r\n\r\n";
 $emailContent .= "--$boundary--\r\n";
 
-// Connect to SMTP server with SSL
+// Connect to SMTP server with TLS (STARTTLS - most secure and standard)
 try {
-  $smtpConnection = @fsockopen("ssl://" . $SMTP_HOST, $SMTP_PORT, $errno, $errstr, 10);
+  // Start with plain connection for STARTTLS
+  $smtpConnection = @fsockopen($SMTP_HOST, $SMTP_PORT, $errno, $errstr, 10);
   
   if (!$smtpConnection) {
     debug_log("SMTP connection failed: $errstr ($errno)");
     respond(false, 'Nije moguće povezati se sa mail serverom.', 500);
   }
   
+  // Set timeout for socket operations
+  stream_set_timeout($smtpConnection, 10);
+  
   // Read initial server response (220)
   $response = fgets($smtpConnection, 515);
   debug_log("SMTP Connect: " . trim($response));
   
+  if (strpos($response, '220') === false) {
+    fclose($smtpConnection);
+    debug_log("Server did not respond with 220");
+    respond(false, 'Mail server nije odgovorio ispravno.', 500);
+  }
+  
   // Send EHLO
   fputs($smtpConnection, "EHLO " . ($_SERVER['SERVER_NAME'] ?? 'maximussecurity.rs') . "\r\n");
   
-  // Read all EHLO responses
+  // Read all EHLO responses and collect capabilities
+  $ehloResponses = [];
   do {
     $response = fgets($smtpConnection, 515);
     debug_log("EHLO Response: " . trim($response));
+    $ehloResponses[] = $response;
   } while (strpos($response, '-') === 3);
   
-  // AUTH LOGIN
-  fputs($smtpConnection, "AUTH LOGIN\r\n");
-  $response = fgets($smtpConnection, 515);
-  debug_log("AUTH: " . trim($response));
+  // Start TLS encryption
+  if ($SMTP_USE_TLS) {
+    fputs($smtpConnection, "STARTTLS\r\n");
+    $response = fgets($smtpConnection, 515);
+    debug_log("STARTTLS: " . trim($response));
+    
+    if (strpos($response, '220') !== false) {
+      // Enable TLS encryption on the socket
+      $crypto = stream_socket_enable_crypto($smtpConnection, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
+      
+      if (!$crypto) {
+        fclose($smtpConnection);
+        debug_log("TLS encryption failed");
+        respond(false, 'TLS enkripcija nije uspela.', 500);
+      }
+      
+      debug_log("TLS encryption enabled successfully");
+      
+      // Send EHLO again after TLS
+      fputs($smtpConnection, "EHLO " . ($_SERVER['SERVER_NAME'] ?? 'maximussecurity.rs') . "\r\n");
+      
+      do {
+        $response = fgets($smtpConnection, 515);
+        debug_log("EHLO after TLS: " . trim($response));
+      } while (strpos($response, '-') === 3);
+    }
+  }
   
-  // Send username (base64 encoded)
-  fputs($smtpConnection, base64_encode($SMTP_USERNAME) . "\r\n");
+  // Try AUTH PLAIN first (more compatible)
+  $authString = base64_encode("\0" . $SMTP_USERNAME . "\0" . $SMTP_PASSWORD);
+  fputs($smtpConnection, "AUTH PLAIN $authString\r\n");
   $response = fgets($smtpConnection, 515);
-  debug_log("USER: " . trim($response));
+  debug_log("AUTH PLAIN: " . trim($response));
   
-  // Send password (base64 encoded)
-  fputs($smtpConnection, base64_encode($SMTP_PASSWORD) . "\r\n");
-  $response = fgets($smtpConnection, 515);
-  debug_log("PASS: " . trim($response));
+  // If AUTH PLAIN failed, try AUTH LOGIN
+  if (strpos($response, '235') === false) {
+    debug_log("AUTH PLAIN failed, trying AUTH LOGIN...");
+    
+    fputs($smtpConnection, "AUTH LOGIN\r\n");
+    $response = fgets($smtpConnection, 515);
+    debug_log("AUTH LOGIN: " . trim($response));
+    
+    // Send username
+    fputs($smtpConnection, base64_encode($SMTP_USERNAME) . "\r\n");
+    $response = fgets($smtpConnection, 515);
+    debug_log("USER: " . trim($response));
+    
+    // Send password
+    fputs($smtpConnection, base64_encode($SMTP_PASSWORD) . "\r\n");
+    $response = fgets($smtpConnection, 515);
+    debug_log("PASS: " . trim($response));
+  }
   
   // Check authentication success (235 = success)
   if (strpos($response, '235') === false) {
