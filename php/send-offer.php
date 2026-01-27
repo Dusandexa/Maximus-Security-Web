@@ -115,7 +115,11 @@ $DEFAULT_RECIPIENTS = ['kontakt@maximussecurity.rs'];
 $FROM_EMAIL = 'kontakt@maximussecurity.rs';
 $FROM_NAME  = 'Maximus Security';
 
-// ⚠️ SMTP Configuration (for authenticated email delivery)
+// ⚠️ SMTP Configuration
+// Set USE_SMTP to false to use PHP mail() function (works on most cPanel hosts)
+// Set USE_SMTP to true to use direct SMTP authentication
+$USE_SMTP = false; // Change to true if mail() doesn't work
+
 $SMTP_HOST = 'mail.maximussecurity.rs';
 $SMTP_PORT = 587; // TLS/STARTTLS port (recommended)
 $SMTP_USE_TLS = true; // Use STARTTLS encryption
@@ -299,6 +303,34 @@ $emailContent .= "Content-Type: text/html; charset=UTF-8\r\n";
 $emailContent .= "Content-Transfer-Encoding: 8bit\r\n\r\n";
 $emailContent .= $bodyHtml . "\r\n\r\n";
 $emailContent .= "--$boundary--\r\n";
+
+/* ==========================
+   SEND MAIL
+   ========================== */
+
+// Choose method based on configuration
+if (!$USE_SMTP) {
+  // Use PHP mail() function (works on most cPanel hosting)
+  debug_log("Using PHP mail() function");
+  
+  $headers = [];
+  $headers[] = 'MIME-Version: 1.0';
+  $headers[] = 'From: ' . $fromName . ' <' . $fromEmail . '>';
+  $headers[] = 'Reply-To: ' . $replyTo;
+  $headers[] = 'Content-Type: multipart/alternative; boundary="' . $boundary . '"';
+  
+  $message = $emailContent;
+  
+  $sent = @mail($to, $subject, $message, implode("\r\n", $headers));
+  
+  if (!$sent) {
+    debug_log("mail() returned false");
+    respond(false, 'Email nije poslat. Proverite server konfiguraciju.', 500);
+  }
+  
+  debug_log("Email sent successfully via mail()");
+  respond(true, 'Hvala! Vaš zahtev je uspešno poslat.');
+}
 
 // Connect to SMTP server with TLS (STARTTLS - most secure and standard)
 try {
