@@ -113,7 +113,13 @@ $DEFAULT_RECIPIENTS = ['kontakt@maximussecurity.rs'];
 
 // ⚠️ TODO: From domain (must match your hosting domain for best deliverability)
 $FROM_EMAIL = 'kontakt@maximussecurity.rs';
-$FROM_NAME  = 'maximussecurity.rs';
+$FROM_NAME  = 'Maximus Security';
+
+// ⚠️ SMTP Configuration (for authenticated email delivery)
+$SMTP_HOST = 'mail.maximussecurity.rs';
+$SMTP_PORT = 465; // SSL port
+$SMTP_USERNAME = 'kontakt@maximussecurity.rs';
+$SMTP_PASSWORD = 'kontaktmaximussecurityrsnalog1!!2026';
 
 /* ==========================
    INPUT + BASIC VALIDATION
@@ -263,16 +269,121 @@ $message .= $bodyHtml . "\r\n\r\n";
 $message .= "--{$boundary}--\r\n";
 
 // Log email attempt
-debug_log("Attempting to send email to: " . $to);
+debug_log("Attempting to send email via SMTP to: " . $to);
 debug_log("Subject: " . $subject);
 debug_log("From: " . $fromEmail);
 
-$sent = @mail($to, $subject, $message, implode("\r\n", $headers));
+// Parse recipients
+$recipients = array_map('trim', explode(',', $to));
+$firstRecipient = $recipients[0];
 
-if (!$sent) {
-  debug_log("mail() returned false - email NOT sent");
-  respond(false, 'Email nije poslat. Proverite mail() konfiguraciju na serveru ili koristite SMTP.', 500);
+// Build the email message with proper SMTP format
+$emailContent = "From: $fromName <$fromEmail>\r\n";
+$emailContent .= "To: $firstRecipient\r\n";
+$emailContent .= "Reply-To: $replyTo\r\n";
+$emailContent .= "Subject: $subject\r\n";
+$emailContent .= "MIME-Version: 1.0\r\n";
+$emailContent .= "Content-Type: multipart/alternative; boundary=\"$boundary\"\r\n";
+$emailContent .= "\r\n";
+
+// Plain text part
+$emailContent .= "--$boundary\r\n";
+$emailContent .= "Content-Type: text/plain; charset=UTF-8\r\n";
+$emailContent .= "Content-Transfer-Encoding: 8bit\r\n\r\n";
+$emailContent .= $bodyText . "\r\n\r\n";
+
+// HTML part
+$emailContent .= "--$boundary\r\n";
+$emailContent .= "Content-Type: text/html; charset=UTF-8\r\n";
+$emailContent .= "Content-Transfer-Encoding: 8bit\r\n\r\n";
+$emailContent .= $bodyHtml . "\r\n\r\n";
+$emailContent .= "--$boundary--\r\n";
+
+// Connect to SMTP server with SSL
+try {
+  $smtpConnection = @fsockopen("ssl://" . $SMTP_HOST, $SMTP_PORT, $errno, $errstr, 10);
+  
+  if (!$smtpConnection) {
+    debug_log("SMTP connection failed: $errstr ($errno)");
+    respond(false, 'Nije moguće povezati se sa mail serverom.', 500);
+  }
+  
+  // Read initial server response (220)
+  $response = fgets($smtpConnection, 515);
+  debug_log("SMTP Connect: " . trim($response));
+  
+  // Send EHLO
+  fputs($smtpConnection, "EHLO " . ($_SERVER['SERVER_NAME'] ?? 'maximussecurity.rs') . "\r\n");
+  
+  // Read all EHLO responses
+  do {
+    $response = fgets($smtpConnection, 515);
+    debug_log("EHLO Response: " . trim($response));
+  } while (strpos($response, '-') === 3);
+  
+  // AUTH LOGIN
+  fputs($smtpConnection, "AUTH LOGIN\r\n");
+  $response = fgets($smtpConnection, 515);
+  debug_log("AUTH: " . trim($response));
+  
+  // Send username (base64 encoded)
+  fputs($smtpConnection, base64_encode($SMTP_USERNAME) . "\r\n");
+  $response = fgets($smtpConnection, 515);
+  debug_log("USER: " . trim($response));
+  
+  // Send password (base64 encoded)
+  fputs($smtpConnection, base64_encode($SMTP_PASSWORD) . "\r\n");
+  $response = fgets($smtpConnection, 515);
+  debug_log("PASS: " . trim($response));
+  
+  // Check authentication success (235 = success)
+  if (strpos($response, '235') === false) {
+    fclose($smtpConnection);
+    debug_log("SMTP authentication failed");
+    respond(false, 'SMTP autentikacija nije uspela. Proverite credentials.', 500);
+  }
+  
+  // MAIL FROM
+  fputs($smtpConnection, "MAIL FROM: <$fromEmail>\r\n");
+  $response = fgets($smtpConnection, 515);
+  debug_log("MAIL FROM: " . trim($response));
+  
+  // RCPT TO (for each recipient)
+  foreach ($recipients as $recipient) {
+    fputs($smtpConnection, "RCPT TO: <$recipient>\r\n");
+    $response = fgets($smtpConnection, 515);
+    debug_log("RCPT TO $recipient: " . trim($response));
+  }
+  
+  // DATA
+  fputs($smtpConnection, "DATA\r\n");
+  $response = fgets($smtpConnection, 515);
+  debug_log("DATA: " . trim($response));
+  
+  // Send the email content
+  fputs($smtpConnection, $emailContent);
+  fputs($smtpConnection, "\r\n.\r\n");
+  $response = fgets($smtpConnection, 515);
+  debug_log("SEND: " . trim($response));
+  
+  // Check if email was sent successfully (250 = success)
+  if (strpos($response, '250') === false) {
+    fclose($smtpConnection);
+    debug_log("Email sending failed");
+    respond(false, 'Email nije uspešno poslat. Greška servera.', 500);
+  }
+  
+  // QUIT
+  fputs($smtpConnection, "QUIT\r\n");
+  $response = fgets($smtpConnection, 515);
+  debug_log("QUIT: " . trim($response));
+  
+  fclose($smtpConnection);
+  
+  debug_log("Email sent successfully via authenticated SMTP");
+  respond(true, 'Hvala! Vaš zahtev je uspešno poslat.');
+  
+} catch (Exception $e) {
+  debug_log("SMTP Exception: " . $e->getMessage());
+  respond(false, 'Greška pri slanju email-a.', 500);
 }
-
-debug_log("mail() returned true - email sent successfully");
-respond(true, 'Hvala! Vaš zahtev je uspešno poslat.');
