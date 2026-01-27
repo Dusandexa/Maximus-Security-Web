@@ -102,14 +102,14 @@ $RECAPTCHA_SECRET = '6LcMoUwsAAAAAAnw1E0J2C_SZgd5diRFg1zlOZIk';
 // ⚠️ TODO: Set your real email addresses below
 // Who receives emails per formKey
 $FORM_RECIPIENTS = [
-  'video-nadzor' => ['onlinemaximussecure@gmail.com'],
-  'alarmni-sistemi' => ['onlinemaximussecure@gmail.com'],
-  'iznajmljivanje-metal-detektorska-vrata' => ['onlinemaximussecure@gmail.com'],
-  'generic' => ['onlinemaximussecure@gmail.com'],
+  'video-nadzor' => ['kontakt@maximussecurity.rs', 'onlinemaximussecure@gmail.com', 'dusandjordjevic008@gmail.com'],
+  'alarmni-sistemi' => ['kontakt@maximussecurity.rs', 'onlinemaximussecure@gmail.com', 'dusandjordjevic008@gmail.com'],
+  'iznajmljivanje-metal-detektorska-vrata' => ['kontakt@maximussecurity.rs', 'onlinemaximussecure@gmail.com', 'dusandjordjevic008@gmail.com'],
+  'generic' => ['kontakt@maximussecurity.rs', 'onlinemaximussecure@gmail.com', 'dusandjordjevic008@gmail.com'],
 ];
 
 // Fallback recipients if formKey not listed
-$DEFAULT_RECIPIENTS = ['onlinemaximussecure@gmail.com'];
+$DEFAULT_RECIPIENTS = ['kontakt@maximussecurity.rs', 'onlinemaximussecure@gmail.com', 'dusandjordjevic008@gmail.com'];
 
 // ⚠️ TODO: From domain (must match your hosting domain for best deliverability)
 $FROM_EMAIL = 'kontakt@maximussecurity.rs';
