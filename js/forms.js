@@ -100,6 +100,57 @@ const MS_FORM_CONFIGS = {
     ]
   },
 
+  // Modeli metal detektorskih vrata
+  modeli: {
+    formKey: "modeli-metal-detektorska-vrata",
+    subject: "Upit za ponudu - Modeli metal detektorskih vrata",
+    endpoint: "/php/send-offer.php",
+    fields: [
+      { name: "ime", label: "Ime", type: "text", required: true, placeholder: "Vaše ime", col: "col-md-6 pt-20" },
+      { name: "prezime", label: "Prezime", type: "text", placeholder: "Vaše prezime", col: "col-md-6 pt-20" },
+
+      { name: "email", label: "Email adresa", type: "email", required: true, placeholder: "npr. ime@domen.com", col: "col-md-6 pt-20" },
+      { name: "telefon", label: "Broj telefona", type: "tel", required: true, placeholder: "npr. +381 6x xxx xxxx", col: "col-md-6 pt-20" },
+
+      { name: "modelVrata", label: "Model vrata", type: "select", required: true, col: "col-md-6 pt-20",
+        options: [
+          "Vrata sa 6 zona",
+          "Vrata sa 12 zona",
+          "Vrata sa 18 zona",
+          "Vrata sa 24 zona",
+          "Vrata sa 33 zona",
+          "Vrata sa 45 zona"
+        ] },
+
+      { name: "kolicina", label: "Količina", type: "select", required: true, col: "col-md-6 pt-20",
+        options: ["1","2","3","4","5","6","7","8","9","10","Više od 10"] },
+
+      { name: "napomena", label: "Napomena", type: "textarea", placeholder: "Dodatne informacije", col: "col-12 pt-20", rows: 4 }
+    ]
+  },
+
+  // Vrata sa 6 zona - product specific form
+  "vrata-6-zona": {
+    formKey: "vrata-6-zona",
+    subject: "Upit za ponudu - Metal detektorska vrata sa 6 zona",
+    endpoint: "/php/send-offer.php",
+    fields: [
+      { name: "ime", label: "Ime", type: "text", required: true, placeholder: "Vaše ime", col: "col-md-6 pt-20" },
+      { name: "prezime", label: "Prezime", type: "text", placeholder: "Vaše prezime", col: "col-md-6 pt-20" },
+
+      { name: "email", label: "Email adresa", type: "email", required: true, placeholder: "npr. ime@domen.com", col: "col-md-6 pt-20" },
+      { name: "telefon", label: "Broj telefona", type: "tel", required: true, placeholder: "npr. +381 6x xxx xxxx", col: "col-md-6 pt-20" },
+
+      { name: "modelVrata", label: "Model vrata", type: "select", required: true, col: "col-md-6 pt-20",
+        options: ["Vrata sa 6 zona"] },
+
+      { name: "kolicina", label: "Količina", type: "select", required: true, col: "col-md-6 pt-20",
+        options: ["1","2","3","4","5","6","7","8","9","10","Više od 10"] },
+
+      { name: "napomena", label: "Napomena", type: "textarea", placeholder: "Dodatne informacije", col: "col-12 pt-20", rows: 4 }
+    ]
+  },
+
   // Parking rampe i motori
   rampe: {
     formKey: "parking-rampe",
@@ -131,6 +182,7 @@ function ms_guessKeyFromUrl() {
   const p = (window.location.pathname || "").toLowerCase();
   if (p.includes("kamere-za-video-nadzor")) return "kamere";
   if (p.includes("alarmni-sistemi")) return "alarm";
+  if (p.includes("modeli-metal-detektorska-vrata")) return "modeli";
   if (p.includes("iznajmljivanje-metal-detektorska-vrata")) return "metal";
   if (p.includes("parking-rampe-motori")) return "rampe";
   return null;
@@ -164,7 +216,7 @@ function ms_showSuccessModal() {
                 <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
               </div>
               <h2 class="fw-bold mb-3 text-dark" id="msSuccessModalLabel">Hvala! Vaš zahtev je uspešno poslat.</h2>
-              <p class="text-dark mb-4 fs-5">Naš tim će vas kontaktirati u što kraćem roku.</p>
+              <p class="text-dark mb-4 fs-5">Naš tim će vas kontaktirati sa najboljom ponudom u što kraćem roku.</p>
               <p class="text-dark mb-4">Ipak ne želite da čekate? <a href="tel:+38162421515" class="text-danger fw-semibold text-decoration-none">Pozovite nas <i class="bi bi-telephone-fill"></i></a></p>
               <button type="button" class="btn btn-outline-danger btn-lg rounded-pill px-4 fw-semibold" data-bs-dismiss="modal">
                 Zatvori

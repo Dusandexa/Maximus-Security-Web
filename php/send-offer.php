@@ -112,6 +112,8 @@ $FORM_RECIPIENTS = [
   'video-nadzor' => ['kontakt@maximussecurity.rs', 'onlinemaximussecure@gmail.com', 'dusandjordjevic008@gmail.com'],
   'alarmni-sistemi' => ['kontakt@maximussecurity.rs', 'onlinemaximussecure@gmail.com', 'dusandjordjevic008@gmail.com'],
   'iznajmljivanje-metal-detektorska-vrata' => ['kontakt@maximussecurity.rs', 'onlinemaximussecure@gmail.com', 'dusandjordjevic008@gmail.com'],
+  'modeli-metal-detektorska-vrata' => ['kontakt@maximussecurity.rs', 'onlinemaximussecure@gmail.com', 'dusandjordjevic008@gmail.com'],
+  'vrata-6-zona' => ['kontakt@maximussecurity.rs', 'onlinemaximussecure@gmail.com', 'dusandjordjevic008@gmail.com'],
   'parking-rampe' => ['kontakt@maximussecurity.rs', 'onlinemaximussecure@gmail.com', 'dusandjordjevic008@gmail.com'],
   'generic' => ['kontakt@maximussecurity.rs', 'onlinemaximussecure@gmail.com', 'dusandjordjevic008@gmail.com'],
 ];
