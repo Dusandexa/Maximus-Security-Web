@@ -74,6 +74,16 @@ const MS_FORM_CONFIGS = {
       { name: "brojVrata", label: "Broj vrata", type: "select", required: true, col: "col-md-6 pt-20",
         options: ["1","2","3","4","5","6","7","8","9","10","Više od 10"] },
 
+      { name: "modelVrata", label: "Model vrata", type: "select", required: true, col: "col-md-6 pt-20",
+        options: [
+          "Vrata sa 6 zona",
+          "Vrata sa 12 zona",
+          "Vrata sa 18 zona",
+          "Vrata sa 24 zona",
+          "Vrata sa 33 zona",
+          "Vrata sa 45 zona"
+        ] },
+
       { name: "vrstaDogadjaja", label: "Vrsta događaja", type: "select", required: true, col: "col-md-6 pt-20",
         options: [
           "Koncerti i muzički događaji",
