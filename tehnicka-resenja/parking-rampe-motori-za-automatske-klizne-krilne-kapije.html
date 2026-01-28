@@ -356,7 +356,8 @@
                 <p class="text-danger small mb-0"><strong>KIT NE SADRŽI:</strong> Oprugu za balansiranje, aluminijumsku letvu</p>
               </div>
               <div class="card-footer bg-white border-0">
-                <a href="tel:+38162421515" class="btn btn-outline-danger w-100"><i class="bi bi-telephone-fill me-2"></i>Proverite stanje proizvoda</a>
+                <a href="tel:+38162421515" class="btn btn-outline-danger w-100 mb-2"><i class="bi bi-telephone-fill me-2"></i>Proverite stanje proizvoda</a>
+                <button type="button" class="btn btn-danger w-100" onclick="selectProductAndScroll('AUTOMATSKA PARKING RAMPA BI/001PE')"><i class="bi bi-envelope-fill me-2"></i>Pošaljite upit</button>
               </div>
             </div>
           </div>
@@ -402,7 +403,8 @@
                 <p class="text-muted small mb-0">Rad na baterije dostupan kao dodatna oprema</p>
               </div>
               <div class="card-footer bg-white border-0">
-                <a href="tel:+38162421515" class="btn btn-outline-danger w-100"><i class="bi bi-telephone-fill me-2"></i>Proverite stanje proizvoda</a>
+                <a href="tel:+38162421515" class="btn btn-outline-danger w-100 mb-2"><i class="bi bi-telephone-fill me-2"></i>Proverite stanje proizvoda</a>
+                <button type="button" class="btn btn-danger w-100" onclick="selectProductAndScroll('Rampa BIONIK 8m')"><i class="bi bi-envelope-fill me-2"></i>Pošaljite upit</button>
               </div>
             </div>
           </div>
@@ -448,7 +450,8 @@
                 <p class="text-success small mb-0"><strong>KIT SADRŽI:</strong> Automatsku barijeru, oprugu za balansiranje, aluminijumsku letvu 6m</p>
               </div>
               <div class="card-footer bg-white border-0">
-                <a href="tel:+38162421515" class="btn btn-outline-danger w-100"><i class="bi bi-telephone-fill me-2"></i>Proverite stanje proizvoda</a>
+                <a href="tel:+38162421515" class="btn btn-outline-danger w-100 mb-2"><i class="bi bi-telephone-fill me-2"></i>Proverite stanje proizvoda</a>
+                <button type="button" class="btn btn-danger w-100" onclick="selectProductAndScroll('AUTOMATSKA RAMPA BI/006GO')"><i class="bi bi-envelope-fill me-2"></i>Pošaljite upit</button>
               </div>
             </div>
           </div>
@@ -472,7 +475,8 @@
                 <p class="text-success small mb-0"><strong>KIT SADRŽI:</strong> 2x daljinski, prijemnik, fotoćelija, lampa, čelična letva 4m</p>
               </div>
               <div class="card-footer bg-white border-0">
-                <a href="tel:+38162421515" class="btn btn-outline-danger w-100"><i class="bi bi-telephone-fill me-2"></i>Proverite stanje proizvoda</a>
+                <a href="tel:+38162421515" class="btn btn-outline-danger w-100 mb-2"><i class="bi bi-telephone-fill me-2"></i>Proverite stanje proizvoda</a>
+                <button type="button" class="btn btn-danger w-100" onclick="selectProductAndScroll('MOTOR KLIZNE KAPIJE KOMPLET')"><i class="bi bi-envelope-fill me-2"></i>Pošaljite upit</button>
               </div>
             </div>
           </div>
@@ -496,7 +500,8 @@
                 <p class="text-success small mb-0"><strong>SET SADRŽI:</strong> 2x motor, centrala, prijemnik, 2x daljinski, fotoćelije, signalna lampa, antena</p>
               </div>
               <div class="card-footer bg-white border-0">
-                <a href="tel:+38162421515" class="btn btn-outline-danger w-100"><i class="bi bi-telephone-fill me-2"></i>Proverite stanje proizvoda</a>
+                <a href="tel:+38162421515" class="btn btn-outline-danger w-100 mb-2"><i class="bi bi-telephone-fill me-2"></i>Proverite stanje proizvoda</a>
+                <button type="button" class="btn btn-danger w-100" onclick="selectProductAndScroll('Komplet Motora za krilne kapije od 3m')"><i class="bi bi-envelope-fill me-2"></i>Pošaljite upit</button>
               </div>
             </div>
           </div>
@@ -531,6 +536,30 @@
   </main>
 
   <script>
+    // Product selection and scroll to form
+    function selectProductAndScroll(productName) {
+      // Scroll to form section
+      const formSection = document.getElementById('offerForm');
+      if (formSection) {
+        formSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // Wait for forms.js to render fields, then select product
+        setTimeout(function() {
+          const productSelect = document.querySelector('select[name="proizvod"]');
+          if (productSelect) {
+            productSelect.value = productName;
+            // Trigger change event for validation
+            productSelect.dispatchEvent(new Event('change', { bubbles: true }));
+            // Mark as touched for validation
+            productSelect.setAttribute('data-touched', 'true');
+            // Add visual feedback
+            productSelect.classList.add('is-valid');
+            productSelect.classList.remove('is-invalid');
+          }
+        }, 500);
+      }
+    }
+
     // Lightbox functionality
     document.addEventListener('DOMContentLoaded', function() {
       const imageModal = document.getElementById('imageModal');
