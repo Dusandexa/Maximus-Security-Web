@@ -220,6 +220,35 @@
 
           <!-- Tehnička rešenja (ACTIVE) -->
           <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active-nav-item" href="#" id="resenjaDrop" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Tehnička rešenja
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="resenjaDrop">
+              <!-- Mobile-only overview -->
+              <li class="d-xl-none"><a class="dropdown-item" href="#">Sve o tehničkim rešenjima</a></li>
+              <li class="d-xl-none">
+                <hr class="dropdown-divider">
+              </li>
+
+              <li><a class="dropdown-item"
+                  href="konfiguracija-instalacija-projektovanje-odrzavanje-i-oprema-racunarske-mreze.html">Računarske
+                  mreže</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item"
+                  href="audio-video-interfon-sistemi-za-kucu-poslvni-prostor.html">Interfonski
+                  sistemi</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item active-nav-item-sub"
+                  href="parking-rampe-motori-za-automatske-klizne-krilne-kapije.html">Rampe i motori za
+                  kapije</a></li>
+            </ul>
+          </li>
 
         </ul>
       </div>
@@ -584,6 +613,59 @@
     });
   </script>
 
+  <!-- === CONTACT/OFFER FORM SECTION === -->
+  <section class="bg-light text-dark section-breathe">
+    <div class="container">
+        <h3 class="text-center mt-50">Zainteresovani ste? <a href="tel:+38162421515"
+     aria-label="Pozovite 062 42 15 15"
+     class="btn btn-light btn-lg px-4 fw-semibold btn-cut-primary">
+    Pozovite nas <i class="bi bi-telephone-fill ms-1"></i>
+  </a></h3>
+        <br><br>
+          <div class="col-12 text-center">
+            <p class="lead text-secondary m-0">
+               Ili popunite
+              </p>
+            <h2 class="fw-semibold display-6 text-dark mb-3">Formular za besplatnu ponudu</h2>
+              <br>
+              <!-- === FORM: Besplatna ponuda === -->
+<div class="row justify-content-center mb-80">
+  <div class="col-lg-8">
+    <form id="offerForm" data-ms-form="rampe" novalidate onsubmit="return false;">
+      
+      <!-- Fields container - will be populated by forms.js -->
+      <div class="row g-3" data-ms-fields></div>
+
+      <!-- reCAPTCHA - kept outside fields container -->
+      <div class="col-12 pt-20 text-center">
+        <div class="form-label mb-2"><strong>Proverite da niste robot</strong> <span class="text-danger">*</span></div>
+        <!-- TODO: Replace YOUR_RECAPTCHA_SITE_KEY with your actual reCAPTCHA v2 site key -->
+        <div class="d-inline-block">
+          <div class="g-recaptcha" data-sitekey="6LcMoUwsAAAAAEeJE_zwm_-FMqAXfDdRXx0-r9G3" data-ms-captcha></div>
+        </div>
+        <div class="invalid-feedback d-block mt-2" data-ms-captcha-error style="display:none;"></div>
+      </div>
+
+      <!-- Submit button - kept outside fields container -->
+      <div class="col-12 text-center pt-30">
+        <button type="submit" class="btn btn-success btn-lg rounded-pill px-4 fw-semibold d-inline-flex align-items-center gap-2">
+          <i class="bi bi-send-fill"></i>
+          Pošalji podatke
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+<!-- === /FORM === -->
+
+            </div>
+            </div>
+      </div>
+    </div>
+  </section>
+  <!-- === /FORM SECTION === -->
+
   <div class="clearfix"></div>
   <footer class="footer-wrap footer-position">
     <div class="container">
@@ -674,6 +756,16 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
   <!-- Swiper JS -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <!-- reCAPTCHA -->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  
+  <!-- jQuery (potreban za jQuery Validation) -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  
+  <!-- jQuery Validation + dodatne metode -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.20.0/dist/jquery.validate.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.20.0/dist/additional-methods.min.js"></script>
+  
   <script defer src="../js/custom.js"></script>
   <script defer src="../js/forms.js"></script>
 </body>

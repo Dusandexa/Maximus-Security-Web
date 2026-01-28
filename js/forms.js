@@ -88,6 +88,31 @@ const MS_FORM_CONFIGS = {
 
       { name: "napomena", label: "Napomena", type: "textarea", placeholder: "Dodatne informacije", col: "col-12 pt-20", rows: 4 }
     ]
+  },
+
+  // Parking rampe i motori
+  rampe: {
+    formKey: "parking-rampe",
+    subject: "Upit za ponudu - Parking rampe i motori za kapije",
+    endpoint: "/php/send-offer.php",
+    fields: [
+      { name: "ime", label: "Ime", type: "text", required: true, placeholder: "Vaše ime", col: "col-md-6 pt-20" },
+      { name: "prezime", label: "Prezime", type: "text", placeholder: "Vaše prezime", col: "col-md-6 pt-20" },
+
+      { name: "email", label: "Email adresa", type: "email", required: true, placeholder: "npr. ime@domen.com", col: "col-md-6 pt-20" },
+      { name: "telefon", label: "Broj telefona", type: "tel", required: true, placeholder: "npr. +381 6x xxx xxxx", col: "col-md-6 pt-20" },
+
+      { name: "proizvod", label: "Izaberite proizvod", type: "select", required: true, col: "col-12 pt-20",
+        options: [
+          "AUTOMATSKA PARKING RAMPA BI/001PE",
+          "Rampa BIONIK 8m",
+          "AUTOMATSKA RAMPA BI/006GO",
+          "MOTOR KLIZNE KAPIJE KOMPLET",
+          "Komplet Motora za krilne kapije od 3m"
+        ] },
+
+      { name: "napomena", label: "Napomena", type: "textarea", placeholder: "Dodatne informacije", col: "col-12 pt-20", rows: 4 }
+    ]
   }
 };
 
@@ -97,6 +122,7 @@ function ms_guessKeyFromUrl() {
   if (p.includes("kamere-za-video-nadzor")) return "kamere";
   if (p.includes("alarmni-sistemi")) return "alarm";
   if (p.includes("iznajmljivanje-metal-detektorska-vrata")) return "metal";
+  if (p.includes("parking-rampe-motori")) return "rampe";
   return null;
 }
 
