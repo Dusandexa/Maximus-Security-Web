@@ -328,9 +328,9 @@
                   <a href="modeli-metal-detektorska-vrata/vrata-sa-6-zona.html" class="btn btn-model-outline btn-sm px-3 fw-semibold btn-straight">
                     Više o vratima <i class="bi bi-arrow-right ms-1"></i>
                   </a>
-                  <a href="#prijavavideo" class="btn btn-danger btn-sm px-4 fw-semibold btn-cut">
+                  <button type="button" class="btn btn-danger btn-sm px-4 fw-semibold btn-cut" onclick="selectModelAndScroll('Vrata sa 6 zona')">
                     Zatražite ponudu <i class="bi bi-arrow-right ms-1"></i>
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
@@ -348,9 +348,9 @@
                   <a href="#ModeliMDVrata" class="btn btn-model-outline btn-sm px-3 fw-semibold btn-straight">
                     Više o vratima <i class="bi bi-arrow-right ms-1"></i>
                   </a>
-                  <a href="#prijavavideo" class="btn btn-danger btn-sm px-4 fw-semibold btn-cut">
+                  <button type="button" class="btn btn-danger btn-sm px-4 fw-semibold btn-cut" onclick="selectModelAndScroll('Vrata sa 12 zona')">
                     Zatražite ponudu <i class="bi bi-arrow-right ms-1"></i>
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
@@ -368,9 +368,9 @@
                   <a href="#ModeliMDVrata" class="btn btn-model-outline btn-sm px-3 fw-semibold btn-straight">
                     Više o vratima <i class="bi bi-arrow-right ms-1"></i>
                   </a>
-                  <a href="#prijavavideo" class="btn btn-danger btn-sm px-4 fw-semibold btn-cut">
+                  <button type="button" class="btn btn-danger btn-sm px-4 fw-semibold btn-cut" onclick="selectModelAndScroll('Vrata sa 18 zona')">
                     Zatražite ponudu <i class="bi bi-arrow-right ms-1"></i>
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
@@ -388,9 +388,9 @@
                   <a href="#ModeliMDVrata" class="btn btn-model-outline btn-sm px-3 fw-semibold btn-straight">
                     Više o vratima <i class="bi bi-arrow-right ms-1"></i>
                   </a>
-                  <a href="#prijavavideo" class="btn btn-danger btn-sm px-4 fw-semibold btn-cut">
+                  <button type="button" class="btn btn-danger btn-sm px-4 fw-semibold btn-cut" onclick="selectModelAndScroll('Vrata sa 24 zona')">
                     Zatražite ponudu <i class="bi bi-arrow-right ms-1"></i>
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
@@ -408,9 +408,9 @@
                   <a href="#ModeliMDVrata" class="btn btn-model-outline btn-sm px-3 fw-semibold btn-straight">
                     Više o vratima <i class="bi bi-arrow-right ms-1"></i>
                   </a>
-                  <a href="#prijavavideo" class="btn btn-danger btn-sm px-4 fw-semibold btn-cut">
+                  <button type="button" class="btn btn-danger btn-sm px-4 fw-semibold btn-cut" onclick="selectModelAndScroll('Vrata sa 33 zona')">
                     Zatražite ponudu <i class="bi bi-arrow-right ms-1"></i>
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
@@ -428,9 +428,9 @@
                   <a href="#ModeliMDVrata" class="btn btn-model-outline btn-sm px-3 fw-semibold btn-straight">
                     Više o vratima <i class="bi bi-arrow-right ms-1"></i>
                   </a>
-                  <a href="#prijavavideo" class="btn btn-danger btn-sm px-4 fw-semibold btn-cut">
+                  <button type="button" class="btn btn-danger btn-sm px-4 fw-semibold btn-cut" onclick="selectModelAndScroll('Vrata sa 45 zona')">
                     Zatražite ponudu <i class="bi bi-arrow-right ms-1"></i>
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
@@ -591,6 +591,32 @@
 
   <script defer src="../js/custom.js"></script>
   <script src="../js/forms.js"></script>
+  
+  <script>
+    // Auto-select door model in form when clicking "Zatražite ponudu" button
+    function selectModelAndScroll(modelName) {
+      // Scroll to form section
+      const formSection = document.getElementById('offerForm');
+      if (formSection) {
+        formSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // Wait for forms.js to render fields, then select model
+        setTimeout(function() {
+          const modelSelect = document.querySelector('select[name="modelVrata"]');
+          if (modelSelect) {
+            modelSelect.value = modelName;
+            // Trigger change event for validation
+            modelSelect.dispatchEvent(new Event('change', { bubbles: true }));
+            // Mark as touched for validation
+            modelSelect.setAttribute('data-touched', 'true');
+            // Add visual feedback
+            modelSelect.classList.add('is-valid');
+            modelSelect.classList.remove('is-invalid');
+          }
+        }, 500);
+      }
+    }
+  </script>
 </body>
 
 </html>
