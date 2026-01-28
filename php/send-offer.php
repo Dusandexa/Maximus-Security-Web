@@ -262,6 +262,12 @@ try {
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // SSL
     $mail->Port       = $SMTP_PORT;
     $mail->CharSet    = 'UTF-8';
+    
+    // Enable SMTP debugging for troubleshooting (remove in production)
+    $mail->SMTPDebug  = 2; // 0 = off, 1 = client, 2 = client and server
+    $mail->Debugoutput = function($str, $level) {
+        debug_log("SMTP Debug [$level]: $str");
+    };
 
     // FROM
     $mail->setFrom($FROM_EMAIL, $FROM_NAME);
@@ -275,6 +281,14 @@ try {
     if (!empty($email)) {
         $mail->addReplyTo($email, $ime ?? 'Klijent');
     }
+    
+    // Additional headers for better Gmail delivery
+    $mail->addCustomHeader('X-Mailer', 'PHPMailer');
+    $mail->addCustomHeader('X-Priority', '3'); // Normal priority
+    $mail->addCustomHeader('Importance', 'Normal');
+    
+    // Add message ID for tracking
+    $mail->MessageID = sprintf("<%s@%s>", uniqid(), 'maximussecurity.rs');
 
     // CONTENT
     $mail->isHTML(true);
@@ -283,15 +297,20 @@ try {
     $mail->AltBody = $bodyText;
 
     // SEND
-    $mail->send();
-
-    debug_log("Email successfully sent via PHPMailer SMTP");
-    respond(true, 'Hvala! Vaš zahtev je uspešno poslat.');
+    $sendResult = $mail->send();
+    
+    if ($sendResult) {
+        debug_log("Email successfully sent via PHPMailer SMTP to: " . implode(', ', $toList));
+        debug_log("Message-ID: " . $mail->getLastMessageID());
+        respond(true, 'Hvala! Vaš zahtev je uspešno poslat.');
+    } else {
+        debug_log("Mail send returned false but no exception thrown");
+        respond(false, 'Email nije poslat. Molimo pokušajte ponovo.', 500);
+    }
 
 } catch (Exception $e) {
-    debug_log("PHPMailer Error: " . $mail->ErrorInfo);
-    respond(false, 'Email nije poslat. SMTP greška: ' . $mail->ErrorInfo, 500);
+    debug_log("PHPMailer Exception: " . $e->getMessage());
+    debug_log("PHPMailer ErrorInfo: " . $mail->ErrorInfo);
+    debug_log("Stack trace: " . $e->getTraceAsString());
+    respond(false, 'Email nije poslat. Greška: ' . $mail->ErrorInfo, 500);
 }
-
-debug_log("Email sent successfully via PHPMailer SMTP");
-respond(true, 'Hvala! Vaš zahtev je uspešno poslat.');
